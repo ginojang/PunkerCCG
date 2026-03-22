@@ -33,6 +33,11 @@ State Update Broadcast
 - 리플레이 시스템
 - 상태 스냅샷 압축 / 델타 전송
 
+<br>
+<br>
+<br>
+<br>
+
 ---
 
 # B. Realtime Layer - RootNet
@@ -424,6 +429,11 @@ WebGL backend bridge 구현
 RootNet은 **Unity/WebGL 대응을 고려한 클라이언트 중심 WebSocket 네트워크 라이브러리 초안**이며,  
 **Transport / Protocol / Backend / Unity Adapter를 분리한 구조**로 다시 설계되고 있다.
 
+<br>
+<br>
+<br>
+<br>
+
 
 ---
 
@@ -468,6 +478,12 @@ Game Server 전달
 - latency 증가 시 게임 체감 붕괴
 - 동시 입력 폭주 처리 필요
 
+<br>
+<br>
+<br>
+<br>
+
+
 ---
 
 # D. Payment / Ledger System
@@ -508,6 +524,12 @@ Final Pool
 - 모든 계산은 **서버 단일 기준**
 - 클라이언트 계산 금지
 - 로그/추적 가능 구조 필수
+
+<br>
+<br>
+<br>
+<br>
+
 
 ---
 
@@ -550,6 +572,12 @@ Game Server API 호출
 
 - 민팅은 외부 시스템에서 수행
 - 게임 서버는 **조회 + 삭제만 담당**
+
+<br>
+<br>
+<br>
+<br>
+
 
 ---
 
