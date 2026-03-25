@@ -73,6 +73,7 @@
     <Compile Include="Assets\Scenes\RootNet\Runtime\Bootstrap\RootNetBootstrap.cs" />
     <Compile Include="Assets\Scenes\RootNet\Runtime\Transports\WebSocket\WebSocketBackendFactory.cs" />
     <Compile Include="Assets\Scenes\RootNet\Runtime\Abstractions\IBinaryMessageCodec.cs" />
+    <Compile Include="Assets\Scenes\RootNet\Runtime\Unity\RootNetClientSettings.cs" />
     <Compile Include="Assets\Scenes\RootNet\Runtime\Unity\Debug\RootNetDebugInputBehaviour.cs" />
     <Compile Include="Assets\Scenes\RootNet\Runtime\Protocol\SystemMessageRegistry.cs" />
     <Compile Include="Assets\Scenes\RootNet\Runtime\Core\NetClientConfig.cs" />

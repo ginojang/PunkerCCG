@@ -21,7 +21,9 @@ namespace RootNet.Unity
 
         private NetClient _client;
         private bool _isInitialized;
-        private bool _isConnecting;
+
+        [Header("Connection")]
+        [SerializeField] private bool _isConnecting;
 
         public NetClient Client => _client;
         public bool IsInitialized => _isInitialized;
