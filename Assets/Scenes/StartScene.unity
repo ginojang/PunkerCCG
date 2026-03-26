@@ -381,16 +381,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 703311004}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aef6afc8e6eca2143b41ab4028fd74ea, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e63fa2476a44a749b531a8be236005d, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::RootNet.Unity.RootNetClientBehaviour
+  m_EditorClassIdentifier: Assembly-CSharp::RootNet.Unity.CCGRootNetClientBehaviour
   serverAddress: ws://192.168.0.6:8765
   connectOnStart: 1
+  useTimeout: 1
+  timeoutSeconds: 15
   sendHelloOnConnected: 1
   clientVersion: 0.1.0
   guestToken: guest-token
   shutdownOnDestroy: 1
-  _isConnecting: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

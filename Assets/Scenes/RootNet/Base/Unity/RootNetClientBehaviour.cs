@@ -1,39 +1,37 @@
 using System;
 using System.Threading.Tasks;
 using RootNet.Messages;
+using RootNet.Transports;
 using UnityEngine;
 
 namespace RootNet.Unity
 {
-    public sealed class RootNetClientBehaviour : MonoBehaviour
+    public class RootNetClientBehaviour : MonoBehaviour
     {
         [Header("Connection")]
         [SerializeField] private string serverAddress = "ws://127.0.0.1:8765";
         [SerializeField] private bool connectOnStart = true;
 
-        [Header("System Hello")]
-        [SerializeField] private bool sendHelloOnConnected = true;
-        [SerializeField] private string clientVersion = "0.1.0";
-        [SerializeField] private string guestToken = "guest-token";
+        [Header("Timeout")]
+        public bool useTimeout = true;
+        public float timeoutSeconds = 15f;
+
 
         [Header("Lifetime")]
         [SerializeField] private bool shutdownOnDestroy = true;
 
         private NetClient _client;
         private bool _isInitialized;
-
-        [Header("Connection")]
-        [SerializeField] private bool _isConnecting;
+        private bool _isConnecting;
 
         public NetClient Client => _client;
         public bool IsInitialized => _isInitialized;
+
         public bool IsConnected => _client != null && _client.IsConnected;
         public string ServerAddress => serverAddress;
 
-        public event Action Connected;
-        public event Action Disconnected;
-        public event Action<string> Error;
-        public event Action<MessageFormat, ushort, object> MessageReceived;
+        protected event Action<string> Error;
+        protected event Action<MessageFormat, ushort, object> MessageReceived;
 
         private void Awake()
         {
@@ -71,14 +69,38 @@ namespace RootNet.Unity
             _isConnecting = false;
         }
 
-        public void InitializeIfNeeded()
+        private void InitializeIfNeeded()
         {
             if (_isInitialized)
                 return;
 
-            _client = RootNetBootstrap.CreateDefault();
-            BindClientEvents();
 
+            RegisterDefaultProtocol();
+
+            var logger = new UnityNetLogger();
+
+            var config = new NetClientConfig
+            {
+                TimeoutSeconds = timeoutSeconds,
+                UseTimeout = useTimeout
+            };
+
+            var binaryRegistry = CreateBinaryRegistry();
+
+            var serializer = new CompositeMessageSerializer(
+                new JsonSystemMessageSerializer(),
+                binaryRegistry);
+
+            IWebSocketClientBackend backend = WebSocketBackendFactory.CreateDefault();
+            IClientTransport transport = new WebSocketTransport(backend);
+
+            _client = new NetClient(
+                transport,
+                serializer,
+                config,
+                logger);
+
+            BindClientEvents();
             _isInitialized = true;
         }
 
@@ -161,31 +183,37 @@ namespace RootNet.Unity
 
         private void HandleConnected()
         {
-            Connected?.Invoke();
-
-            if (sendHelloOnConnected)
-            {
-                _client.SendSystem(new HelloRequest
-                {
-                    ClientVersion = clientVersion,
-                    Token = guestToken
-                });
-            }
+            OnConnected();
         }
 
         private void HandleDisconnected()
         {
-            Disconnected?.Invoke();
+            OnDisconnected();
         }
 
         private void HandleError(string message)
         {
             Error?.Invoke(message);
         }
-
         private void HandleMessageReceived(MessageFormat format, ushort messageId, object message)
         {
+            Debug.Log($"HandleMessageReceived:  {messageId}");
+
             MessageReceived?.Invoke(format, messageId, message);
+        }
+
+
+        
+        protected virtual void RegisterDefaultProtocol() { }
+
+        protected virtual BinaryMessageRegistry CreateBinaryRegistry() {  return null;  }
+
+        protected virtual void OnConnected() { }
+        protected virtual void OnDisconnected() { }
+
+        public void Send<T>(T message) where T : ISystemMessage
+        {
+            _client.SendSystem(message);
         }
     }
 }
