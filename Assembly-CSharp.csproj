@@ -76,6 +76,7 @@
     <Compile Include="Assets\Scenes\RootNet\Base\Abstractions\IClientTransport.cs" />
     <Compile Include="Assets\Scenes\RootNet\Base\Transports\WebSocket\NativeWebSocketBackend.cs" />
     <Compile Include="Assets\Scenes\RootNet\Base\Unity\Debug\RootNetDebugInputBehaviour.cs" />
+    <Compile Include="Assets\Scenes\RootNet\Game\CCGRootNetClientBehaviour.cs" />
     <Compile Include="Assets\Scenes\RootNet\Base\Messages\SystemMessages.cs" />
     <Compile Include="Assets\Scenes\RootNet\Base\Abstractions\ISystemMessage.cs" />
     <Compile Include="Assets\Scenes\RootNet\Base\Protocol\SystemMessageRegistry.cs" />
@@ -86,7 +87,6 @@
     <Compile Include="Assets\Scenes\RootNet\Base\Unity\RootNetClientBehaviour.cs" />
     <Compile Include="Assets\Scenes\RootNet\Base\Protocol\CompositeMessageSerializer.cs" />
     <Compile Include="Assets\Scenes\RootNet\Base\Core\NetClientBehaviour.cs" />
-    <Compile Include="Assets\Scenes\RootNet\Base\Unity\CCGRootNetClientBehaviour.cs" />
     <Compile Include="Assets\Scenes\RootNet\Base\Abstractions\IBinaryMessageCodec.cs" />
     <Compile Include="Assets\Scenes\RootNet\Base\Logging\UnityNetLoger.cs" />
     <Compile Include="Assets\Scenes\RootNet\Base\Protocol\JsonSystemMessageSerializer.cs" />
@@ -94,18 +94,6 @@
     <Compile Include="Assets\Scenes\RootNet\Base\Unity\Debug\RootNetDebugLogBehaviour.cs" />
     <Compile Include="Assets\Scenes\RootNet\Base\Abstractions\IBinaryMessage.cs" />
     <Compile Include="Assets\Scenes\RootNet\Base\Transports\WebSocket\WebSocketBackendFactory.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Assets\ScriptTemplates\52-Mirror__Network Authenticator-NewNetworkAuthenticator.cs.txt" />
-    <None Include="Assets\ScriptTemplates\56-Mirror__Network Discovery-NewNetworkDiscovery.cs.txt" />
-    <None Include="Assets\ScriptTemplates\51-Mirror__Network Manager With Actions-NewNetworkManagerWithActions.cs.txt" />
-    <None Include="Assets\ScriptTemplates\53-Mirror__Network Behaviour With Actions-NewNetworkBehaviourWithActions.cs.txt" />
-    <None Include="Assets\ScriptTemplates\57-Mirror__Network Transform-NewNetworkTransform.cs.txt" />
-    <None Include="Assets\ScriptTemplates\52-Mirror__Network Behaviour-NewNetworkBehaviour.cs.txt" />
-    <None Include="Assets\ScriptTemplates\55-Mirror__Network Room Player-NewNetworkRoomPlayer.cs.txt" />
-    <None Include="Assets\ScriptTemplates\54-Mirror__Custom Interest Management-CustomInterestManagement.cs.txt" />
-    <None Include="Assets\ScriptTemplates\50-Mirror__Network Manager-NewNetworkManager.cs.txt" />
-    <None Include="Assets\ScriptTemplates\54-Mirror__Network Room Manager-NewNetworkRoomManager.cs.txt" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
