@@ -58,7 +58,7 @@ namespace CCGF
         [SerializeField] private string clientVersion = "0.1.0";
         [SerializeField] private string guestToken = "guest-token";
 
-
+        private bool _handlersRegistered;
 
         protected override void RegisterDefaultProtocol()
         {
@@ -69,7 +69,7 @@ namespace CCGF
             SystemMessageRegistry.Register<PingMessage>(3);
             SystemMessageRegistry.Register<PongMessage>(4);
         }
-
+        
         protected override BinaryMessageRegistry CreateBinaryRegistry()
         {
             var binaryRegistry = new BinaryMessageRegistry();
@@ -81,7 +81,7 @@ namespace CCGF
         {
             if (sendHelloOnConnected)
             {
-                Send(new HelloRequest
+                SendSystem(new HelloRequest
                 {
                     ClientVersion = clientVersion,
                     Token = guestToken
@@ -92,6 +92,39 @@ namespace CCGF
         protected override void OnDisconnected() 
         { 
         }
+
+        protected override void OnError(string message) 
+        { 
+        }
+        protected override void OnMessageReceived(MessageFormat format, ushort messageId, object message) 
+        {
+        }
+
+
+        protected override void BindMessageEvents() 
+        {
+            if (!_handlersRegistered)
+            {
+                RegisterHandler<HelloResponse>(2, OnHelloResponse);
+                RegisterHandler<PongMessage>(4, OnPong);
+                _handlersRegistered = true;
+            }
+        }
+
+        protected override void UnbindMessageEvents() 
+        { 
+        }
+
+        void OnHelloResponse(HelloResponse msg)
+        {
+            Debug.Log($"[RootNetMessage] HelloResponse success={msg.Success}, message={msg.Message}");
+        }
+
+        void OnPong(PongMessage msg)
+        {
+            Debug.Log($"[RootNetMessage] Pong clientTime={msg.ClientTimeMs}, serverTime={msg.ServerTimeMs}");
+        }
+
     }
 
 

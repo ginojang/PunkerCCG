@@ -30,8 +30,6 @@ namespace RootNet.Unity
         public bool IsConnected => _client != null && _client.IsConnected;
         public string ServerAddress => serverAddress;
 
-        protected event Action<string> Error;
-        protected event Action<MessageFormat, ushort, object> MessageReceived;
 
         private void Awake()
         {
@@ -57,7 +55,8 @@ namespace RootNet.Unity
 
         private void OnDestroy()
         {
-            UnbindClientEvents();
+            UnbindNetClientEvents();
+            UnbindMessageEvents();
 
             if (shutdownOnDestroy)
             {
@@ -100,8 +99,12 @@ namespace RootNet.Unity
                 config,
                 logger);
 
-            BindClientEvents();
             _isInitialized = true;
+
+            BindNetClientEvents();
+            BindMessageEvents();
+
+            
         }
 
         public async Task ConnectAsync()
@@ -159,7 +162,7 @@ namespace RootNet.Unity
             _client.RegisterHandler(messageId, handler);
         }
 
-        private void BindClientEvents()
+        private void BindNetClientEvents()
         {
             if (_client == null)
                 return;
@@ -170,7 +173,7 @@ namespace RootNet.Unity
             _client.MessageReceived += HandleMessageReceived;
         }
 
-        private void UnbindClientEvents()
+        private void UnbindNetClientEvents()
         {
             if (_client == null)
                 return;
@@ -193,27 +196,28 @@ namespace RootNet.Unity
 
         private void HandleError(string message)
         {
-            Error?.Invoke(message);
+            OnError(message);
         }
         private void HandleMessageReceived(MessageFormat format, ushort messageId, object message)
         {
-            Debug.Log($"HandleMessageReceived:  {messageId}");
-
-            MessageReceived?.Invoke(format, messageId, message);
+            OnMessageReceived(format, messageId, message);
         }
 
 
         
         protected virtual void RegisterDefaultProtocol() { }
 
-        protected virtual BinaryMessageRegistry CreateBinaryRegistry() {  return null;  }
+        protected virtual BinaryMessageRegistry CreateBinaryRegistry() { return new BinaryMessageRegistry(); }
 
         protected virtual void OnConnected() { }
         protected virtual void OnDisconnected() { }
+        protected virtual void OnError(string message) { }
 
-        public void Send<T>(T message) where T : ISystemMessage
-        {
-            _client.SendSystem(message);
-        }
+        protected virtual void OnMessageReceived(MessageFormat format, ushort messageId, object message) { }
+
+
+
+        protected virtual void BindMessageEvents() { }
+        protected virtual void UnbindMessageEvents() { } 
     }
 }
