@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: d522279c90b14504f9a25467442f9981
+timeCreated: 1451205258
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 52739
+  packageName: CCG Kit
+  packageVersion: 2.9.0
+  assetPath: Assets/CCGKit/ThirdParty/FullSerializer/Source/Converters/fsWeakReferenceConverter.cs
+  uploadId: 805106

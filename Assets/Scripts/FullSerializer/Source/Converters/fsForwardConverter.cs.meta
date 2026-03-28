@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: 7eccd27d395a3b445900ce1a85cc679a
+timeCreated: 1451205257
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 52739
+  packageName: CCG Kit
+  packageVersion: 2.9.0
+  assetPath: Assets/CCGKit/ThirdParty/FullSerializer/Source/Converters/fsForwardConverter.cs
+  uploadId: 805106

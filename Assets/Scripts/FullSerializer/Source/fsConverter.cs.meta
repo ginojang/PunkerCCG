@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: 77ed27c3d6b79c044ad5c52b7832d379
+timeCreated: 1451205257
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 52739
+  packageName: CCG Kit
+  packageVersion: 2.9.0
+  assetPath: Assets/CCGKit/ThirdParty/FullSerializer/Source/fsConverter.cs
+  uploadId: 805106

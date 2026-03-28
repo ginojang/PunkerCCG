@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: cb4638b0e5989604ca0d3801ab74bb4f
+timeCreated: 1451205258
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 52739
+  packageName: CCG Kit
+  packageVersion: 2.9.0
+  assetPath: Assets/CCGKit/ThirdParty/FullSerializer/Source/Internal/fsOption.cs
+  uploadId: 805106

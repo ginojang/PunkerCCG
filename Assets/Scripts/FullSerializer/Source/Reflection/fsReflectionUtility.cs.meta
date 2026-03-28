@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: b2fe4e0d816d15145b26bd01d34c8b47
+timeCreated: 1451205257
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 52739
+  packageName: CCG Kit
+  packageVersion: 2.9.0
+  assetPath: Assets/CCGKit/ThirdParty/FullSerializer/Source/Reflection/fsReflectionUtility.cs
+  uploadId: 805106
