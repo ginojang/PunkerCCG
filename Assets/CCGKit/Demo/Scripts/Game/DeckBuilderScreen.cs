@@ -15,9 +15,49 @@ using TMPro;
 
 namespace CCGKit
 {
+    /*=========================================================================================================================
+     게임 설정 데이터(GameConfiguration)와 플레이어 덱 데이터(playerDecks)를 화면에 연결해서, 덱 생성/선택/편집/저장을 담당하는 UI 오케스트레이터
+
+    * 카드 라이브러리 보여주기
+    * 덱 목록 보여주기
+    * 현재 덱 선택
+    * 카드 추가/제거
+    * 덱 이름 수정
+    * 최소/최대 장수 검증
+    * JSON 저장
+    
+
+        GameConfiguration(JSON 로드 결과)
+        ↓
+        GameManager.Instance.config
+        ↓
+        DeckBuilderScreen
+        ↓
+        DeckButton / CardListItem / CardView / DeckBuilderCard
+        ↓
+        사용자 입력
+        ↓
+        GameManager.Instance.playerDecks 갱신
+        ↓
+        decks.json 저장
+
+     ========================================================================================================================*/
+
+
+
     public class DeckBuilderScreen : BaseScreen
     {
         public List<Transform> cardPositions;
+
+        /*=========================================================================================================================
+
+       즉 화면이 크게 3분할이다.
+
+           1.  카드 라이브러리
+           2.  덱 목록
+           3.  현재 덱의 카드 리스트
+
+        ========================================================================================================================*/
 
 #pragma warning disable 649
         [SerializeField] private GameObject creatureCardViewPrefab;
@@ -41,14 +81,19 @@ namespace CCGKit
         [SerializeField] private TextMeshProUGUI numCardsText;
 #pragma warning restore 649
 
-        private GameObject createDeckItem;
+        //
+        private GameObject createDeckItem;          //“새 덱 만들기” 버튼용 오브젝트 참조다.
 
-        private DeckButton currentDeckButton;
+        private DeckButton currentDeckButton;       // 현재 선택된 덱 UI 항목이다.   즉 화면 기준 “활성 덱”을 가리키는 중심 포인터다.
 
         private fsSerializer serializer = new fsSerializer();
 
+
+        // 카드 라이브러리를 페이지 단위로 넘기기 위한 상태
         private int numPages;
         private int currentPage;
+
+       
 
         protected override void Awake()
         {
@@ -70,14 +115,20 @@ namespace CCGKit
         {
             base.Start();
 
+            // 새 덱만들기 버튼 생성..
             createDeckItem = Instantiate(deckListAddItemPrefab) as GameObject;
             createDeckItem.transform.SetParent(deckListContent.transform, false);
             createDeckItem.GetComponent<CreateDeckButton>().scene = this;
 
+            // 카드 라이브러리 1페이지 로드 - 즉 화면 진입 시 전체 카드 중 첫 페이지를 배치한다.
             LoadCards(0);
+
+            // 페이지 수 계산
             numPages = Mathf.CeilToInt(GameManager.Instance.config.GetNumCards() / (float)cardPositions.Count);
             pageText.text = "Page " + (currentPage + 1) + "/" + numPages;
 
+            // GameManager.Instance.playerDecks를 순회해 DeckButton들을 만든다.
+            // 즉 덱 목록 UI는 저장된 덱 데이터로부터 동적 생성된다.
             foreach (var deck in GameManager.Instance.playerDecks)
             {
                 var go = Instantiate(deckListItemPrefab) as GameObject;
@@ -87,11 +138,14 @@ namespace CCGKit
                 go.GetComponent<DeckButton>().SetDeck(deck);
             }
 
+            // 첫 덱 자동 활성화
+            // 첫 번째 덱 버튼이 있으면 SetActiveDeck(firstDeckButton) 호출한다.
             var firstDeckButton = deckListContent.GetComponentInChildren<DeckButton>();
             if (firstDeckButton != null)
             {
                 SetActiveDeck(firstDeckButton);
             }
+            // 즉 화면 진입 시 현재 선택 덱이 자동 지정된다.
         }
 
         public void OnBackButtonPressed()
