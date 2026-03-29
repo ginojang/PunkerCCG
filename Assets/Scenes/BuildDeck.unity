@@ -577,6 +577,58 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
+--- !u!1 &1792846064
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1792846066}
+  - component: {fileID: 1792846065}
+  m_Layer: 0
+  m_Name: NetworkManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1792846065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1792846064}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e63fa2476a44a749b531a8be236005d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CCGF.CCGRootNetClientBehaviour
+  serverAddress: ws://127.0.0.1:8765
+  connectOnStart: 1
+  useTimeout: 1
+  timeoutSeconds: 15
+  shutdownOnDestroy: 1
+  sendHelloOnConnected: 1
+  clientVersion: 0.1.0
+  guestToken: guest-token
+--- !u!4 &1792846066
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1792846064}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.04627, y: -0.27691, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!222 &6918718917739390
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -7586,3 +7638,4 @@ SceneRoots:
   - {fileID: 2966812855470936414}
   - {fileID: 7026018744690775065}
   - {fileID: 1666673428}
+  - {fileID: 1792846066}
