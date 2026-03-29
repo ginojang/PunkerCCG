@@ -123,6 +123,7 @@
     <Compile Include="Assets\Scripts\Core\Foundation\Properties\IntProperty.cs" />
     <Compile Include="Assets\Scripts\FullSerializer\Source\fsObjectProcessor.cs" />
     <Compile Include="Assets\Scripts\Core\Foundation\EndGameCondition.cs" />
+    <Compile Include="Assets\CCGKit\Demo\Scripts\Game\MenuButtonNoGlow.cs" />
     <Compile Include="Assets\Scripts\RootNet\Base\Abstractions\IWebSocketClientBackend.cs" />
     <Compile Include="Assets\Scripts\FullSerializer\Source\fsData.cs" />
     <Compile Include="Assets\Scripts\FullSerializer\Source\fsExceptions.cs" />
@@ -161,11 +162,13 @@
     <Compile Include="Assets\CCGKit\Demo\Scripts\Game\CardView.cs" />
     <Compile Include="Assets\Scripts\RootNet\Base\Core\NetClientConfig.cs" />
     <Compile Include="Assets\Scripts\Core\Foundation\Attributes\PlayerStatFieldAttribute.cs" />
+    <Compile Include="Assets\CCGKit\Demo\Scripts\Game\CreatureCardView.cs" />
     <Compile Include="Assets\Scripts\Core\Foundation\EffectTargetCondition.cs" />
     <Compile Include="Assets\Scripts\FullSerializer\Source\fsConverterRegistrar.cs" />
     <Compile Include="Assets\Scripts\Core\Foundation\GameAction.cs" />
     <Compile Include="Assets\Scripts\Core\Foundation\Cost.cs" />
     <Compile Include="Assets\Scripts\FullSerializer\Source\fsSerializer.cs" />
+    <Compile Include="Assets\CCGKit\Demo\Scripts\Game\SpellCardView.cs" />
     <Compile Include="Assets\Scripts\FullSerializer\Source\Internal\fsVersionManager.cs" />
     <Compile Include="Assets\Scripts\FullSerializer\Source\fsConverter.cs" />
     <Compile Include="Assets\CCGKit\Demo\Scripts\Game\MenuButton.cs" />

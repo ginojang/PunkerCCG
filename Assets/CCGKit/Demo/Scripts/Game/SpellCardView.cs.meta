@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: f02e390e69fa5964f906d31ad3f8e8c4
-timeCreated: 1496397825
+guid: 98a1d088379b39c46b077bad6a3f003d
+timeCreated: 1490781577
 licenseType: Store
 MonoImporter:
   serializedVersion: 2
@@ -15,5 +15,5 @@ AssetOrigin:
   productId: 52739
   packageName: CCG Kit
   packageVersion: 2.9.0
-  assetPath: Assets/CCGKit/Demo/Scripts/Game/CreateDeckButton.cs
+  assetPath: Assets/CCGKit/Demo/Scripts/Game/SpellCardView.cs
   uploadId: 805106

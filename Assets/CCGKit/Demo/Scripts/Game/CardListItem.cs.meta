@@ -1,2 +1,19 @@
 fileFormatVersion: 2
-guid: 2c2cc584f4fcda3498bb8c96cef901ba
+guid: e3cc4aa2b0920f145ad741e105719b79
+timeCreated: 1496495661
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 52739
+  packageName: CCG Kit
+  packageVersion: 2.9.0
+  assetPath: Assets/CCGKit/Demo/Scripts/Game/CardListItem.cs
+  uploadId: 805106

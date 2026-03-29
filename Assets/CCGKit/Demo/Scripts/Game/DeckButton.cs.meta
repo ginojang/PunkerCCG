@@ -1,2 +1,19 @@
 fileFormatVersion: 2
-guid: 1def9f684b6543549a4e0798a25cbb62
+guid: 21dbc48567044514c8a0f1d05735ca66
+timeCreated: 1496398066
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 52739
+  packageName: CCG Kit
+  packageVersion: 2.9.0
+  assetPath: Assets/CCGKit/Demo/Scripts/Game/DeckButton.cs
+  uploadId: 805106

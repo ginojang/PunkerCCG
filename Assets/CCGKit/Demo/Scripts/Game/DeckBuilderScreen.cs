@@ -246,6 +246,9 @@ namespace CCGKit
             var startIndex = page * cardPositions.Count;
             var endIndex = Mathf.Min(startIndex + cardPositions.Count, gameConfig.GetNumCards());
 
+            Debug.Log($"{gameConfig.GetNumCards()}");
+            Debug.Log($"LoadCards >>  start_index :{startIndex},   end_index :{endIndex}");
+
             foreach (var card in FindObjectsByType<CardView>(FindObjectsSortMode.None))
             {
                 Destroy(card.gameObject);

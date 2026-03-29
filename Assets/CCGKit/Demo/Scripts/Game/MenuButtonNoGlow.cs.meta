@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: f02e390e69fa5964f906d31ad3f8e8c4
-timeCreated: 1496397825
+guid: 64aa9c59e03a17f4e83207e208677e5c
+timeCreated: 1494852512
 licenseType: Store
 MonoImporter:
   serializedVersion: 2
@@ -15,5 +15,5 @@ AssetOrigin:
   productId: 52739
   packageName: CCG Kit
   packageVersion: 2.9.0
-  assetPath: Assets/CCGKit/Demo/Scripts/Game/CreateDeckButton.cs
+  assetPath: Assets/CCGKit/Demo/Scripts/Game/MenuButtonNoGlow.cs
   uploadId: 805106

@@ -430,15 +430,15 @@ MonoBehaviour:
   - {fileID: 5552928387736948441}
   - {fileID: 2164357088110689138}
   - {fileID: 6661207573221076057}
-  creatureCardViewPrefab: {fileID: 0}
-  spellCardViewPrefab: {fileID: 0}
+  creatureCardViewPrefab: {fileID: 1130229958192014, guid: 3e2eb5fbe61ddce49b9e848b89eed4f2, type: 3}
+  spellCardViewPrefab: {fileID: 1236948560037684, guid: d74a1cb162a060d459abb43b4cc47cdb, type: 3}
   deckListContent: {fileID: 3354681484489070827}
-  deckListItemPrefab: {fileID: 0}
-  deckListAddItemPrefab: {fileID: 0}
+  deckListItemPrefab: {fileID: 1949627674600618, guid: a6e904877df8949ddb880fd4517707dc, type: 3}
+  deckListAddItemPrefab: {fileID: 1925634381503632, guid: 78eeb9254772b4e3fa8de4b00f2c7d31, type: 3}
   pageText: {fileID: 1042351704892903291}
   deckNameInputField: {fileID: 2972501385493507113}
   cardListContent: {fileID: 3354681484489070827}
-  cardListItemPrefab: {fileID: 0}
+  cardListItemPrefab: {fileID: 1758323835122030, guid: ad3dcf829ffbf41cf8cc1a4e4987424d, type: 3}
   numCardsText: {fileID: 5502466895296919358}
 --- !u!1 &1670591541
 GameObject:
