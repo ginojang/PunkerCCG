@@ -4,6 +4,7 @@
 
 
 using System.Collections.Generic;
+using RootNet.Unity;
 
 namespace CCGKit
 {
@@ -25,7 +26,7 @@ namespace CCGKit
         /// <summary>
         /// The unique network instance identifier of this player.
         /// </summary>
-        public NetworkIdentity netId;
+        public RootNetClientBehaviour netId;
 
         /// <summary>
         /// The nickname of this player.

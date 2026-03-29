@@ -29,21 +29,32 @@ namespace CCGKit
         /// The properties of the game.
         /// </summary>
         public GameProperties properties = new GameProperties();
+        /*
+         * 이건 게임 전체 레벨의 공통 설정이다.    예를 들면 턴, 핸드 크기, 마나 규칙, 시작 조건 같은 전역 룰 설정이 여기에 있을 가능성이 높다.
+         */
 
         /// <summary>
         /// The game zones of the game.
         /// </summary>
         public List<GameZoneType> gameZones = new List<GameZoneType>();
+        /*
+         * 이건 카드가 존재하거나 이동하는 공간 정의다.        예:  Deck    Hand    Field   Graveyard   Exile       즉 룰이 돌아가는 공간 축
+         */
 
         /// <summary>
         /// The player stats.
         /// </summary>
         public List<DefinitionStat> playerStats = new List<DefinitionStat>();
+        /*
+         * 플레이어가 어떤 스탯 구조를 가지는지 정의한다.       HP          Mana        Energy          Armor       즉 카드가 아니라 플레이어 정의다
+         */
 
         /// <summary>
         /// The card types.
         /// </summary>
         public List<CardType> cardTypes = new List<CardType>();
+
+        /* 카드 타입 */
 
         /// <summary>
         /// The keywords of the game.
@@ -59,6 +70,22 @@ namespace CCGKit
         /// The cards of the game.
         /// </summary>
         public List<Card> cards = new List<Card>();
+
+
+        /*-----------------------------------------------------------------------------
+        GameConfiguration
+         ├─ CardType        (템플릿)
+         ├─ PlayerStat      (플레이어 상태 정의)
+         ├─ GameZone        (공간 구조)
+         ├─ GameAction      (상태 변화)
+         ├─ EndCondition    (종료 판정)
+         └─ Card            (실제 카드)
+
+          --- CardSet  (카드 묽음 단위,  확장팩, 시즌팩 ..)
+
+         -----------------------------------------------------------------------------*/
+
+
 
         /// <summary>
         /// The JSON serializer.

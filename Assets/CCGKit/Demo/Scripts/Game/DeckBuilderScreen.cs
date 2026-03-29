@@ -10,7 +10,7 @@ using UnityEngine.Assertions;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 
-
+using FullSerializer;
 using TMPro;
 
 namespace CCGKit
