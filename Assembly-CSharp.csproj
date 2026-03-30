@@ -182,6 +182,7 @@
     <Compile Include="Assets\Scripts\FullSerializer\Source\fsConverterRegistrar.cs" />
     <Compile Include="Assets\Scripts\Core\Foundation\GameAction.cs" />
     <Compile Include="Assets\Scripts\Core\Foundation\Effects\SetCardStatEffect.cs" />
+    <Compile Include="Assets\CCGKit\Demo\Scripts\Game\Launcher.cs" />
     <Compile Include="Assets\Scripts\Core\Foundation\Cost.cs" />
     <Compile Include="Assets\Scripts\FullSerializer\Source\fsSerializer.cs" />
     <Compile Include="Assets\CCGKit\Demo\Scripts\Game\SpellCardView.cs" />

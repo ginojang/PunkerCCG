@@ -114,11 +114,6 @@ namespace CCGKit
 
         protected override void Start()
         {
-            // GINO  // 원래는 메인 쓰레드 네트웍 메니저에서 작업해야 한다.
-            GameManager.Instance.Initialize();
-            //
-
-
             base.Start();
 
             // 새 덱만들기 버튼 생성..
