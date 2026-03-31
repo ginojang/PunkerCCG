@@ -58,7 +58,7 @@ namespace CCGKit
     "turnDuration": 30,
     "minDeckSize": 25,
     "maxDeckSize": 35,
-    "gameStartActions": [
+    "gameStartActions": [anffh
         {
             "zoneId": 0,
             "name": "Shuffle cards",
