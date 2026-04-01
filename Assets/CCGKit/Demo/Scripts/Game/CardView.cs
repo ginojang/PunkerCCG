@@ -61,7 +61,7 @@ namespace CCGKit
             }
 
             pictureSprite.sprite =
-                Resources.Load<Sprite>(string.Format("Images/{0}", libraryCard.GetStringProperty("Picture")));
+                Resources.Load<Sprite>(string.Format("Card/{0}", libraryCard.GetStringProperty("Picture")));
             var material = libraryCard.GetStringProperty("Material");
             if (!string.IsNullOrEmpty(material))
             {
@@ -82,8 +82,10 @@ namespace CCGKit
                 costText.text = manaCost.ToString();
             }
 
-            pictureSprite.sprite =
-                Resources.Load<Sprite>(string.Format("Images/{0}", card.GetStringProperty("Picture")));
+            var spriteName = string.Format("Card/{0}", card.GetStringProperty("Picture"));
+            //Debug.Log($"<<Sprite Name>>  {spriteName}");
+            pictureSprite.sprite = Resources.Load<Sprite>(spriteName);
+
             var material = card.GetStringProperty("Material");
             if (!string.IsNullOrEmpty(material))
             {

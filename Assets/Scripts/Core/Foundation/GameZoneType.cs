@@ -97,7 +97,48 @@ namespace CCGKit
 /*=====================================================================================================
  *  LIST ±∏¡∂¿”
  
-
+[
+    {
+        "name": "Deck",
+        "owner": "Player",
+        "type": "Static",
+        "ownerVisibility": "Hidden",
+        "opponentVisibility": "Hidden",
+        "hasMaxSize": false,
+        "maxSize": 0,
+        "id": 0
+    },
+    {
+        "name": "Hand",
+        "owner": "Player",
+        "type": "Dynamic",
+        "ownerVisibility": "Visible",
+        "opponentVisibility": "Hidden",
+        "hasMaxSize": false,
+        "maxSize": 0,
+        "id": 1
+    },
+    {
+        "name": "Board",
+        "owner": "Player",
+        "type": "Dynamic",
+        "ownerVisibility": "Visible",
+        "opponentVisibility": "Visible",
+        "hasMaxSize": false,
+        "maxSize": 0,
+        "id": 2
+    },
+    {
+        "name": "Graveyard",
+        "owner": "Player",
+        "type": "Static",
+        "ownerVisibility": "Visible",
+        "opponentVisibility": "Visible",
+        "hasMaxSize": false,
+        "maxSize": 0,
+        "id": 3
+    }
+]
 
  * 
  * =====================================================================================================*/

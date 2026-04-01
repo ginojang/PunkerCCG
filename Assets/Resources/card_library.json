@@ -19,7 +19,7 @@
                         "$type": "CCGKit.StringProperty"
                     },
                     {
-                        "value": "Creature",
+                        "value": "1단계 스코라(Skora)",
                         "name": "Picture",
                         "$type": "CCGKit.StringProperty"
                     },
