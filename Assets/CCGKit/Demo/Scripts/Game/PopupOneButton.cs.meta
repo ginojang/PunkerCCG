@@ -1,2 +1,19 @@
 fileFormatVersion: 2
-guid: f1263ff276d769d42a32ed894b6ec7b8
+guid: 62d37757a86cc9b45a1da6b1627fa3fa
+timeCreated: 1494852707
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 52739
+  packageName: CCG Kit
+  packageVersion: 2.9.0
+  assetPath: Assets/CCGKit/Demo/Scripts/Game/PopupOneButton.cs
+  uploadId: 805106

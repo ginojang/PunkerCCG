@@ -482,7 +482,7 @@ MonoBehaviour:
   deckListAddItemPrefab: {fileID: 1925634381503632, guid: 78eeb9254772b4e3fa8de4b00f2c7d31, type: 3}
   pageText: {fileID: 1042351704892903291}
   deckNameInputField: {fileID: 2972501385493507113}
-  cardListContent: {fileID: 3354681484489070827}
+  cardListContent: {fileID: 4707113284626201938}
   cardListItemPrefab: {fileID: 1758323835122030, guid: ad3dcf829ffbf41cf8cc1a4e4987424d, type: 3}
   numCardsText: {fileID: 5502466895296919358}
 --- !u!1 &1670591541
@@ -2196,8 +2196,8 @@ MonoBehaviour:
   onClickEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
+      - m_Target: {fileID: 1666673429}
+        m_TargetAssemblyTypeName: CCGKit.DeckBuilderScreen, Assembly-CSharp
         m_MethodName: OnCreateDeckButtonPressed
         m_Mode: 1
         m_Arguments:
@@ -2552,8 +2552,8 @@ MonoBehaviour:
   m_OnEndEdit:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
+      - m_Target: {fileID: 1666673429}
+        m_TargetAssemblyTypeName: CCGKit.DeckBuilderScreen, Assembly-CSharp
         m_MethodName: OnDeckNameInputFieldEndedEdit
         m_Mode: 1
         m_Arguments:
@@ -6087,8 +6087,8 @@ MonoBehaviour:
   onClickEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
+      - m_Target: {fileID: 1666673429}
+        m_TargetAssemblyTypeName: CCGKit.DeckBuilderScreen, Assembly-CSharp
         m_MethodName: OnDoneButtonPressed
         m_Mode: 1
         m_Arguments:

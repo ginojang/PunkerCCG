@@ -395,6 +395,8 @@ namespace CCGKit
             }
 
             var decksPath = Application.persistentDataPath + "/decks.json";
+            Debug.Log($"Deck File Saved..  {decksPath}");
+
             fsData serializedData;
             serializer.TrySerialize(GameManager.Instance.playerDecks, out serializedData)
                 .AssertSuccessWithoutWarnings();
