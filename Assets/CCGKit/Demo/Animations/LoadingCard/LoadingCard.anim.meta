@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 27c4f556b171d4f38ae75bc55b9b28e2
+timeCreated: 1497352528
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 7400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 52739
+  packageName: CCG Kit
+  packageVersion: 2.9.0
+  assetPath: Assets/CCGKit/Demo/Animations/LoadingCard/LoadingCard.anim
+  uploadId: 805106
