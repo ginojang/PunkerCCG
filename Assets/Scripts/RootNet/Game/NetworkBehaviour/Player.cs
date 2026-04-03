@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     public bool isHuman;
 
 
+    protected GameState gameState = new GameState();
     protected PlayerInfo playerInfo = new PlayerInfo();
     protected PlayerInfo opponentInfo = new PlayerInfo();
 
@@ -27,7 +28,10 @@ public class Player : MonoBehaviour
 
     protected EffectSolver effectSolver;
 
+    //
 
+
+    //
     public PlayerInfo GetPlayerInfo()
     {
         return playerInfo;

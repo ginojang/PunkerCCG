@@ -101,13 +101,11 @@ namespace CCGKit
         {
             base.OnStartLocalPlayer();
     
-            // GINO CHECK
-            /*
             if (GameNetworkManager.Instance.IsSinglePlayer)
             {
                 bot = gameObject.AddComponent<BotController>();
                 bot.SetPlayer(this);
-            }*/
+            }
     
             gameUI = GameObject.Find("GameUI").GetComponent<GameUI>();
             Assert.IsNotNull(gameUI);

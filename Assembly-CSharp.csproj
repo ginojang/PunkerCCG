@@ -127,6 +127,7 @@
     <Compile Include="Assets\Scripts\Core\Foundation\GameAction\SetPlayerStatAction.cs" />
     <Compile Include="Assets\Scripts\FullSerializer\Source\Converters\Unity\Gradient_DirectConverter.cs" />
     <Compile Include="Assets\Scripts\RootNet\Base\Messages\SystemMessages.cs" />
+    <Compile Include="Assets\Scripts\RootNet\GameNetworkManger.cs" />
     <Compile Include="Assets\CCGKit\Demo\Scripts\Game\CardListItem.cs" />
     <Compile Include="Assets\Scripts\FullSerializer\Source\Internal\fsOption.cs" />
     <Compile Include="Assets\Scripts\RootNet\Base\Logging\NullNetLogger.cs" />
