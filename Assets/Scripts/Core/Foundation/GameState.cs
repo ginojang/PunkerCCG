@@ -35,7 +35,6 @@ namespace CCGKit
         /// The effect solver to use in this game.
         /// </summary>
         /// 
-        // GINO CHECK -- 게임 메인 로직 핵심.
-        //public EffectSolver effectSolver;
+        public EffectSolver effectSolver;
     }
 }

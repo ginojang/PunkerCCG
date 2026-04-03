@@ -93,12 +93,10 @@ namespace CCGKit
             }
         }
 
-        // GINO-CHECK - MAIN-GAME
-        /*
         public virtual bool CanBePlayed(DemoHumanPlayer owner)
         {
             return owner.isActivePlayer && owner.manaStat.effectiveValue >= manaCost;
-        }*/
+        }
 
         public bool IsHighlighted()
         {
