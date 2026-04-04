@@ -20,5 +20,15 @@ public class GameNetworkManager : MonoBehaviour
     private void Start()
     {
         gameObject.GetComponent<DemoHumanPlayer>().OnStartLocalPlayer();
+
+        var msg = gameObject.GetComponent<DemoHumanPlayer>().BuildStarGameMessage();
+        OnStartGame(msg);
     }
+
+
+    public void OnStartGame(StartGameMessage msg)
+    {
+        gameObject.GetComponent<DemoHumanPlayer>().OnStartGame(msg);
+    }
+   
 }

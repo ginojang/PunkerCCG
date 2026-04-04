@@ -28,6 +28,13 @@ public class Player : MonoBehaviour
 
     protected EffectSolver effectSolver;
 
+    protected int currentTurn;
+
+    protected int currentPlayerIndex;
+
+
+    public int randomSeed;
+
     //
     public PlayerInfo GetPlayerInfo()
     {
@@ -57,6 +64,9 @@ public class Player : MonoBehaviour
         // 우선 첫번째 덱을 기본 덱으로 세팅 (임시)
         var defaultDeckIndex = 0;
         LoadDefaultDeck(defaultDeckIndex);
+
+        // 서버 클래스 게임 시작 함수 수행 (임시)
+        StartGame();
 
     }
 
@@ -89,25 +99,6 @@ public class Player : MonoBehaviour
                 }
             }
         }
-
-        // GINO CHECK..  현재 플레어이 정보 서버에 전송하는 부분인듯
-        /*
-        // Register the player to the game and send the server his information.
-        var msg = new RegisterPlayerMessage();
-        msg.netId = netIdentity;
-        if (isHuman)
-        {
-            var playerName = PlayerPrefs.GetString("player_name");
-            msg.name = string.IsNullOrEmpty(playerName) ? "Unnamed Wizard" : playerName;
-        }
-        else
-        {
-            msg.name = "Turing Machine";
-        }
-        msg.isHuman = isHuman;
-        msg.deck = msgDefaultDeck.ToArray();
-        NetworkClient.Send<RegisterPlayerMessage>(msg);
-        */
     }
 
     void LoadPlayerStates()
@@ -178,11 +169,121 @@ public class Player : MonoBehaviour
         //
     }
 
+    void StartGame()
+    {
+        // 임시.
+        currentPlayerIndex = 0;
 
+        Debug.Log("Game has started.");
+
+        currentTurn = 1;
+
+        var players = gameState.players;
+
+
+        // Create an array with all the player nicknames.
+        var playerNicknames = new List<string>(players.Count);
+        foreach (var player in players)
+        {
+            playerNicknames.Add(player.nickname);
+        }
+
+        // Set the current player and opponents.
+        gameState.currentPlayer = players[currentPlayerIndex];
+        gameState.currentOpponent = players.Find(x => x != gameState.currentPlayer);
+
+        randomSeed = System.Environment.TickCount;
+        effectSolver = new EffectSolver(gameState, randomSeed);
+
+        foreach (var player in players)
+        {
+            effectSolver.SetTriggers(player);
+            foreach (var zone in player.zones)
+            {
+                foreach (var card in zone.Value.cards)
+                {
+                    effectSolver.SetDestroyConditions(card);
+                    effectSolver.SetTriggers(card);
+                }
+            }
+        }
+
+        // Execute the game start actions.
+        foreach (var action in GameManager.Instance.config.properties.gameStartActions)
+        {
+            ExecuteGameAction(action);
+        }
+
+    }
+
+
+    protected void ExecuteGameAction(GameAction action)
+    {
+        var targetPlayers = new List<PlayerInfo>();
+        switch (action.target)
+        {
+            case GameActionTarget.CurrentPlayer:
+                targetPlayers.Add(gameState.currentPlayer);
+                break;
+
+            case GameActionTarget.CurrentOpponent:
+                targetPlayers.Add(gameState.currentOpponent);
+                break;
+
+            case GameActionTarget.AllPlayers:
+                targetPlayers = gameState.players;
+                break;
+        }
+
+        foreach (var player in targetPlayers)
+        {
+            action.Resolve(gameState, player);
+        }
+    }
+
+    // 임시 함수.
+    public StartGameMessage BuildStarGameMessage()
+    {
+        var players = gameState.players;
+
+        // 
+        var player = players[currentPlayerIndex];
+        var msg = new StartGameMessage();
+
+        // GINO CHECK..
+        //msg.recipientNetId = 0; // player.netId;
+        msg.playerIndex = currentPlayerIndex;
+        msg.turnDuration = turnDuration;
+
+        var playerNicknames = new List<string>(players.Count);
+        playerNicknames.Add("Gino");
+        playerNicknames.Add("Jisu");
+
+
+        // GINO CHECK -  싱글 모드에서는 이미 player Info 가지고 있기 때문에  안보낸다.
+
+        msg.nicknames = playerNicknames.ToArray();
+        //
+        //msg.player = GetPlayerNetworkState(player);
+        //msg.opponent = GetOpponentNetworkState(players.Find(x => x != player));
+        //msg.rngSeed = rngSeed;
+
+
+        return msg;
+
+    }
 
 
     public virtual void OnStartGame(StartGameMessage msg)
     {
+        gameStarted = true;
+
+        //effectSolver = new EffectSolver(gameState, msg.rngSeed);
+        effectSolver = new EffectSolver(gameState, randomSeed);
+        effectSolver.SetTriggers(playerInfo);
+        effectSolver.SetTriggers(opponentInfo);
+
+        // GINO CHECK..  네트웍 모드에서는 msg의 player_info 내용으로 갱신한다.
 
     }
     public virtual void OnEndGame(EndGameMessage msg)
