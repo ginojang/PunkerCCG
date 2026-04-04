@@ -3,7 +3,10 @@
 // a copy of which is available at http://unity3d.com/company/legal/as_terms.
 
 using System.Collections.Generic;
+using System.IO;
+
 using UnityEngine;
+using FullSerializer;
 
 namespace CCGKit
 {
@@ -44,6 +47,9 @@ namespace CCGKit
         /// </summary>
         private static readonly GameManager instance = new GameManager();
 
+        private fsSerializer serializer = new fsSerializer();
+
+
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
         static void Init()
         {
@@ -56,6 +62,18 @@ namespace CCGKit
         public void Initialize()
         {
             config.LoadGameConfigurationAtRuntime();
+
+            var decksPath = Application.persistentDataPath + "/decks.json";
+            if (File.Exists(decksPath))
+            {
+                var file = new StreamReader(decksPath);
+                var fileContents = file.ReadToEnd();
+                var data = fsJsonParser.Parse(fileContents);
+                object deserialized = null;
+                serializer.TryDeserialize(data, typeof(List<Deck>), ref deserialized).AssertSuccessWithoutWarnings();
+                file.Close();
+                GameManager.Instance.playerDecks = deserialized as List<Deck>;
+            }
         }
 
         /// <summary>

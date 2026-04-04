@@ -128,6 +128,9 @@ namespace CCGKit
             numPages = Mathf.CeilToInt(GameManager.Instance.config.GetNumCards() / (float)cardPositions.Count);
             pageText.text = "Page " + (currentPage + 1) + "/" + numPages;
 
+
+            //
+
             // GameManager.Instance.playerDecks를 순회해 DeckButton들을 만든다.
             // 즉 덱 목록 UI는 저장된 덱 데이터로부터 동적 생성된다.
             foreach (var deck in GameManager.Instance.playerDecks)

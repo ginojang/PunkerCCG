@@ -50,17 +50,68 @@ public class Player : MonoBehaviour
 
     public virtual void OnStartLocalPlayer()
     {
-        //RegisterWithServer();
-
-        //
+        // 게임에 대한 전체 Rule Base 세팅
         LoadPlayerStates();
 
+
+        // 우선 첫번째 덱을 기본 덱으로 세팅 (임시)
+        var defaultDeckIndex = 0;
+        LoadDefaultDeck(defaultDeckIndex);
+
+    }
+
+    void LoadDefaultDeck(int defaultDeckIndex)
+    {
+        var decks = GameManager.Instance.playerDecks;
+        var msgDefaultDeck = new List<int>();
+        if (decks.Count > 0)
+        {
+            //var defaultDeckIndex = isHuman ? PlayerPrefs.GetInt("default_deck") : PlayerPrefs.GetInt("default_ai_deck");
+            var defaultDeck = decks[defaultDeckIndex];
+            for (var i = 0; i < defaultDeck.cards.Count; i++)
+            {
+                for (var j = 0; j < defaultDeck.cards[i].amount; j++)
+                {
+                    msgDefaultDeck.Add(defaultDeck.cards[i].id);
+                }
+            }
+
+            GameManager.Instance.defaultDeck = defaultDeck;
+        }
+        else
+        {
+            var defaultDeck = GameManager.Instance.defaultDeck;
+            for (var i = 0; i < defaultDeck.cards.Count; i++)
+            {
+                for (var j = 0; j < defaultDeck.cards[i].amount; j++)
+                {
+                    msgDefaultDeck.Add(defaultDeck.cards[i].id);
+                }
+            }
+        }
+
+        // GINO CHECK..  현재 플레어이 정보 서버에 전송하는 부분인듯
+        /*
+        // Register the player to the game and send the server his information.
+        var msg = new RegisterPlayerMessage();
+        msg.netId = netIdentity;
+        if (isHuman)
+        {
+            var playerName = PlayerPrefs.GetString("player_name");
+            msg.name = string.IsNullOrEmpty(playerName) ? "Unnamed Wizard" : playerName;
+        }
+        else
+        {
+            msg.name = "Turing Machine";
+        }
+        msg.isHuman = isHuman;
+        msg.deck = msgDefaultDeck.ToArray();
+        NetworkClient.Send<RegisterPlayerMessage>(msg);
+        */
     }
 
     void LoadPlayerStates()
     {
-        Debug.Log($"LoadPlayerStates  >>>>>>>>>  ");
-
         var gameConfig = GameManager.Instance.config;
         foreach (var stat in gameConfig.playerStats)
         {
@@ -73,8 +124,6 @@ public class Player : MonoBehaviour
             statCopy.maxValue = stat.maxValue;
             playerInfo.stats[stat.id] = statCopy;
             playerInfo.namedStats[stat.name] = statCopy;
-
-            Debug.Log($"{stat.id}");
         }
 
         foreach (var stat in gameConfig.playerStats)
@@ -105,8 +154,6 @@ public class Player : MonoBehaviour
             }
             playerInfo.zones[zone.id] = zoneCopy;
             playerInfo.namedZones[zone.name] = zoneCopy;
-
-            Debug.Log($"{zone.id}");
         }
 
         foreach (var zone in gameConfig.gameZones)
@@ -125,7 +172,6 @@ public class Player : MonoBehaviour
             opponentInfo.zones[zone.id] = zoneCopy;
             opponentInfo.namedZones[zone.name] = zoneCopy;
         }
-
         gameState.players.Add(playerInfo);
         gameState.players.Add(opponentInfo);
 
