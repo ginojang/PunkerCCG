@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: c2e085de934874c5a876cabfe24a44c3
+timeCreated: 1494331598
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 52739
+  packageName: CCG Kit
+  packageVersion: 2.9.0
+  assetPath: Assets/CCGKit/Demo/Prefabs/OpponentCard.prefab
+  uploadId: 805106

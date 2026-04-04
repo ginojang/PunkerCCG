@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 2cc2976954c9cd1489185931d562ad97
+timeCreated: 1491498573
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 52739
+  packageName: CCG Kit
+  packageVersion: 2.9.0
+  assetPath: Assets/CCGKit/Demo/Prefabs/SpellTargetingArrow.prefab
+  uploadId: 805106

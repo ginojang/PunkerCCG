@@ -29,9 +29,6 @@ public class Player : MonoBehaviour
     protected EffectSolver effectSolver;
 
     //
-
-
-    //
     public PlayerInfo GetPlayerInfo()
     {
         return playerInfo;
@@ -50,6 +47,93 @@ public class Player : MonoBehaviour
     protected virtual void Start()
     {
     }
+
+    public virtual void OnStartLocalPlayer()
+    {
+        //RegisterWithServer();
+
+        //
+        LoadPlayerStates();
+
+    }
+
+    void LoadPlayerStates()
+    {
+        Debug.Log($"LoadPlayerStates  >>>>>>>>>  ");
+
+        var gameConfig = GameManager.Instance.config;
+        foreach (var stat in gameConfig.playerStats)
+        {
+            var statCopy = new Stat();
+            statCopy.statId = stat.id;
+            statCopy.name = stat.name;
+            statCopy.originalValue = stat.originalValue;
+            statCopy.baseValue = stat.baseValue;
+            statCopy.minValue = stat.minValue;
+            statCopy.maxValue = stat.maxValue;
+            playerInfo.stats[stat.id] = statCopy;
+            playerInfo.namedStats[stat.name] = statCopy;
+
+            Debug.Log($"{stat.id}");
+        }
+
+        foreach (var stat in gameConfig.playerStats)
+        {
+            var statCopy = new Stat();
+            statCopy.statId = stat.id;
+            statCopy.name = stat.name;
+            statCopy.originalValue = stat.originalValue;
+            statCopy.baseValue = stat.baseValue;
+            statCopy.minValue = stat.minValue;
+            statCopy.maxValue = stat.maxValue;
+            opponentInfo.stats[stat.id] = statCopy;
+            opponentInfo.namedStats[stat.name] = statCopy;
+        }
+
+        foreach (var zone in gameConfig.gameZones)
+        {
+            var zoneCopy = new RuntimeZone();
+            zoneCopy.zoneId = zone.id;
+            zoneCopy.name = zone.name;
+            if (zone.hasMaxSize)
+            {
+                zoneCopy.maxCards = zone.maxSize;
+            }
+            else
+            {
+                zoneCopy.maxCards = int.MaxValue;
+            }
+            playerInfo.zones[zone.id] = zoneCopy;
+            playerInfo.namedZones[zone.name] = zoneCopy;
+
+            Debug.Log($"{zone.id}");
+        }
+
+        foreach (var zone in gameConfig.gameZones)
+        {
+            var zoneCopy = new RuntimeZone();
+            zoneCopy.zoneId = zone.id;
+            zoneCopy.name = zone.name;
+            if (zone.hasMaxSize)
+            {
+                zoneCopy.maxCards = zone.maxSize;
+            }
+            else
+            {
+                zoneCopy.maxCards = int.MaxValue;
+            }
+            opponentInfo.zones[zone.id] = zoneCopy;
+            opponentInfo.namedZones[zone.name] = zoneCopy;
+        }
+
+        gameState.players.Add(playerInfo);
+        gameState.players.Add(opponentInfo);
+
+        //
+    }
+
+
+
 
     public virtual void OnStartGame(StartGameMessage msg)
     {
@@ -160,8 +244,6 @@ public class Player : MonoBehaviour
     /// <summary>Stop event, only called on client and host.</summary>
     public virtual void OnStopClient() { }
 
-    /// <summary>Like Start(), but only called on client and host for the local player object.</summary>
-    public virtual void OnStartLocalPlayer() { }
 
     /// <summary>Stop event, but only called on client and host for the local player object.</summary>
     public virtual void OnStopLocalPlayer() { }

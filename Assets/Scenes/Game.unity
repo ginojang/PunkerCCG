@@ -6127,8 +6127,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1913803331}
   - component: {fileID: 1913803332}
+  - component: {fileID: 1913803333}
   m_Layer: 0
-  m_Name: GameNetworkManager
+  m_Name: MainGameManagers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6162,6 +6163,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NetworkManger
   IsSinglePlayer: 1
+--- !u!114 &1913803333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1913803330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe898c6cc06f8fd428fc4621c299bf32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CCGKit.DemoHumanPlayer
+  isLocalPlayer: 1
+  isActivePlayer: 1
+  isHuman: 1
+  creatureCardViewPrefab: {fileID: 1130229958192014, guid: 3e2eb5fbe61ddce49b9e848b89eed4f2, type: 3}
+  spellCardViewPrefab: {fileID: 1236948560037684, guid: d74a1cb162a060d459abb43b4cc47cdb, type: 3}
+  opponentCardPrefab: {fileID: 1727265671445790, guid: c2e085de934874c5a876cabfe24a44c3, type: 3}
+  boardCreaturePrefab: {fileID: 1126236746470944, guid: 69ebdb0285d64c94f96d793ceb5aa93c, type: 3}
+  spellTargetingArrowPrefab: {fileID: 1009513512288260, guid: 2cc2976954c9cd1489185931d562ad97, type: 3}
+  fightTargetingArrowPrefab: {fileID: 1009513512288260, guid: 220963b2578d8254bac3491a4421740a, type: 3}
+  opponentTargetingArrowPrefab: {fileID: 1009513512288260, guid: 3a431f6b2d6393d4e806cd54fbe3bda9, type: 3}
+  isCardSelected: 0
 --- !u!1 &1958544283
 GameObject:
   m_ObjectHideFlags: 0

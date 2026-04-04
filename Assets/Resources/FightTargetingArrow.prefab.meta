@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 220963b2578d8254bac3491a4421740a
+timeCreated: 1491498573
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 52739
+  packageName: CCG Kit
+  packageVersion: 2.9.0
+  assetPath: Assets/CCGKit/Demo/Prefabs/FightTargetingArrow.prefab
+  uploadId: 805106
