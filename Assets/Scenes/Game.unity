@@ -4673,6 +4673,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1415212748}
+  - component: {fileID: 1415212749}
   m_Layer: 0
   m_Name: GameUI
   m_TagString: Untagged
@@ -4695,6 +4696,42 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1415212749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1415212747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1459b525116984a4aba94c35f9a2aecd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CCGKit.GameUI
+  playerActiveBackground: {fileID: 35077098}
+  playerInactiveBackground: {fileID: 1653277013}
+  opponentActiveBackground: {fileID: 858536368}
+  opponentInactiveBackground: {fileID: 687817096}
+  playerAvatarBorder: {fileID: 502325458}
+  playerAvatarGlow: {fileID: 1958544283}
+  opponentAvatarBorder: {fileID: 1763135290}
+  opponentAvatarGlow: {fileID: 1710509505}
+  playerNameText: {fileID: 715678089}
+  opponentNameText: {fileID: 516437608}
+  playerHealthText: {fileID: 397459786}
+  opponentHealthText: {fileID: 882388051}
+  playerDeckText: {fileID: 1283827980}
+  opponentDeckText: {fileID: 301931982}
+  playerHandText: {fileID: 1452106383}
+  opponentHandText: {fileID: 241473161}
+  playerGraveyardText: {fileID: 1876582089}
+  opponentGraveyardText: {fileID: 1002186491}
+  playerManaBar: {fileID: 6755449881014086441}
+  opponentManaText: {fileID: 1235294443}
+  endTurnSprite: {fileID: 2227126122306194155}
+  endTurnTitleText: {fileID: 5674191335399693702}
+  endTurnTimeText: {fileID: 6051188979422498193}
+  endTurnButton: {fileID: 1025001506303625551}
 --- !u!1 &1421215833
 GameObject:
   m_ObjectHideFlags: 0
