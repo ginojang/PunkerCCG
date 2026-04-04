@@ -21,8 +21,8 @@ namespace CCGKit
         /// <summary>
         /// The unique connection identifier of this player.
         /// </summary>
-        public uint connectionId;
-
+        //public uint connectionId;
+        
         /// <summary>
         /// The unique network instance identifier of this player.
         /// </summary>
@@ -45,28 +45,46 @@ namespace CCGKit
 
         /// <summary>
         /// The stats of this player, indexed by id.
-        /// </summary>
+        //
+        /// Life, Mana, Armor, Energy, 기타 자원
+        /// 
+
         public Dictionary<int, Stat> stats = new Dictionary<int, Stat>();
+
 
         /// <summary>
         /// The stats of this player, indexed by name.
         /// </summary>
+        /// 
+        // stats가 실체고, namedStats는 조회 shortcut이다.
+        // 
+        /// stats[1] 대신   namedStats["Life"] 이렇게 사용
+        /// 
+
         public Dictionary<string, Stat> namedStats = new Dictionary<string, Stat>();
+
 
         /// <summary>
         /// The zones of this player, indexed by id.
         /// </summary>
+        /// 
+        /// 손패, 덱, 필드, 묘지 같은 플레이어 소유 존
+        /// 핵심중의 핵심
         public Dictionary<int, RuntimeZone> zones = new Dictionary<int, RuntimeZone>();
+
 
         /// <summary>
         /// The zones of this player, indexed by name.
         /// </summary>
+        /// 
+        /// 조회용 zone short cut
+        /// namedZones["Hand"]
         public Dictionary<string, RuntimeZone> namedZones = new Dictionary<string, RuntimeZone>();
 
         /// <summary>
         /// The current card instance identifier of this player.
         /// </summary>
-        public int currentCardInstanceId;
+        //public int currentCardInstanceId;
 
         /// <summary>
         /// The current turn number of this player.

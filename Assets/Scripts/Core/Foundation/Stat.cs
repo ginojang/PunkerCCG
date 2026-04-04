@@ -57,6 +57,15 @@ namespace CCGKit
     /// transmitted over the network, which means you should only use them to represent values that can
     /// actually change over the course of a game in order to save bandwidth.
     /// </summary>
+
+    /*
+     Stat은 CCG Kit에서 매우 핵심적인 개념이다.
+    게임이 진행되는 동안 변화하는 정수 값들을 표현하며, 플레이어와 카드 양쪽 모두에서 사용된다.
+    예를 들어 플레이어는 생명력이나 마나 같은 스탯을 가질 수 있고, 생물 카드는 비용, 공격력, 방어력 같은 스탯을 가진다.
+    이러한 스탯들은 네트워크를 통해 전송되기 때문에, 불필요한 트래픽을 줄이기 위해 실제 게임 진행 중에 변화하는 값들만 스탯으로 사용하는 것이 좋다.
+     */
+
+
     public class Stat
     {
         /// <summary>
