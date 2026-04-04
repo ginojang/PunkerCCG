@@ -71,6 +71,6 @@ namespace CCGKit
         /// <param name="newValue">The new value of the stat.</param>
         /// <param name="oldValue">The old value of the stat.</param>
         /// <returns>True if this trigger is true; false otherwise.</returns>
-        public abstract bool IsTrue(GameState state, string zone);
+        public abstract bool IsTrue(string zone);
     }
 }

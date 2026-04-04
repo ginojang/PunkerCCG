@@ -43,6 +43,6 @@ namespace CCGKit
         /// </summary>
         /// <param name="state">The state of the game.</param>
         /// <param name="player">The player on which to resolve this action.</param>
-        public abstract void Resolve(GameState state, PlayerInfo player);
+        public abstract void Resolve(PlayerInfo player);
     }
 }

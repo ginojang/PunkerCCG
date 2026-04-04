@@ -15,7 +15,7 @@ namespace CCGKit
         /// <param name="state">The state of the game.</param>
         /// <param name="player">The state of the player.</param>
         /// <returns>The integer value of this value.</returns>
-        public override int GetValue(GameState state, PlayerInfo player)
+        public override int GetValue(PlayerInfo player)
         {
             return player.numTurn;
         }

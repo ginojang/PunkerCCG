@@ -39,7 +39,7 @@ namespace CCGKit
         /// </summary>
         /// <param name="state">The state of the game.</param>
         /// <param name="player">The player on which to resolve this action.</param>
-        public override void Resolve(GameState state, PlayerInfo player)
+        public override void Resolve(PlayerInfo player)
         {
             var fromZone = player.zones[originZoneId];
             var toZone = player.zones[destinationZoneId];

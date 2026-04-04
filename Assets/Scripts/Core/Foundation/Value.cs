@@ -15,6 +15,6 @@ namespace CCGKit
         /// <param name="state">The state of the game.</param>
         /// <param name="player">The state of the player.</param>
         /// <returns></returns>
-        public abstract int GetValue(GameState state, PlayerInfo player);
+        public abstract int GetValue(PlayerInfo player);
     }
 }

@@ -27,7 +27,7 @@ public class GameNetworkManager : MonoBehaviour
 
     //
     // 기존 GameState 부분 통합
-    //public List<PlayerInfo> players = new List<PlayerInfo>();
+    public List<PlayerInfo> players = new List<PlayerInfo>();  // 링크용
 
     public PlayerInfo playerInfo = new PlayerInfo(); 
     public PlayerInfo opponentInfo = new PlayerInfo();
@@ -86,6 +86,9 @@ public class GameNetworkManager : MonoBehaviour
         {
             BuildPlayerWithConfiguration(playerInfo);
             BuildPlayerWithConfiguration(opponentInfo);
+
+            players.Add(playerInfo);
+            players.Add(opponentInfo);
         }
         else
         {
@@ -135,6 +138,32 @@ public class GameNetworkManager : MonoBehaviour
     private void Start()
     {
         gameObject.GetComponent<DemoHumanPlayer>().OnStartLocalPlayer();
+
+        randomSeed = System.Environment.TickCount;
+        effectSolver = new EffectSolver(randomSeed);
+
+        //
+        effectSolver.SetTriggers(playerInfo);
+        foreach (var zone in playerInfo.zones)
+        {
+            foreach (var card in zone.Value.cards)
+            {
+                effectSolver.SetDestroyConditions(card);
+                effectSolver.SetTriggers(card);
+            }
+        }
+
+        //
+        effectSolver.SetTriggers(opponentInfo);
+        foreach (var zone in opponentInfo.zones)
+        {
+            foreach (var card in zone.Value.cards)
+            {
+                effectSolver.SetDestroyConditions(card);
+                effectSolver.SetTriggers(card);
+            }
+        }
+
 
         gameObject.GetComponent<DemoHumanPlayer>().OnStartGame("Gino", "Jisu");
 

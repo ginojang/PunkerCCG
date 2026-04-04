@@ -21,16 +21,16 @@ namespace CCGKit
         [Order(3)]
         public int cardTypeId;
 
-        public override void Resolve(GameState state, RuntimeCard card)
+        public override void Resolve(RuntimeCard card)
         {
-            var originZone = state.config.gameZones.Find(x => x.id == originGameZoneId);
-            var destinationZone = state.config.gameZones.Find(x => x.id == destinationGameZoneId);
+            var originZone = GameNetworkManager.Instance.config.gameZones.Find(x => x.id == originGameZoneId);
+            var destinationZone = GameNetworkManager.Instance.config.gameZones.Find(x => x.id == destinationGameZoneId);
             
             // GINO CHECK
             //state.effectSolver.MoveCard(card.ownerPlayer.netId, card, originZone.name, destinationZone.name);
         }
 
-        public override bool AreTargetsAvailable(GameState state, RuntimeCard sourceCard, Target target)
+        public override bool AreTargetsAvailable(RuntimeCard sourceCard, Target target)
         {
             var cards = new List<RuntimeCard>();
             switch (target.GetTarget())
@@ -43,7 +43,7 @@ namespace CCGKit
                 case EffectTarget.AllPlayerCards:
                 case EffectTarget.RandomPlayerCard:
                     {
-                        foreach (var card in state.currentPlayer.zones[originGameZoneId].cards)
+                        foreach (var card in GameNetworkManager.Instance.playerInfo.zones[originGameZoneId].cards)
                         {
                             cards.Add(card);
                         }
@@ -53,7 +53,7 @@ namespace CCGKit
                 case EffectTarget.AllOpponentCards:
                 case EffectTarget.RandomOpponentCard:
                     {
-                        foreach (var card in state.currentOpponent.zones[originGameZoneId].cards)
+                        foreach (var card in GameNetworkManager.Instance.opponentInfo.zones[originGameZoneId].cards)
                         {
                             cards.Add(card);
                         }
@@ -63,11 +63,11 @@ namespace CCGKit
                 case EffectTarget.AllCards:
                 case EffectTarget.RandomCard:
                     {
-                        foreach (var card in state.currentPlayer.zones[originGameZoneId].cards)
+                        foreach (var card in GameNetworkManager.Instance.playerInfo.zones[originGameZoneId].cards)
                         {
                             cards.Add(card);
                         }
-                        foreach (var card in state.currentOpponent.zones[originGameZoneId].cards)
+                        foreach (var card in GameNetworkManager.Instance.opponentInfo.zones[originGameZoneId].cards)
                         {
                             cards.Add(card);
                         }

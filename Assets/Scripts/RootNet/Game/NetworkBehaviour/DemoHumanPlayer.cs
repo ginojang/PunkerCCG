@@ -272,7 +272,13 @@ namespace CCGKit
         }
     
         public void OnStartGame(string playerName, string opponentName)
-        {    
+        {
+            foreach (var action in GameManager.Instance.config.properties.gameStartActions)
+            {
+                ExecuteGameAction(action);
+            }
+
+            //
             GameObject.Find("Player/Avatar").GetComponent<PlayerAvatar>().playerInfo = GameNetworkManager.Instance.playerInfo;
             GameObject.Find("Opponent/Avatar").GetComponent<PlayerAvatar>().playerInfo = GameNetworkManager.Instance.opponentInfo;
     
@@ -313,7 +319,34 @@ namespace CCGKit
                 endTurnButton.GetComponent<EndTurnButton>().player = this;
             }
         }
-    
+
+        protected void ExecuteGameAction(GameAction action)
+        {
+            var targetPlayers = new List<PlayerInfo>();
+            switch (action.target)
+            {
+                case GameActionTarget.CurrentPlayer:
+                    targetPlayers.Add(GameNetworkManager.Instance.playerInfo);
+                    break;
+
+                case GameActionTarget.CurrentOpponent:
+                    targetPlayers.Add(GameNetworkManager.Instance.opponentInfo);
+                    break;
+
+                case GameActionTarget.AllPlayers:
+                    targetPlayers.Add(GameNetworkManager.Instance.playerInfo);
+                    targetPlayers.Add(GameNetworkManager.Instance.opponentInfo);
+                    break;
+            }
+
+            foreach (var player in targetPlayers)
+            {
+                action.Resolve(player);
+            }
+        }
+
+
+
         public void OnStartTurn(StartTurnMessage msg)
         {
             // GINO CHECK

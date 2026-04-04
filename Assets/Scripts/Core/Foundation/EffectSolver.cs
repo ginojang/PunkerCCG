@@ -25,7 +25,7 @@ namespace CCGKit
         /// <summary>
         /// The current state of the game.
         /// </summary>
-        public GameState gameState;
+        //public GameState gameState;
 
         /// <summary>
         /// The random number generator of the game.
@@ -37,11 +37,11 @@ namespace CCGKit
         /// </summary>
         /// <param name="gameState">The state of the game.</param>
         /// <param name="rngSeed">The random number generator's seed.</param>
-        public EffectSolver(GameState gameState, int rngSeed)
+        public EffectSolver(int rngSeed)
         {
-            this.gameState = gameState;
-            this.gameState.config = GameManager.Instance.config;
-            this.gameState.effectSolver = this;
+            //this.gameState = gameState;
+            //this.gameState.config = GameManager.Instance.config;
+            //this.gameState.effectSolver = this;
             rng = new Random(rngSeed);
         }
 
@@ -50,14 +50,14 @@ namespace CCGKit
         /// </summary>
         public void OnTurnStarted()
         {
-            foreach (var zone in gameState.currentPlayer.zones)
+            foreach (var zone in GameNetworkManager.Instance.playerInfo.zones)
             {
-                var zoneDefinition = gameState.config.gameZones.Find(x => x.id == zone.Value.zoneId);
+                var zoneDefinition = GameNetworkManager.Instance.config.gameZones.Find(x => x.id == zone.Value.zoneId);
                 if (zoneDefinition.type == ZoneType.Dynamic && zoneDefinition.opponentVisibility == ZoneOpponentVisibility.Visible)
                 {
                     foreach (var card in zone.Value.cards)
                     {
-                        TriggerEffect<OnPlayerTurnStartedTrigger>(gameState.currentPlayer, card, x => { return true; });
+                        TriggerEffect<OnPlayerTurnStartedTrigger>(GameNetworkManager.Instance.playerInfo, card, x => { return true; });
                     }
                 }
             }
@@ -68,14 +68,14 @@ namespace CCGKit
         /// </summary>
         public void OnTurnEnded()
         {
-            foreach (var zone in gameState.currentPlayer.zones)
+            foreach (var zone in GameNetworkManager.Instance.playerInfo.zones)
             {
-                var zoneDefinition = gameState.config.gameZones.Find(x => x.id == zone.Value.zoneId);
+                var zoneDefinition = GameNetworkManager.Instance.config.gameZones.Find(x => x.id == zone.Value.zoneId);
                 if (zoneDefinition.type == ZoneType.Dynamic && zoneDefinition.opponentVisibility == ZoneOpponentVisibility.Visible)
                 {
                     foreach (var card in zone.Value.cards)
                     {
-                        TriggerEffect<OnPlayerTurnEndedTrigger>(gameState.currentPlayer, card, x => { return true; });
+                        TriggerEffect<OnPlayerTurnEndedTrigger>(GameNetworkManager.Instance.playerInfo, card, x => { return true; });
                     }
                 }
             }
@@ -88,8 +88,8 @@ namespace CCGKit
         /// <param name="attackingCardInstanceId">The instance identifier of the attacking card.</param>
         public void FightPlayer(NetworkIdentity attackingPlayerNetId, int attackingCardInstanceId)
         {
-            var attackingPlayer = gameState.players.Find(x => x.netId == attackingPlayerNetId);
-            var attackedPlayer = gameState.players.Find(x => x.netId != attackingPlayerNetId);
+            var attackingPlayer = GameNetworkManager.Instance.players.Find(x => x.netId == attackingPlayerNetId);
+            var attackedPlayer = GameNetworkManager.Instance.players.Find(x => x.netId != attackingPlayerNetId);
             if (attackingPlayer != null && attackedPlayer != null)
             {
                 var board = attackingPlayer.namedZones["Board"];
@@ -109,8 +109,8 @@ namespace CCGKit
         /// <param name="attackedCreature">The attacked creature.</param>
         public void FightCreature(NetworkIdentity attackingPlayerNetId, RuntimeCard attackingCreature, RuntimeCard attackedCreature)
         {
-            var attackingPlayer = gameState.players.Find(x => x.netId == attackingPlayerNetId);
-            var attackedPlayer = gameState.players.Find(x => x.netId != attackingPlayerNetId);
+            var attackingPlayer = GameNetworkManager.Instance.players.Find(x => x.netId == attackingPlayerNetId);
+            var attackedPlayer = GameNetworkManager.Instance.players.Find(x => x.netId != attackingPlayerNetId);
             if (attackingPlayer != null && attackedPlayer != null)
             {
                 attackedCreature.namedStats["Life"].baseValue -= attackingCreature.namedStats["Attack"].effectiveValue;
@@ -128,7 +128,7 @@ namespace CCGKit
         /// <param name="msgTargetInfo">The optional target information.</param>
         public void MoveCard(NetworkIdentity playerNetId, RuntimeCard card, string originZone, string destinationZone, int[] msgTargetInfo = null)
         {
-            var player = gameState.players.Find(x => x.netId == playerNetId);
+            var player = GameNetworkManager.Instance.players.Find(x => x.netId == playerNetId);
             if (player != null)
             {
                 List<int> targetInfo = null;
@@ -139,14 +139,14 @@ namespace CCGKit
 
                 player.namedZones[originZone].RemoveCard(card);
                 player.namedZones[destinationZone].AddCard(card);
-                TriggerEffect<OnCardLeftZoneTrigger>(player, card, x => { return x.IsTrue(gameState, originZone); }, targetInfo);
-                TriggerEffect<OnCardEnteredZoneTrigger>(player, card, x => { return x.IsTrue(gameState, destinationZone); }, targetInfo);
+                TriggerEffect<OnCardLeftZoneTrigger>(player, card, x => { return x.IsTrue(originZone); }, targetInfo);
+                TriggerEffect<OnCardEnteredZoneTrigger>(player, card, x => { return x.IsTrue(destinationZone); }, targetInfo);
 
-                var libraryCard = gameState.config.GetCard(card.cardId);
-                var cardType = gameState.config.cardTypes.Find(x => x.id == libraryCard.cardTypeId);
+                var libraryCard = GameNetworkManager.Instance.config.GetCard(card.cardId);
+                var cardType = GameNetworkManager.Instance.config.cardTypes.Find(x => x.id == libraryCard.cardTypeId);
                 if (cardType.moveAfterTriggeringEffect)
                 {
-                    var finalDestinationZone = gameState.config.gameZones.Find(x => x.id == cardType.zoneId);
+                    var finalDestinationZone = GameNetworkManager.Instance.config.gameZones.Find(x => x.id == cardType.zoneId);
                     // We do not use the MoveCards function here, because we do not want to trigger any effects
                     // (which would cause an infinite recursion).
                     player.namedZones[destinationZone].RemoveCard(card);
@@ -163,7 +163,7 @@ namespace CCGKit
         /// <param name="targetInfo">The optional target information.</param>
         public void DrawCards(NetworkIdentity playerNetId, int numCards, List<int> targetInfo = null)
         {
-            var player = gameState.players.Find(x => x.netId == playerNetId);
+            var player = GameNetworkManager.Instance.players.Find(x => x.netId == playerNetId);
             if (player != null)
             {
                 var deck = player.namedZones["Deck"];
@@ -211,7 +211,7 @@ namespace CCGKit
         /// <param name="targetInfo">The optional target information.</param>
         public void TriggerEffect<T>(PlayerInfo player, RuntimeCard card, Predicate<T> predicate, List<int> targetInfo = null) where T : Trigger
         {
-            var libraryCard = gameState.config.GetCard(card.cardId);
+            var libraryCard = GameNetworkManager.Instance.config.GetCard(card.cardId);
             var triggeredAbilities = libraryCard.abilities.FindAll(x => x is TriggeredAbility);
             foreach (var ability in triggeredAbilities)
             {
@@ -224,7 +224,7 @@ namespace CCGKit
                         var targets = GetPlayerTargets(player, triggeredAbility.target, targetInfo);
                         foreach (var t in targets)
                         {
-                            (triggeredAbility.effect as PlayerEffect).Resolve(gameState, t);
+                            (triggeredAbility.effect as PlayerEffect).Resolve(t);
                         }
                     }
                     else if (triggeredAbility.effect is CardEffect && AreTargetsAvailable(triggeredAbility.effect, card, triggeredAbility.target))
@@ -233,7 +233,7 @@ namespace CCGKit
                         var targets = GetCardTargets(player, card, triggeredAbility.target, cardEffect.gameZoneId, cardEffect.cardTypeId, targetInfo);
                         foreach (var t in targets)
                         {
-                            (triggeredAbility.effect as CardEffect).Resolve(gameState, t);
+                            (triggeredAbility.effect as CardEffect).Resolve(t);
                         }
                     }
                     else if (triggeredAbility.effect is MoveCardEffect && AreTargetsAvailable(triggeredAbility.effect, card, triggeredAbility.target))
@@ -242,7 +242,7 @@ namespace CCGKit
                         var targets = GetCardTargets(player, card, triggeredAbility.target, moveCardEffect.originGameZoneId, moveCardEffect.cardTypeId, targetInfo);
                         foreach (var t in targets)
                         {
-                            (triggeredAbility.effect as MoveCardEffect).Resolve(gameState, t);
+                            (triggeredAbility.effect as MoveCardEffect).Resolve(t);
                         }
                     }
                 }
@@ -258,7 +258,7 @@ namespace CCGKit
         /// <param name="targetInfo">The optional target information.</param>
         public void ActivateAbility(PlayerInfo player, RuntimeCard card, int abilityIndex, List<int> targetInfo = null)
         {
-            var libraryCard = gameState.config.GetCard(card.cardId);
+            var libraryCard = GameNetworkManager.Instance.config.GetCard(card.cardId);
             var activatedAbilities = libraryCard.abilities.FindAll(x => x is ActivatedAbility);
             var activatedAbility = activatedAbilities[abilityIndex] as ActivatedAbility;
             if (activatedAbility.effect is PlayerEffect && AreTargetsAvailable(activatedAbility.effect, card, activatedAbility.target))
@@ -266,7 +266,7 @@ namespace CCGKit
                 var targets = GetPlayerTargets(player, activatedAbility.target, targetInfo);
                 foreach (var t in targets)
                 {
-                    (activatedAbility.effect as PlayerEffect).Resolve(gameState, t);
+                    (activatedAbility.effect as PlayerEffect).Resolve(t);
                 }
             }
             else if (activatedAbility.effect is CardEffect && AreTargetsAvailable(activatedAbility.effect, card, activatedAbility.target))
@@ -275,7 +275,7 @@ namespace CCGKit
                 var targets = GetCardTargets(player, card, activatedAbility.target, cardEffect.gameZoneId, cardEffect.cardTypeId, targetInfo);
                 foreach (var t in targets)
                 {
-                    (activatedAbility.effect as CardEffect).Resolve(gameState, t);
+                    (activatedAbility.effect as CardEffect).Resolve(t);
                 }
             }
             else if (activatedAbility.effect is MoveCardEffect && AreTargetsAvailable(activatedAbility.effect, card, activatedAbility.target))
@@ -284,7 +284,7 @@ namespace CCGKit
                 var targets = GetCardTargets(player, card, activatedAbility.target, moveCardEffect.originGameZoneId, moveCardEffect.cardTypeId, targetInfo);
                 foreach (var t in targets)
                 {
-                    (activatedAbility.effect as MoveCardEffect).Resolve(gameState, t);
+                    (activatedAbility.effect as MoveCardEffect).Resolve(t);
                 }
             }
         }
@@ -325,7 +325,7 @@ namespace CCGKit
                 {
                     foreach (var zone in player.zones)
                     {
-                        var zoneDefinition = gameState.config.gameZones.Find(x => x.id == zone.Value.zoneId);
+                        var zoneDefinition = GameNetworkManager.Instance.config.gameZones.Find(x => x.id == zone.Value.zoneId);
                         if (zoneDefinition.type == ZoneType.Dynamic && zoneDefinition.opponentVisibility == ZoneOpponentVisibility.Visible)
                         {
                             foreach (var card in zone.Value.cards)
@@ -375,7 +375,7 @@ namespace CCGKit
                     break;
 
                 case EffectTarget.Opponent:
-                    playerTargets.Add(gameState.players.Find(x => x != player));
+                    playerTargets.Add(GameNetworkManager.Instance.players.Find(x => x != player));
                     break;
 
                 case EffectTarget.TargetPlayer:
@@ -385,13 +385,13 @@ namespace CCGKit
                     }
                     else
                     {
-                        playerTargets.Add(gameState.players.Find(x => x != player));
+                        playerTargets.Add(GameNetworkManager.Instance.players.Find(x => x != player));
                     }
                     break;
 
                 case EffectTarget.RandomPlayer:
                     {
-                        playerTargets.AddRange(gameState.players);
+                        playerTargets.AddRange(GameNetworkManager.Instance.players);
                         playerTargets = playerTargets.OrderBy(x => x.netId).ToList();
                         var randomPlayer = playerTargets[GetRandomNumber(playerTargets.Count)];
                         playerTargets.RemoveAll(x => x != randomPlayer);
@@ -399,7 +399,7 @@ namespace CCGKit
                     break;
 
                 case EffectTarget.AllPlayers:
-                    playerTargets.AddRange(gameState.players);
+                    playerTargets.AddRange(GameNetworkManager.Instance.players);
                     break;
 
                 default:
@@ -435,7 +435,7 @@ namespace CCGKit
         public List<RuntimeCard> GetCardTargets(PlayerInfo player, RuntimeCard sourceCard, Target abilityTarget, int gameZoneId, int cardTypeId, List<int> targetInfo)
         {
             var cardTargets = new List<RuntimeCard>();
-            var opponent = gameState.players.Find(x => x != player);
+            var opponent = GameNetworkManager.Instance.players.Find(x => x != player);
             var target = abilityTarget.GetTarget();
             var effectZone = gameZoneId;
             var effectCardType = cardTypeId;
@@ -544,7 +544,7 @@ namespace CCGKit
         /// <returns>True if there are any targets available for the specified effect; false otherwise.</returns>
         public bool AreTargetsAvailable(Effect effect, RuntimeCard sourceCard, Target target)
         {
-            return effect.AreTargetsAvailable(gameState, sourceCard, target);
+            return effect.AreTargetsAvailable(sourceCard, target);
         }
 
         /// <summary>

@@ -15,10 +15,10 @@ namespace CCGKit
         [Order(5)]
         public int duration;
 
-        public override void Resolve(GameState state, RuntimeCard card)
+        public override void Resolve(RuntimeCard card)
         {
             var stat = card.stats[statId];
-            var newValue = value.GetValue(state, card.ownerPlayer);
+            var newValue = value.GetValue(card.ownerPlayer);
             var diff = 0;
             if (stat.effectiveValue >= newValue)
             {

@@ -18,7 +18,7 @@ namespace CCGKit
         /// <param name="sourceCard">The card containing the effect.</param>
         /// <param name="target">The target type of the effect.</param>
         /// <returns>True if there are any targets available for this effect; false otherwise.</returns>
-        public virtual bool AreTargetsAvailable(GameState state, RuntimeCard sourceCard, Target target)
+        public virtual bool AreTargetsAvailable(RuntimeCard sourceCard, Target target)
         {
             return true;
         }
@@ -34,7 +34,7 @@ namespace CCGKit
         /// </summary>
         /// <param name="state">The game's state.</param>
         /// <param name="player">The player on which to resolve this effect.</param>
-        public virtual void Resolve(GameState state, PlayerInfo player)
+        public virtual void Resolve(PlayerInfo player)
         {
         }
 
@@ -45,7 +45,7 @@ namespace CCGKit
         /// <param name="sourceCard">The card containing the effect.</param>
         /// <param name="target">The target type of the effect.</param>
         /// <returns>True if there are any targets available for this effect; false otherwise.</returns>
-        public override bool AreTargetsAvailable(GameState state, RuntimeCard sourceCard, Target target)
+        public override bool AreTargetsAvailable(RuntimeCard sourceCard, Target target)
         {
             var players = new List<PlayerInfo>();
             switch (target.GetTarget())
@@ -55,14 +55,14 @@ namespace CCGKit
                     break;
 
                 case EffectTarget.Opponent:
-                    var opponent = state.players.Find(x => x != sourceCard.ownerPlayer);
+                    var opponent = GameNetworkManager.Instance.players.Find(x => x != sourceCard.ownerPlayer);
                     players.Add(opponent);
                     break;
 
                 case EffectTarget.TargetPlayer:
                 case EffectTarget.RandomPlayer:
                 case EffectTarget.AllPlayers:
-                    players.AddRange(state.players);
+                    players.AddRange(GameNetworkManager.Instance.players);
                     break;
 
                 default:
@@ -96,7 +96,7 @@ namespace CCGKit
         /// </summary>
         /// <param name="state">The game's state.</param>
         /// <param name="player">The card on which to resolve this effect.</param>
-        public virtual void Resolve(GameState state, RuntimeCard card)
+        public virtual void Resolve(RuntimeCard card)
         {
         }
     }
@@ -127,7 +127,7 @@ namespace CCGKit
         /// <param name="sourceCard">The card containing the effect.</param>
         /// <param name="target">The target type of the effect.</param>
         /// <returns>True if there are any targets available for this effect; false otherwise.</returns>
-        public override bool AreTargetsAvailable(GameState state, RuntimeCard sourceCard, Target target)
+        public override bool AreTargetsAvailable(RuntimeCard sourceCard, Target target)
         {
             var cards = new List<RuntimeCard>();
             switch (target.GetTarget())
@@ -140,7 +140,7 @@ namespace CCGKit
                 case EffectTarget.AllPlayerCards:
                 case EffectTarget.RandomPlayerCard:
                     {
-                        foreach (var card in state.currentPlayer.zones[gameZoneId].cards)
+                        foreach (var card in GameNetworkManager.Instance.playerInfo.zones[gameZoneId].cards)
                         {
                             cards.Add(card);
                         }
@@ -150,7 +150,7 @@ namespace CCGKit
                 case EffectTarget.AllOpponentCards:
                 case EffectTarget.RandomOpponentCard:
                     {
-                        foreach (var card in state.currentOpponent.zones[gameZoneId].cards)
+                        foreach (var card in GameNetworkManager.Instance.opponentInfo.zones[gameZoneId].cards)
                         {
                             cards.Add(card);
                         }
@@ -160,11 +160,11 @@ namespace CCGKit
                 case EffectTarget.AllCards:
                 case EffectTarget.RandomCard:
                     {
-                        foreach (var card in state.currentPlayer.zones[gameZoneId].cards)
+                        foreach (var card in GameNetworkManager.Instance.playerInfo.zones[gameZoneId].cards)
                         {
                             cards.Add(card);
                         }
-                        foreach (var card in state.currentOpponent.zones[gameZoneId].cards)
+                        foreach (var card in GameNetworkManager.Instance.opponentInfo.zones[gameZoneId].cards)
                         {
                             cards.Add(card);
                         }

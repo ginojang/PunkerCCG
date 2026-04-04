@@ -11,7 +11,7 @@ namespace CCGKit
         [Order(1)]
         public int numCards;
 
-        public override void Resolve(GameState state, PlayerInfo player)
+        public override void Resolve(PlayerInfo player)
         {
             // GINO_CHECK
             //state.effectSolver.DrawCards(player.netId, numCards);

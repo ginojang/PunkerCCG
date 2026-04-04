@@ -193,7 +193,7 @@ public class Player : MonoBehaviour
         gameState.currentOpponent = players.Find(x => x != gameState.currentPlayer);
 
         randomSeed = System.Environment.TickCount;
-        effectSolver = new EffectSolver(gameState, randomSeed);
+        effectSolver = new EffectSolver(randomSeed);
 
         foreach (var player in players)
         {
@@ -237,7 +237,7 @@ public class Player : MonoBehaviour
 
         foreach (var player in targetPlayers)
         {
-            action.Resolve(gameState, player);
+            action.Resolve(player);
         }
     }
 
@@ -279,7 +279,7 @@ public class Player : MonoBehaviour
         gameStarted = true;
 
         //effectSolver = new EffectSolver(gameState, msg.rngSeed);
-        effectSolver = new EffectSolver(gameState, randomSeed);
+        effectSolver = new EffectSolver(randomSeed);
         effectSolver.SetTriggers(playerInfo);
         effectSolver.SetTriggers(opponentInfo);
 

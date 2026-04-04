@@ -15,9 +15,9 @@ namespace CCGKit
         [Order(5)]
         public int duration;
 
-        public override void Resolve(GameState state, RuntimeCard card)
+        public override void Resolve(RuntimeCard card)
         {
-            var modifier = new Modifier(-value.GetValue(state, card.ownerPlayer), duration);
+            var modifier = new Modifier(-value.GetValue(card.ownerPlayer), duration);
             card.stats[statId].AddModifier(modifier);
         }
     }

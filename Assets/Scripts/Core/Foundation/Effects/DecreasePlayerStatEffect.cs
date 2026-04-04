@@ -19,9 +19,9 @@ namespace CCGKit
         [Order(3)]
         public int duration;
 
-        public override void Resolve(GameState state, PlayerInfo player)
+        public override void Resolve(PlayerInfo player)
         {
-            var modifier = new Modifier(-value.GetValue(state, player), duration);
+            var modifier = new Modifier(-value.GetValue(player), duration);
             player.stats[statId].AddModifier(modifier);
         }
     }

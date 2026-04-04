@@ -27,7 +27,7 @@ namespace CCGKit
         /// </summary>
         /// <param name="state">The state of the game.</param>
         /// <param name="player">The player on which to resolve this action.</param>
-        public override void Resolve(GameState state, PlayerInfo player)
+        public override void Resolve(PlayerInfo player)
         {
             var zone = player.zones[zoneId];
             zone.cards.Shuffle();   //  ListShuffle.Shuffle(zone.cards);  실제로는 이거임.  확장 메서드

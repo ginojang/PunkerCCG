@@ -9,9 +9,9 @@ namespace CCGKit
         [GameZoneField("Zone")]
         public int zoneId;
 
-        public override bool IsTrue(GameState state, string zone)
+        public override bool IsTrue(string zone)
         {
-            var toZone = state.config.gameZones.Find(x => x.name == zone);
+            var toZone = GameNetworkManager.Instance.config.gameZones.Find(x => x.name == zone);
             return toZone.id == zoneId;
         }
     }
