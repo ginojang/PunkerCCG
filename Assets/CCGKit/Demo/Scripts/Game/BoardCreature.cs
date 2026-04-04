@@ -239,7 +239,7 @@ namespace CCGKit
 
         private void OnMouseDown()
         {
-            if (ownerPlayer != null && ownerPlayer.isActivePlayer && isPlayable)
+            if (ownerPlayer != null && GameNetworkManager.Instance.isActivePlayer && isPlayable)
             {
                 fightTargetingArrow = Instantiate(fightTargetingArrowPrefab).GetComponent<FightTargetingArrow>();
                 fightTargetingArrow.targetType = EffectTarget.OpponentOrOpponentCreature;

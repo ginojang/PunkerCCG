@@ -72,7 +72,7 @@ public class Player : MonoBehaviour
 
     void LoadDefaultDeck(int defaultDeckIndex)
     {
-        var decks = GameManager.Instance.playerDecks;
+        var decks = GameNetworkManager.Instance.playerDecks;
         var msgDefaultDeck = new List<int>();
         if (decks.Count > 0)
         {
@@ -103,7 +103,7 @@ public class Player : MonoBehaviour
 
     void LoadPlayerStates()
     {
-        var gameConfig = GameManager.Instance.config;
+        var gameConfig = GameNetworkManager.Instance.config;
         foreach (var stat in gameConfig.playerStats)
         {
             var statCopy = new Stat();
@@ -343,7 +343,7 @@ public class Player : MonoBehaviour
 
     public void PlayCard(RuntimeCard card, List<int> targetInfo = null)
     {
-        var libraryCard = GameManager.Instance.config.GetCard(card.cardId);
+        var libraryCard = GameNetworkManager.Instance.config.GetCard(card.cardId);
         PayResourceCosts(libraryCard.costs.ConvertAll(cost => cost as PayResourceCost));
         SendMoveCardMessage(card, targetInfo);
     }

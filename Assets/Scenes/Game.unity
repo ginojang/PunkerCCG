@@ -6200,6 +6200,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NetworkManger
   IsSinglePlayer: 1
+  defaultDeck:
+    name: New deck
+    cards: []
+  playerDecks: []
+  playerName: 
+  isPlayerLoggedIn: 0
+  isLocalPlayer: 1
+  isActivePlayer: 1
+  isHuman: 1
 --- !u!114 &1913803333
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6215,6 +6224,7 @@ MonoBehaviour:
   isLocalPlayer: 1
   isActivePlayer: 1
   isHuman: 1
+  randomSeed: 0
   creatureCardViewPrefab: {fileID: 1130229958192014, guid: 3e2eb5fbe61ddce49b9e848b89eed4f2, type: 3}
   spellCardViewPrefab: {fileID: 1236948560037684, guid: d74a1cb162a060d459abb43b4cc47cdb, type: 3}
   opponentCardPrefab: {fileID: 1727265671445790, guid: c2e085de934874c5a876cabfe24a44c3, type: 3}

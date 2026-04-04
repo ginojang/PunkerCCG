@@ -95,7 +95,7 @@ namespace CCGKit
 
         public virtual bool CanBePlayed(DemoHumanPlayer owner)
         {
-            return owner.isActivePlayer && owner.manaStat.effectiveValue >= manaCost;
+            return GameNetworkManager.Instance.isActivePlayer && owner.manaStat.effectiveValue >= manaCost;
         }
 
         public bool IsHighlighted()

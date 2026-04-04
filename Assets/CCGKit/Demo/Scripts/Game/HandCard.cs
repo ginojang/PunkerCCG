@@ -35,8 +35,7 @@ namespace CCGKit
 
         public void OnSelected()
         {
-            if (ownerPlayer.isActivePlayer &&
-                cardView.CanBePlayed(ownerPlayer))
+            if (GameNetworkManager.Instance.isActivePlayer && cardView.CanBePlayed(ownerPlayer))
             {
                 startedDrag = true;
                 initialPos = transform.position;

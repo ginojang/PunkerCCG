@@ -7,6 +7,36 @@ using System.Collections.Generic;
 
 namespace CCGKit
 {
+    /*
+     * 카드도 Stat를 가지냐
+
+        카드게임에서는 플레이어만 값이 변하는 게 아니지.
+
+        예를 들어 카드도:
+
+        비용
+        공격력
+        체력/방어력
+        이동력
+        카운터
+        충전 수치
+        내구도
+
+        이런 게 다 변할 수 있다.
+
+        그래서 원본 주석에도 비슷한 철학이 있었다.
+
+        플레이어: life, mana
+        카드: cost, attack, defense
+
+        즉 Stat는 “플레이어 전용”이 아니라
+        게임 중 변화하는 정수값의 공통 런타임 표현이다.
+
+        그렇다면 RuntimeCard가 Stat를 들고 있는 건 자연스럽다.
+     */
+
+
+
     /// <summary>
     /// This class represents a runtime instance of a card.
     /// </summary>
@@ -35,7 +65,29 @@ namespace CCGKit
         /// <summary>
         /// The keywords of this card.
         /// </summary>
+        /*
+          이건 카드 수치 외의 상태를 담는다.
+
+            예:
+
+            Taunt
+            Charge
+            Flying
+            Frozen
+            Stealth
+
+            이런 건 보통 숫자 스탯보다 키워드 쪽으로 가는 게 자연스럽다.
+
+            즉 원본은 카드 상태를 두 축으로 본다.
+
+            숫자형 상태 = Stat
+            속성형 상태 = Keyword
+
+            이건 꽤 괜찮은 분리다.
+         */
         public List<RuntimeKeyword> keywords = new List<RuntimeKeyword>();
+
+
 
         /// <summary>
         /// The player that owns this card.

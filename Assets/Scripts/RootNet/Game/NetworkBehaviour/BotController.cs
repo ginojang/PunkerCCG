@@ -18,7 +18,7 @@ namespace CCGKit
     /// </summary>
     public class BotController : MonoBehaviour
     {
-        private Player player;
+        private DemoHumanPlayer player;
 
         private PlayerInfo playerInfo;
         private PlayerInfo opponentInfo;
@@ -30,11 +30,12 @@ namespace CCGKit
 
         protected Dictionary<int, int> numTurnsOnBoard = new Dictionary<int, int>();
 
-        public void SetPlayer(Player player)
+        public void SetPlayer(DemoHumanPlayer player)
         {
             this.player = player;
-            playerInfo = player.GetPlayerInfo();
-            opponentInfo = player.GetOpponentInfo();
+            playerInfo = GameNetworkManager.Instance.playerInfo;
+            opponentInfo = GameNetworkManager.Instance.opponentInfo;
+
             //this.player.isHuman = false;
         }
 

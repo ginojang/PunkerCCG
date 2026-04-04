@@ -82,10 +82,8 @@ namespace CCGKit
     
         protected BotController bot;
     
-        protected override void Awake()
+        protected void Awake()
         {
-            base.Awake();
-    
             Assert.IsNotNull(creatureCardViewPrefab);
             Assert.IsNotNull(spellCardViewPrefab);
             Assert.IsNotNull(opponentCardPrefab);
@@ -93,14 +91,12 @@ namespace CCGKit
             Assert.IsNotNull(spellTargetingArrowPrefab);
             Assert.IsNotNull(fightTargetingArrowPrefab);
             Assert.IsNotNull(opponentTargetingArrowPrefab);
-    
-            isHuman = true;
         }
     
-        public override void OnStartLocalPlayer()
+        
+
+        public void OnStartLocalPlayer()
         {
-            base.OnStartLocalPlayer();
-    
             if (GameNetworkManager.Instance.IsSinglePlayer)
             {
                 bot = gameObject.AddComponent<BotController>();
@@ -110,7 +106,7 @@ namespace CCGKit
             gameUI = GameObject.Find("GameUI").GetComponent<GameUI>();
             Assert.IsNotNull(gameUI);
     
-            foreach (var entry in playerInfo.stats)
+            foreach (var entry in GameNetworkManager.Instance.playerInfo.stats)
             {
                 if (entry.Value.name == "Life")
                 {
@@ -122,7 +118,7 @@ namespace CCGKit
                 }
             }
     
-            foreach (var entry in opponentInfo.stats)
+            foreach (var entry in GameNetworkManager.Instance.opponentInfo.stats)
             {
                 if (entry.Value.name == "Life")
                 {
@@ -150,10 +146,10 @@ namespace CCGKit
                 gameUI.SetOpponentMana(opponentManaStat.effectiveValue);
             };
     
-            deckZone = playerInfo.namedZones["Deck"];
+            deckZone = GameNetworkManager.Instance.playerInfo.namedZones["Deck"];
             deckZone.onZoneChanged += numCards => { gameUI.SetPlayerDeckCards(numCards); };
     
-            handZone = playerInfo.namedZones["Hand"];
+            handZone = GameNetworkManager.Instance.playerInfo.namedZones["Hand"];
             handZone.onZoneChanged += numCards => { gameUI.SetPlayerHandCards(numCards); };
             handZone.onCardAdded += card =>
             {
@@ -172,7 +168,7 @@ namespace CCGKit
                 }
             };
     
-            boardZone = playerInfo.namedZones["Board"];
+            boardZone = GameNetworkManager.Instance.playerInfo.namedZones["Board"];
             boardZone.onCardCreatedByEffectAdded += AddCreatureToPlayerBoard;
             boardZone.onCardRemoved += card =>
             {
@@ -206,19 +202,19 @@ namespace CCGKit
                 }
             };
     
-            graveyardZone = playerInfo.namedZones["Graveyard"];
+            graveyardZone = GameNetworkManager.Instance.playerInfo.namedZones["Graveyard"];
             graveyardZone.onZoneChanged += numCards =>
             {
                 gameUI.SetPlayerGraveyardCards(numCards);
             };
     
-            opponentDeckZone = opponentInfo.namedZones["Deck"];
+            opponentDeckZone = GameNetworkManager.Instance.opponentInfo.namedZones["Deck"];
             opponentDeckZone.onZoneChanged += numCards =>
             {
                 gameUI.SetOpponentDeckCards(numCards);
             };
     
-            opponentHandZone = opponentInfo.namedZones["Hand"];
+            opponentHandZone = GameNetworkManager.Instance.opponentInfo.namedZones["Hand"];
             opponentHandZone.onZoneChanged += numCards =>
             {
                 gameUI.SetOpponentHandCards(numCards);
@@ -232,7 +228,7 @@ namespace CCGKit
                 RearrangeOpponentHand();
             };
     
-            opponentBoardZone = opponentInfo.namedZones["Board"];
+            opponentBoardZone = GameNetworkManager.Instance.opponentInfo.namedZones["Board"];
             opponentBoardZone.onCardCreatedByEffectAdded += AddCreatureToOpponentBoard;
             opponentBoardZone.onCardRemoved += card =>
             {
@@ -268,19 +264,17 @@ namespace CCGKit
                 }
             };
     
-            opponentGraveyardZone = opponentInfo.namedZones["Graveyard"];
+            opponentGraveyardZone = GameNetworkManager.Instance.opponentInfo.namedZones["Graveyard"];
             opponentGraveyardZone.onZoneChanged += numCards =>
             {
                 gameUI.SetOpponentGraveyardCards(numCards);
             };
         }
     
-        public override void OnStartGame(StartGameMessage msg)
-        {
-            base.OnStartGame(msg);
-    
-            GameObject.Find("Player/Avatar").GetComponent<PlayerAvatar>().playerInfo = playerInfo;
-            GameObject.Find("Opponent/Avatar").GetComponent<PlayerAvatar>().playerInfo = opponentInfo;
+        public void OnStartGame(string playerName, string opponentName)
+        {    
+            GameObject.Find("Player/Avatar").GetComponent<PlayerAvatar>().playerInfo = GameNetworkManager.Instance.playerInfo;
+            GameObject.Find("Opponent/Avatar").GetComponent<PlayerAvatar>().playerInfo = GameNetworkManager.Instance.opponentInfo;
     
             for (var i = 0; i < opponentHandZone.numCards; i++)
             {
@@ -303,18 +297,9 @@ namespace CCGKit
             gameUI.SetOpponentDeckCards(opponentDeckZone.numCards);
     
             // Set the player nicknames in the UI.
-            for (var i = 0; i < msg.nicknames.Length; i++)
-            {
-                var nickname = msg.nicknames[i];
-                if (i == msg.playerIndex)
-                {
-                    gameUI.SetPlayerName(nickname);
-                }
-                else
-                {
-                    gameUI.SetOpponentName(nickname);
-                }
-            }
+            gameUI.SetPlayerName(playerName);
+            gameUI.SetOpponentName(opponentName);
+
     
             var gameScreen = GameObject.FindFirstObjectByType<GameScreen>();
             if (gameScreen != null)
@@ -329,10 +314,8 @@ namespace CCGKit
             }
         }
     
-        public override void OnStartTurn(StartTurnMessage msg)
+        public void OnStartTurn(StartTurnMessage msg)
         {
-            base.OnStartTurn(msg);
-    
             // GINO CHECK
             /*
             if (GameNetworkManager.Instance.IsSinglePlayer)
@@ -368,7 +351,7 @@ namespace CCGKit
                 var scene = GameObject.FindFirstObjectByType<GameScreen>();
                 scene.OpenPopup<PopupTurnStart>("PopupTurnStart", null, false);
     
-                gameUI.StartTurnCountdown(turnDuration);
+                gameUI.StartTurnCountdown(GameNetworkManager.Instance.turnDuration);
             }
             else
             {
@@ -531,10 +514,8 @@ namespace CCGKit
             });
         }
     
-        public override void OnEndTurn(EndTurnMessage msg)
+        public void OnEndTurn(EndTurnMessage msg)
         {
-            base.OnEndTurn(msg);
-    
             // GINO CHECK
             /*
             if (GameNetworkManager.Instance.IsSinglePlayer)
@@ -556,9 +537,9 @@ namespace CCGKit
                 {
                     playerBoardCards.Remove(currentCreature);
                     RearrangeBottomBoard();
-    
-                    playerInfo.namedZones["Hand"].AddCard(currentCreature.card);
-                    playerInfo.namedZones["Board"].RemoveCard(currentCreature.card);
+
+                    GameNetworkManager.Instance.playerInfo.namedZones["Hand"].AddCard(currentCreature.card);
+                    GameNetworkManager.Instance.playerInfo.namedZones["Board"].RemoveCard(currentCreature.card);
     
                     Destroy(currentCreature.gameObject);
                     currentCreature = null;
@@ -575,7 +556,7 @@ namespace CCGKit
             gameUI.StopCountdown();
         }
     
-        public override void StopTurn()
+        public void StopTurn()
         {
             var msg = new StopTurnMessage();
 
@@ -585,12 +566,12 @@ namespace CCGKit
     
         protected virtual void Update()
         {
-            if (!isLocalPlayer)
+            if (!GameNetworkManager.Instance.isLocalPlayer)
             {
                 return;
             }
     
-            if (!gameStarted)
+            if (!GameNetworkManager.Instance.gameStarted)
             {
                 return;
             }
@@ -598,7 +579,7 @@ namespace CCGKit
             var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             if (Input.GetMouseButtonDown(0))
             {
-                if (isActivePlayer && currentSpellCard == null)
+                if (GameNetworkManager.Instance.isActivePlayer && currentSpellCard == null)
                 {
                     var hits = Physics2D.RaycastAll(mousePos, Vector2.zero);
                     var hitCards = new List<GameObject>();
@@ -843,13 +824,13 @@ namespace CCGKit
                                 break;
                             }
                         }
-    
+
                         // Preemptively move the card so that the effect solver can properly check the availability of targets
                         // by also taking into account this card (that is trying to be played).
-                        playerInfo.namedZones["Hand"].RemoveCard(card.card);
-                        playerInfo.namedZones["Board"].AddCard(card.card);
+                        GameNetworkManager.Instance.playerInfo.namedZones["Hand"].RemoveCard(card.card);
+                        GameNetworkManager.Instance.playerInfo.namedZones["Board"].AddCard(card.card);
     
-                        if (targetableAbility != null && effectSolver.AreTargetsAvailable(targetableAbility.effect, card.card, targetableAbility.target))
+                        if (targetableAbility != null && GameNetworkManager.Instance.effectSolver.AreTargetsAvailable(targetableAbility.effect, card.card, targetableAbility.target))
                         {
                             var targetingArrow = Instantiate(spellTargetingArrowPrefab).GetComponent<SpellTargetingArrow>();
                             boardCreature.GetComponent<BoardCreature>().abilitiesTargetingArrow = targetingArrow;
@@ -857,7 +838,7 @@ namespace CCGKit
                             targetingArrow.targetType = targetableAbility.target.GetTarget();
                             targetingArrow.onTargetSelected += () =>
                             {
-                                base.PlayCard(card.card, targetingArrow.targetInfo);
+                                PlayCard(card.card, targetingArrow.targetInfo);
 
                                 // GINO CHECK
                                 //effectSolver.MoveCard(netIdentity, card.card, "Hand", "Board", targetingArrow.targetInfo.ToArray());
@@ -868,7 +849,7 @@ namespace CCGKit
                         }
                         else
                         {
-                            base.PlayCard(card.card);
+                            PlayCard(card.card);
 
                             // GINO CHECK
                             //effectSolver.MoveCard(netIdentity, card.card, "Hand", "Board");
@@ -906,7 +887,7 @@ namespace CCGKit
     
                         currentSpellCard = card;
     
-                        if (targetableAbility != null && effectSolver.AreTargetsAvailable(targetableAbility.effect, card.card, targetableAbility.target))
+                        if (targetableAbility != null && GameNetworkManager.Instance.effectSolver.AreTargetsAvailable(targetableAbility.effect, card.card, targetableAbility.target))
                         {
                             var targetingArrow = Instantiate(spellTargetingArrowPrefab).GetComponent<SpellTargetingArrow>();
                             boardSpell.targetingArrow = targetingArrow;
@@ -914,7 +895,7 @@ namespace CCGKit
                             targetingArrow.targetType = targetableAbility.target.GetTarget();
                             targetingArrow.onTargetSelected += () =>
                             {
-                                base.PlayCard(card.card, targetingArrow.targetInfo);
+                                PlayCard(card.card, targetingArrow.targetInfo);
 
                                 // GINO CHECK
                                 //effectSolver.MoveCard(netIdentity, card.card, "Hand", "Board", targetingArrow.targetInfo.ToArray());
@@ -925,7 +906,7 @@ namespace CCGKit
                         }
                         else
                         {
-                            base.PlayCard(card.card);
+                            PlayCard(card.card);
 
                             // GINO CHECK
                             //effectSolver.MoveCard(netIdentity, card.card, "Hand", "Board");
@@ -957,13 +938,13 @@ namespace CCGKit
                 boardCreature.GetComponent<BoardCreature>().ownerPlayer = this;
                 boardCreature.GetComponent<BoardCreature>().PopulateWithInfo(creatureCard);
                 boardCreature.GetComponent<BoardCreature>().fightTargetingArrowPrefab = fightTargetingArrowPrefab;
-                effectSolver.SetDestroyConditions(creatureCard);
+                GameNetworkManager.Instance.effectSolver.SetDestroyConditions(creatureCard);
     
                 playerBoardCards.Add(boardCreature.GetComponent<BoardCreature>());
     
                 RearrangeBottomBoard(() =>
                 {
-                    playerInfo.namedZones["Board"].AddCard(creatureCard);
+                    GameNetworkManager.Instance.playerInfo.namedZones["Board"].AddCard(creatureCard);
                 });
                 
                 UpdateHandCardsHighlight();
@@ -985,13 +966,13 @@ namespace CCGKit
                 boardCreature.transform.position = new Vector2(1.9f * opponentBoardCards.Count, 0);
                 boardCreature.GetComponent<BoardCreature>().ownerPlayer = this;
                 boardCreature.GetComponent<BoardCreature>().PopulateWithInfo(creatureCard);
-                effectSolver.SetDestroyConditions(creatureCard);
+                GameNetworkManager.Instance.effectSolver.SetDestroyConditions(creatureCard);
     
                 opponentBoardCards.Add(boardCreature.GetComponent<BoardCreature>());
     
                 RearrangeTopBoard(() =>
                 {
-                    opponentInfo.namedZones["Board"].AddCard(creatureCard);
+                    GameNetworkManager.Instance.opponentInfo.namedZones["Board"].AddCard(creatureCard);
                 });
             }
         }
@@ -1020,10 +1001,8 @@ namespace CCGKit
             }
         }
     
-        public override void OnEndGame(EndGameMessage msg)
+        public void OnEndGame(EndGameMessage msg)
         {
-            base.OnEndGame(msg);
-
             // GINO CHECK
             /*
             if (GameNetworkManager.Instance.IsSinglePlayer)
@@ -1035,7 +1014,7 @@ namespace CCGKit
             var scene = GameObject.FindFirstObjectByType<GameScreen>();
             scene.OpenPopup<PopupOneButton>("PopupOneButton", popup =>
             {
-                if (msg.winnerPlayerIndex == playerInfo.netId)
+                if (msg.winnerPlayerIndex == GameNetworkManager.Instance.playerInfo.netId)
                 {
                     popup.text.text = "You win!";
                 }
@@ -1060,10 +1039,8 @@ namespace CCGKit
             });
         }
     
-        public override void OnCardMoved(CardMovedMessage msg)
+        public void OnCardMoved(CardMovedMessage msg)
         {
-            base.OnCardMoved(msg);
-    
             // GINO CHECK
             /*
             if (GameNetworkManager.Instance.IsSinglePlayer)
@@ -1084,9 +1061,9 @@ namespace CCGKit
     
             if (cardType.name == "Creature")
             {
-                var opponentBoard = opponentInfo.namedZones["Board"];
-                effectSolver.SetDestroyConditions(opponentBoard.cards[opponentBoard.cards.Count - 1]);
-                effectSolver.SetTriggers(opponentBoard.cards[opponentBoard.cards.Count - 1]);
+                var opponentBoard = GameNetworkManager.Instance.opponentInfo.namedZones["Board"];
+                GameNetworkManager.Instance.effectSolver.SetDestroyConditions(opponentBoard.cards[opponentBoard.cards.Count - 1]);
+                GameNetworkManager.Instance.effectSolver.SetTriggers(opponentBoard.cards[opponentBoard.cards.Count - 1]);
                 var boardCreature = Instantiate(boardCreaturePrefab);
                 boardCreature.tag = "OpponentOwned";
                 boardCreature.GetComponent<BoardCreature>().PopulateWithInfo(opponentBoard.cards[opponentBoard.cards.Count - 1]);
@@ -1107,8 +1084,8 @@ namespace CCGKit
                     {
                         var targetingArrow = Instantiate(opponentTargetingArrowPrefab).GetComponent<OpponentTargetingArrow>();
                         targetingArrow.Begin(boardCreature.transform.position);
-                        var playerCard = playerInfo.zones[msg.targetInfo[0]].cards.Find(x => x.instanceId == msg.targetInfo[1]);
-                        var opponentCard = opponentInfo.zones[msg.targetInfo[0]].cards.Find(x => x.instanceId == msg.targetInfo[1]);
+                        var playerCard = GameNetworkManager.Instance.playerInfo.zones[msg.targetInfo[0]].cards.Find(x => x.instanceId == msg.targetInfo[1]);
+                        var opponentCard = GameNetworkManager.Instance.opponentInfo.zones[msg.targetInfo[0]].cards.Find(x => x.instanceId == msg.targetInfo[1]);
                         if (playerCard != null)
                         {
                             var playerBoardCard = playerBoardCards.Find(x => x.card.instanceId == playerCard.instanceId);
@@ -1134,9 +1111,9 @@ namespace CCGKit
             }
             else if (cardType.name == "Spell")
             {
-                var opponentBoard = opponentInfo.namedZones["Board"];
-                effectSolver.SetDestroyConditions(opponentBoard.cards[opponentBoard.cards.Count - 1]);
-                effectSolver.SetTriggers(opponentBoard.cards[opponentBoard.cards.Count - 1]);
+                var opponentBoard = GameNetworkManager.Instance.opponentInfo.namedZones["Board"];
+                GameNetworkManager.Instance.effectSolver.SetDestroyConditions(opponentBoard.cards[opponentBoard.cards.Count - 1]);
+                GameNetworkManager.Instance.effectSolver.SetTriggers(opponentBoard.cards[opponentBoard.cards.Count - 1]);
                 var spellCard = Instantiate(spellCardViewPrefab);
                 spellCard.transform.position = GameObject.Find("OpponentSpellsPivot").transform.position;
                 spellCard.GetComponent<SpellCardView>().PopulateWithInfo(opponentBoard.cards[opponentBoard.cards.Count - 1]);
@@ -1155,8 +1132,8 @@ namespace CCGKit
                 {
                     var targetingArrow = Instantiate(opponentTargetingArrowPrefab).GetComponent<OpponentTargetingArrow>();
                     targetingArrow.Begin(spellCard.transform.position);
-                    var playerCard = playerInfo.zones[msg.targetInfo[0]].cards.Find(x => x.instanceId == msg.targetInfo[1]);
-                    var opponentCard = opponentInfo.zones[msg.targetInfo[0]].cards.Find(x => x.instanceId == msg.targetInfo[1]);
+                    var playerCard = GameNetworkManager.Instance.playerInfo.zones[msg.targetInfo[0]].cards.Find(x => x.instanceId == msg.targetInfo[1]);
+                    var opponentCard = GameNetworkManager.Instance.opponentInfo.zones[msg.targetInfo[0]].cards.Find(x => x.instanceId == msg.targetInfo[1]);
                     if (playerCard != null)
                     {
                         var playerBoardCard = playerBoardCards.Find(x => x.card.instanceId == playerCard.instanceId);
@@ -1192,10 +1169,8 @@ namespace CCGKit
             Destroy(arrow.gameObject);
         }
     
-        public override void OnPlayerAttacked(PlayerAttackedMessage msg)
+        public void OnPlayerAttacked(PlayerAttackedMessage msg)
         {
-            base.OnPlayerAttacked(msg);
-    
             //if (GameNetworkManager.Instance.IsSinglePlayer)
             //{
               //  return;
@@ -1206,15 +1181,13 @@ namespace CCGKit
             {
                 CombatAnimation.PlayFightAnimation(attackingCard.gameObject, GameObject.Find("Player/Avatar"), 0.1f, () =>
                 {
-                    effectSolver.FightPlayer(msg.attackingPlayerNetId, msg.attackingCardInstanceId);
+                    GameNetworkManager.Instance.effectSolver.FightPlayer(msg.attackingPlayerNetId, msg.attackingCardInstanceId);
                 });
             }
         }
     
-        public override void OnCreatureAttacked(CreatureAttackedMessage msg)
+        public void OnCreatureAttacked(CreatureAttackedMessage msg)
         {
-            base.OnCreatureAttacked(msg);
-    
             //if (GameNetworkManager.Instance.IsSinglePlayer)
             //{
               //  return;
@@ -1226,12 +1199,12 @@ namespace CCGKit
             {
                 CombatAnimation.PlayFightAnimation(attackingCard.gameObject, attackedCard.gameObject, 0.5f, () =>
                 {
-                    effectSolver.FightCreature(msg.attackingPlayerNetId, attackingCard.card, attackedCard.card);
+                    GameNetworkManager.Instance.effectSolver.FightCreature(msg.attackingPlayerNetId, attackingCard.card, attackedCard.card);
                 });
             }
         }
     
-        public override void OnPlayerDrewCards(PlayerDrewCardsMessage msg)
+        public void OnPlayerDrewCards(PlayerDrewCardsMessage msg)
         {
             //if (GameNetworkManager.Instance.IsSinglePlayer)
             //{
@@ -1251,11 +1224,11 @@ namespace CCGKit
             RearrangeHand();
             UpdateHandCardsHighlight();
     
-            var numDeckCards = playerInfo.namedZones["Deck"].numCards;
+            var numDeckCards = GameNetworkManager.Instance.playerInfo.namedZones["Deck"].numCards;
             gameUI.SetPlayerDeckCards(numDeckCards - msg.cards.Length);
         }
     
-        public override void OnOpponentDrewCards(OpponentDrewCardsMessage msg)
+        public void OnOpponentDrewCards(OpponentDrewCardsMessage msg)
         {
             //if (GameNetworkManager.Instance.IsSinglePlayer)
             //{
@@ -1268,7 +1241,7 @@ namespace CCGKit
             }
             RearrangeOpponentHand();
     
-            var numDeckCards = opponentInfo.namedZones["Deck"].numCards;
+            var numDeckCards = GameNetworkManager.Instance.opponentInfo.namedZones["Deck"].numCards;
             gameUI.SetOpponentDeckCards(numDeckCards - msg.numCards);
     
             opponentHandZone.numCards += msg.numCards;

@@ -48,6 +48,16 @@ namespace CCGKit
         {
             return duration == PERMANENT;
         }
+
+        /*
+         
+        Modifier는 사실상 이 두 값이 전부다.
+            value
+            duration
+
+        그리고 duration == 0이면 permanent로 취급한다.
+         */
+
     }
 
     /// <summary>
@@ -176,10 +186,23 @@ namespace CCGKit
         /// </summary>
         public void OnEndTurn()
         {
+            /*
+             * 이건 변경 전 최종값 스냅샷이다.  중요한 포인트는 baseValue가 아니라 **effectiveValue**를 저장한다는 점이다.
+                즉 작성자 의도는 분명하다:
+                이 함수가 관심 있는 건 “기준값이 바뀌었나”가 아니라      최종 표시/판정 값이 바뀌었나이다
+             */
             var oldValue = effectiveValue;
 
+
+            /*
+             이건 제거 대상 후보를 담을 임시 리스트다.
+            modifiers를 순회하면서 바로 삭제하면 컬렉션 변경 문제가 생길 수 있어서    먼저 제거 대상을 모은 뒤  나중에 한 번에 삭제한다
+             */
             var modifiersToRemove = new List<Modifier>(modifiers.Count);
 
+            /*
+             핵심.........
+             */
             var temporaryModifiers = modifiers.FindAll(x => !x.IsPermanent());
             foreach (var modifier in temporaryModifiers)
             {
