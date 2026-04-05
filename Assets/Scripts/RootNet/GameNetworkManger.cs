@@ -87,8 +87,16 @@ public class GameNetworkManager : MonoBehaviour
             BuildPlayerWithConfiguration(playerInfo);
             BuildPlayerWithConfiguration(opponentInfo);
 
+            BuildPlayerMetadata();
+
             players.Add(playerInfo);
             players.Add(opponentInfo);
+
+            BindEndGameConditions(playerInfo);
+            BindEndGameConditions(opponentInfo);
+
+            BuildDeck(playerInfo, defaultDeck);
+            BuildDeck(opponentInfo, defaultDeck);  // 우선은 defaultDeck 사용
         }
         else
         {
@@ -134,10 +142,134 @@ public class GameNetworkManager : MonoBehaviour
         }
     }
 
+    void BuildPlayerMetadata()
+    {
+        playerInfo.id = 0;
+        playerInfo.nickname = string.IsNullOrWhiteSpace(playerName) ? "Gino" : playerName;
+        playerInfo.isHuman = true;
+
+        opponentInfo.id = 1;
+        opponentInfo.nickname = "Jisu";
+        opponentInfo.isHuman = false;
+    }
+
+    void BindEndGameConditions(PlayerInfo player)
+    {
+        foreach (var condition in config.properties.endGameConditions)
+        {
+            if (condition is PlayerStatEndGameCondition playerStatCondition)
+            {
+                var targetStat = player.stats[playerStatCondition.statId];
+                targetStat.onValueChanged += (oldValue, newValue) =>
+                {
+                    if (playerStatCondition.IsTrue(player))
+                    {
+                        EndGame(player, playerStatCondition.type);
+                    }
+                };
+            }
+            else if (condition is CardsInZoneEndGameCondition cardsCondition)
+            {
+                var targetZone = player.zones[cardsCondition.zoneId];
+                targetZone.onZoneChanged += value =>
+                {
+                    if (cardsCondition.IsTrue(player))
+                    {
+                        EndGame(player, cardsCondition.type);
+                    }
+                };
+            }
+        }
+    }
+
+    public void EndGame(PlayerInfo loser, EndGameType type)
+    {
+        if (!gameStarted)
+            return;
+
+        gameStarted = false;
+
+        var winner = players.Find(x => x != loser);
+        Debug.Log($"EndGame - loser: {loser.nickname}, winner: {winner?.nickname}, type: {type}");
+
+        // TODO:
+        // 1. currentTurn 정지
+        // 2. UI 알림
+        // 3. DemoHumanPlayer.OnEndGame(...) 연결
+    }
+
+    void BuildDeck(PlayerInfo player, Deck sourceDeck)
+    {
+        if (sourceDeck == null)
+        {
+            Debug.LogError("BuildDeck failed: sourceDeck is null.");
+            return;
+        }
+
+        var deckZone = player.namedZones["Deck"];
+        if (deckZone == null)
+        {
+            Debug.LogError("BuildDeck failed: Deck zone not found.");
+            return;
+        }
+
+        // 혹시 재초기화될 수 있으니 한번 정리
+        deckZone.cards.Clear();
+        deckZone.numCards = 0;
+
+        foreach (var deckEntry in sourceDeck.cards)
+        {
+            for (int i = 0; i < deckEntry.amount; i++)
+            {
+                var runtimeCard = new RuntimeCard();
+                runtimeCard.cardId = deckEntry.id;
+                runtimeCard.instanceId = player.currentCardInstanceId++;
+                runtimeCard.ownerPlayer = player;
+
+                var libraryCard = config.GetCard(deckEntry.id);
+                if (libraryCard == null)
+                {
+                    Debug.LogError($"BuildDeck failed: library card not found. cardId={deckEntry.id}");
+                    continue;
+                }
+
+                // Stat 복사
+                foreach (var stat in libraryCard.stats)
+                {
+                    var statCopy = new Stat();
+                    statCopy.statId = stat.statId;
+                    statCopy.name = stat.name;
+                    statCopy.originalValue = stat.originalValue;
+                    statCopy.baseValue = stat.baseValue;
+                    statCopy.minValue = stat.minValue;
+                    statCopy.maxValue = stat.maxValue;
+
+                    runtimeCard.stats[stat.statId] = statCopy;
+                    runtimeCard.namedStats[stat.name] = statCopy;
+                }
+
+                // Keyword 복사
+                foreach (var keyword in libraryCard.keywords)
+                {
+                    var keywordCopy = new RuntimeKeyword();
+                    keywordCopy.keywordId = keyword.keywordId;
+                    keywordCopy.valueId = keyword.valueId;
+                    runtimeCard.keywords.Add(keywordCopy);
+                }
+
+                // 초기 세팅 단계이므로 이벤트 안 태우고 직접 추가
+                deckZone.cards.Add(runtimeCard);
+            }
+        }
+
+        // cards.Count와 numCards를 맞춤
+        deckZone.numCards = deckZone.cards.Count;
+    }
+
 
     private void Start()
     {
-        gameObject.GetComponent<DemoHumanPlayer>().OnStartLocalPlayer();
+        gameObject.GetComponent<DemoHumanPlayer>().InitializePlayers();
 
         randomSeed = System.Environment.TickCount;
         effectSolver = new EffectSolver(randomSeed);
@@ -164,9 +296,20 @@ public class GameNetworkManager : MonoBehaviour
             }
         }
 
+        if (IsSinglePlayer == true)
+        {
+            Invoke("StartGame", 1.0f);
+        }
+        else
+        {
+            // GINO TODO
+            Assert.IsFalse(false);
+        }
+    }
 
-        gameObject.GetComponent<DemoHumanPlayer>().OnStartGame("Gino", "Jisu");
-
+    void StartGame()
+    {
+        gameObject.GetComponent<DemoHumanPlayer>().OnStartGame(playerInfo.nickname, opponentInfo.nickname);
     }
 
 

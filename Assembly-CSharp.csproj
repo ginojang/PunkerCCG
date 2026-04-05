@@ -87,8 +87,8 @@
     <Compile Include="Assets\CCGKit\Demo\Scripts\Game\PlayerManaBar.cs" />
     <Compile Include="Assets\Scripts\FullSerializer\Source\fsPropertyAttribute.cs" />
     <Compile Include="Assets\CCGKit\Demo\Scripts\Game\CreateDeckButton.cs" />
-    <Compile Include="Assets\Scripts\Core\Utils\StringUtils.cs" />
     <Compile Include="Assets\CCGKit\Demo\Scripts\Game\PopupTurnStart.cs" />
+    <Compile Include="Assets\Scripts\Core\Utils\StringUtils.cs" />
     <Compile Include="Assets\Scripts\RootNet\Game\NetworkBehaviour\Player.cs" />
     <Compile Include="Assets\Scripts\FullSerializer\Source\Converters\Unity\UnityEvent_Converter.cs" />
     <Compile Include="Assets\Scripts\FullSerializer\Source\fsContext.cs" />
@@ -161,9 +161,9 @@
     <Compile Include="Assets\Scripts\Core\Utils\ListShuffle.cs" />
     <Compile Include="Assets\Scripts\Core\Foundation\Trigger.cs" />
     <Compile Include="Assets\Scripts\FullSerializer\Source\Converters\Unity\GUIStyleState_DirectConverter.cs" />
-    <Compile Include="Assets\Scripts\FullSerializer\Source\Converters\fsDictionaryConverter.cs" />
     <Compile Include="Assets\Scripts\Core\Foundation\GameManager.cs" />
     <Compile Include="Assets\Scripts\RootNet\Game\NetworkBehaviour\NetworkIdentity.cs" />
+    <Compile Include="Assets\Scripts\FullSerializer\Source\Converters\fsDictionaryConverter.cs" />
     <Compile Include="Assets\Scripts\Core\Foundation\Properties\StringProperty.cs" />
     <Compile Include="Assets\Scripts\FullSerializer\Source\Aot\fsAotVersionInfo.cs" />
     <Compile Include="Assets\Scripts\Core\Foundation\Effects\IncreasePlayerStatEffect.cs" />
@@ -231,8 +231,8 @@
     <Compile Include="Assets\Scripts\Core\Foundation\Effects\MoveCardEffect.cs" />
     <Compile Include="Assets\Scripts\Core\Foundation\Triggers\OnCardLeftZoneTrigger.cs" />
     <Compile Include="Assets\Scripts\Core\Foundation\GameAction\ShuffleCardsAction.cs" />
-    <Compile Include="Assets\Scripts\FullSerializer\Source\fsConfig.cs" />
     <Compile Include="Assets\Scripts\Core\Foundation\Effects\DecreasePlayerStatEffect.cs" />
+    <Compile Include="Assets\Scripts\FullSerializer\Source\fsConfig.cs" />
     <Compile Include="Assets\Scripts\FullSerializer\Source\Converters\Unity\RectOffset_DirectConverter.cs" />
     <Compile Include="Assets\Scripts\RootNet\Base\Abstractions\ISystemMessageSerializer.cs" />
     <Compile Include="Assets\Scripts\Core\Foundation\Keyword.cs" />

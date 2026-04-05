@@ -102,5 +102,7 @@ namespace CCGKit
             var card = zones[zoneId].cards.Find(x => x.instanceId == cardInstanceId);
             return card;
         }
+
+        public int currentCardInstanceId;
     }
 }

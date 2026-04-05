@@ -295,7 +295,30 @@ namespace CCGKit
         /// <param name="card">The card to set.</param>
         public void SetDestroyConditions(RuntimeCard card)
         {
+            if (card == null)
+            {
+                Debug.LogError("SetDestroyConditions: card is null");
+                return;
+            }
+
             var cardType = card.cardType;
+
+            Debug.Log($"SetDestroyConditions cardId={card.cardId}, instanceId={card.instanceId}, cardType={(cardType != null ? cardType.name : "NULL")}");
+
+            if (cardType == null)
+            {
+                Debug.LogError($"SetDestroyConditions: cardType is null. cardId={card.cardId}");
+                return;
+            }
+
+            if (cardType.destroyConditions == null)
+            {
+                Debug.LogWarning($"SetDestroyConditions: destroyConditions is null. cardType={cardType.name}");
+                return;
+            }
+
+
+            ///
             foreach (var condition in cardType.destroyConditions)
             {
                 if (condition is StatDestroyCardCondition)

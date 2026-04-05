@@ -95,7 +95,7 @@ namespace CCGKit
     
         
 
-        public void OnStartLocalPlayer()
+        public void InitializePlayers()
         {
             if (GameNetworkManager.Instance.IsSinglePlayer)
             {
