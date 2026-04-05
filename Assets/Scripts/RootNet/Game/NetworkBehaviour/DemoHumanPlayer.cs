@@ -566,6 +566,7 @@ namespace CCGKit
                     card.OnEndTurn();
                 }
     
+                // 진짜 중요한 로직이 여기에 있음.
                 if (currentCreature != null)
                 {
                     playerBoardCards.Remove(currentCreature);

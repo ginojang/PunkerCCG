@@ -62,7 +62,9 @@ namespace CCGKit
         {
             if (active)
             {
-                player.StopTurn();
+                //player.StopTurn();
+                GameNetworkManager.Instance.OnStopTurn();
+
                 shineSprite.DOKill();
                 hoverSprite.DOKill();
                 var newColor = shineSprite.color;

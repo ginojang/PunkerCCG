@@ -348,4 +348,68 @@ public class GameNetworkManager : MonoBehaviour
         // GINO TODO
     }
 
+    public void OnStopTurn()
+    {
+        Debug.Log($"OnStopTurn >>>>>>>>>>>  ");
+
+        EndTurn();
+    }
+
+
+    public void EndTurn()
+    {
+        Debug.Log($"End turn for player {currentPlayerIndex}");
+
+        // 1. UI/로컬 플레이어 정리 먼저
+        var msg = new EndTurnMessage();
+        msg.isRecipientTheActivePlayer = (currentPlayerIndex == 0);
+        gameObject.GetComponent<DemoHumanPlayer>().OnEndTurn(msg);
+
+        // 2. 턴 종료 액션 실행
+        foreach (var action in config.properties.turnEndActions)
+        {
+            gameObject.GetComponent<DemoHumanPlayer>().ExecuteGameAction(action);
+        }
+
+        // 3. 턴 종료 트리거 실행
+        effectSolver.OnTurnEnded();
+
+        // 4. 모든 플레이어 stat 종료 처리
+        foreach (var player in players)
+        {
+            foreach (var entry in player.stats)
+            {
+                entry.Value.OnEndTurn();
+            }
+        }
+
+        // 5. 현재 턴 플레이어 카드 stat 종료 처리
+        var currentPlayer = players[currentPlayerIndex];
+        foreach (var zone in currentPlayer.zones)
+        {
+            foreach (var card in zone.Value.cards)
+            {
+                foreach (var stat in card.stats)
+                {
+                    stat.Value.OnEndTurn();
+                }
+            }
+        }
+
+        // 6. 다음 플레이어로 전환
+        /*
+        currentPlayerIndex += 1;
+        if (currentPlayerIndex >= players.Count)
+        {
+            currentPlayerIndex = 0;
+            currentTurn += 1;
+        }*/
+
+        // 7. 다음 턴 시작
+        if (gameStarted)
+        {
+            StartTurn_LocalPlayerOnly();
+        }
+    }
+
 }
