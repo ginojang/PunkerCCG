@@ -32,6 +32,7 @@ namespace CCGKit
 
         public void SetEnabled(bool enabled)
         {
+            Debug.Log($"EndTurnButton >> SetEnabled  {enabled}");
             disabledSprite.gameObject.SetActive(!enabled);
             active = enabled;
         }

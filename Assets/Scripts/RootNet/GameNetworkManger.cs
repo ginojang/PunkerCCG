@@ -312,6 +312,7 @@ public class GameNetworkManager : MonoBehaviour
 
     void StartGame()
     {
+        gameStarted = true;
         gameObject.GetComponent<DemoHumanPlayer>().OnStartGame(playerInfo.nickname, opponentInfo.nickname);
 
         // 임시 테스트
@@ -348,11 +349,13 @@ public class GameNetworkManager : MonoBehaviour
         // GINO TODO
     }
 
+    // 턴 종료 버튼 누르면 들어옴.
     public void OnStopTurn()
     {
         Debug.Log($"OnStopTurn >>>>>>>>>>>  ");
 
-        EndTurn();
+        // 반드시 Invoker로 수행
+        Invoke("EndTurn", 1.0f);
     }
 
 

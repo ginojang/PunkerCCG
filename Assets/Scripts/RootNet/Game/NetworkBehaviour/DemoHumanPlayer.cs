@@ -360,6 +360,9 @@ namespace CCGKit
             gameUI.SetPlayerActive(msg.isRecipientTheActivePlayer);
             gameUI.SetOpponentActive(!msg.isRecipientTheActivePlayer);
             gameUI.SetEndTurnButtonEnabled(msg.isRecipientTheActivePlayer);
+
+            Debug.Log($">>>>>>>>>  OnStartTurn  {msg.isRecipientTheActivePlayer}");
+                
     
             foreach (var card in opponentHandCards)
             {
