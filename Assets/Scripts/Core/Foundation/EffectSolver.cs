@@ -55,8 +55,14 @@ namespace CCGKit
                 var zoneDefinition = GameNetworkManager.Instance.config.gameZones.Find(x => x.id == zone.Value.zoneId);
                 if (zoneDefinition.type == ZoneType.Dynamic && zoneDefinition.opponentVisibility == ZoneOpponentVisibility.Visible)
                 {
+                    // 이 존은 상대에게 보여야 한다는 뜻이다.
+                    // 이 조건 때문에 보통:     Board는 포함,  Hand는 제외 ,  Deck은 제외 가 될 가능성이 높다.
+                    
+                    // “턴 시작 트리거는 상대에게 공개된 동적 존의 카드들만 검사한다”
                     foreach (var card in zone.Value.cards)
                     {
+                        // 이 카드가 가진 triggered ability 중에서 “플레이어 턴 시작 시 발동하는 트리거”만 찾아 실행해라
+                        //
                         TriggerEffect<OnPlayerTurnStartedTrigger>(GameNetworkManager.Instance.playerInfo, card, x => { return true; });
                     }
                 }
@@ -205,20 +211,94 @@ namespace CCGKit
         /// Triggers the triggered effects of the specified card.
         /// </summary>
         /// <typeparam name="T">The type of the trigger.</typeparam>
+        /// 즉 T 자리에 트리거 타입을 넣어서 재사용한다.
+        /*
+        /// 예를 들면:
+
+                OnPlayerTurnStartedTrigger
+                OnPlayerTurnEndedTrigger
+                OnCardEnteredZoneTrigger
+                OnPlayerStatIncreasedTrigger
+
+                이런 식이다. 즉 이 함수는 모든 triggered effect를 한 함수로 처리하기 위한 공통 엔진이다. */
+        /// 
         /// <param name="player">The owner player of the card that is triggering the effect.</param>
         /// <param name="card">The card that is triggering the effect.</param>
         /// <param name="predicate">The predicate that needs to be satisfied in order to trigger the effect.</param>
         /// <param name="targetInfo">The optional target information.</param>
         public void TriggerEffect<T>(PlayerInfo player, RuntimeCard card, Predicate<T> predicate, List<int> targetInfo = null) where T : Trigger
         {
+            /*
+             * 이건 런타임 카드(RuntimeCard)에서 원본 카드 정의(Card)를 다시 찾는 부분이다.
+
+                왜 필요하냐면, 런타임 카드에는:
+
+                현재 stats
+                현재 keywords
+                같은 상태는 있지만,
+
+                어떤 ability들이 붙어 있는지는 원본 카드 정의를 봐야 하기 때문이다.
+    
+                즉:         RuntimeCard = 현재 상태
+                            libraryCard = 능력 정의서    >>  이렇게 역할이 나뉜다.
+             */
             var libraryCard = GameNetworkManager.Instance.config.GetCard(card.cardId);
+
+
+            /*
+             * 카드의 전체 ability 목록 중에서        TriggeredAbility만 필터링한다.
+
+                    즉 activated ability는 여기서 안 본다.
+                    이 함수는 이름 그대로 triggered effect 전용이다.
+
+                    예를 들어 카드에 능력이 3개 있어도:
+
+                    activated 1개
+                    triggered 2개
+
+                    라면 여기서는 triggered 2개만 본다.
+             */
             var triggeredAbilities = libraryCard.abilities.FindAll(x => x is TriggeredAbility);
             foreach (var ability in triggeredAbilities)
             {
+                /*
+                 * 카드 한 장이 여러 triggered ability를 가질 수 있다는 뜻이다.
+
+                        예:
+
+                        “내 턴 시작 시 +1 공격력”
+                        “체력이 감소하면 카드 1장 뽑기”
+
+                        이 둘이 같은 카드에 붙어 있을 수도 있다.
+                 */
+
+
+                /*
+                 * triggeredAbility.trigger를 지금 함수의 제네릭 타입 T로 캐스팅한다.
+
+                        예를 들어 이 함수가:   TriggerEffect<OnPlayerTurnStartedTrigger>(...)
+
+                로 불렸다면, OnPlayerTurnStartedTrigger인 trigger는 살아남고, 다른 타입 trigger는 null이 된다
+                
+                즉 이 줄이 사실상:     “지금 발생한 이벤트 타입과 이 카드 능력의 trigger 타입이 맞는가?” 를 검사하는 부분이다.
+                 */
                 var triggeredAbility = ability as TriggeredAbility;
                 var trigger = triggeredAbility.trigger as T;
                 if (trigger != null && predicate(trigger) == true)
                 {
+
+                    //  PlayerEffect 처리            
+                    /*
+                     이건 effect가 플레이어를 대상으로 하는 효과일 때다.
+
+                    예:
+                            플레이어 체력 회복, 마나 증가, 상대에게 피해, 플레이어 버프
+
+                    흐름은:
+                            이 effect가 현재 타겟을 가질 수 있는지 검사.  실제 플레이어 타겟 목록 계산. 각 타겟에 대해 Resolve() 실행
+
+                    즉 이 부분은: PlayerEffect용 타겟 계산 + 실행 루프 다.
+                     */
                     if (triggeredAbility.effect is PlayerEffect && AreTargetsAvailable(triggeredAbility.effect, card, triggeredAbility.target))
                     {
                         var targets = GetPlayerTargets(player, triggeredAbility.target, targetInfo);
@@ -227,6 +307,22 @@ namespace CCGKit
                             (triggeredAbility.effect as PlayerEffect).Resolve(t);
                         }
                     }
+
+
+                    // CardEffect 처리
+                    /*
+                     이건 effect가 카드를 대상으로 하는 경우다.
+
+                    예:
+                        카드 공격력 증가, 카드 체력 감소, 특정 카드 파괴, 특정 타입 카드 강화
+                        여기서는 GetCardTargets(...)를 쓴다.
+                        중요한 포인트는 이 함수가 추가로:
+                        gameZoneId, cardTypeId
+                        까지 받아서 필터링한다는 점이다.
+
+                    즉:
+                    어느 존에서 찾을지 어떤 타입 카드만 대상으로 할지. 같은 룰이 들어간다.
+                     */
                     else if (triggeredAbility.effect is CardEffect && AreTargetsAvailable(triggeredAbility.effect, card, triggeredAbility.target))
                     {
                         var cardEffect = triggeredAbility.effect as CardEffect;
@@ -236,6 +332,20 @@ namespace CCGKit
                             (triggeredAbility.effect as CardEffect).Resolve(t);
                         }
                     }
+
+
+                    // MoveCardEffect 처리
+                    /*
+                     이건 카드 이동 효과다.
+
+                    예:
+
+                        카드 한 장을 Hand로 되돌림, Board에서 Graveyard로 보냄, Deck에서 Hand로 가져옴
+
+                        이것도 타겟은 카드니까 GetCardTargets()를 쓰지만, 의미는 단순 stat 변경이 아니라 zone 이동이다.
+
+                        즉 CardEffect와 비슷해 보이지만, 실제 실행은 더 강한 효과다.
+                     */
                     else if (triggeredAbility.effect is MoveCardEffect && AreTargetsAvailable(triggeredAbility.effect, card, triggeredAbility.target))
                     {
                         var moveCardEffect = triggeredAbility.effect as MoveCardEffect;
@@ -248,6 +358,8 @@ namespace CCGKit
                 }
             }
         }
+
+
 
         /// <summary>
         /// Activates the specified ability of the specified card.
