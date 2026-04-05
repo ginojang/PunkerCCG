@@ -207,6 +207,19 @@ namespace CCGKit
             }
         }
 
+
+
+        // 패시브 (자동발동)
+        /*
+            이벤트 기반, 조건 만족 시 자동 실행, 플레이어 입력 없음
+
+            예:
+
+            “내 턴 시작 시 카드 1장 뽑기”
+            “피해를 받으면 공격력 +1”
+            “카드가 죽으면 상대에게 2 데미지”
+         */
+
         /// <summary>
         /// Triggers the triggered effects of the specified card.
         /// </summary>
@@ -339,7 +352,6 @@ namespace CCGKit
                      이건 카드 이동 효과다.
 
                     예:
-
                         카드 한 장을 Hand로 되돌림, Board에서 Graveyard로 보냄, Deck에서 Hand로 가져옴
 
                         이것도 타겟은 카드니까 GetCardTargets()를 쓰지만, 의미는 단순 stat 변경이 아니라 zone 이동이다.
@@ -359,7 +371,18 @@ namespace CCGKit
             }
         }
 
+        /*
+         * 패시브>>.
+         
+        Activated Ability (수동 발동)
 
+                플레이어가 선택해서 사용, 보통 비용(cost)이 있음, 타겟 선택 필요할 수도 있음
+
+                예:
+                “2 마나: 카드 1장 뽑기”
+                “이 카드를 희생: 적 카드 파괴”
+                “클릭 시 공격력 +2”
+         */
 
         /// <summary>
         /// Activates the specified ability of the specified card.
@@ -370,9 +393,37 @@ namespace CCGKit
         /// <param name="targetInfo">The optional target information.</param>
         public void ActivateAbility(PlayerInfo player, RuntimeCard card, int abilityIndex, List<int> targetInfo = null)
         {
+            /* 위 TriggerEffect<T> 함수와 같다.  단 ActivatedAbility 만 뽑는다 */
             var libraryCard = GameNetworkManager.Instance.config.GetCard(card.cardId);
             var activatedAbilities = libraryCard.abilities.FindAll(x => x is ActivatedAbility);
+
+            /*
+            이제 activated ability들 중에서, 지정한 인덱스 하나를 꺼낸다.  이건 꽤 중요한 의미가 있다.
+            즉 카드가 activated ability를 여러 개 가질 수 있다는 뜻이다.
+
+                예:
+                    능력 0: “1마나: 공격력 +1”
+                    능력 1: “3마나: 카드 1장 뽑기”
+
+                    이런 경우 abilityIndex로 구분할 수 있다.
+
+                주의점
+                    여기엔 범위 체크가 없다. 즉 abilityIndex가 잘못 들어오면 바로 터질 수 있다. 지금은 내부 호출이 맞다고 가정한 구조다.
+                             */
             var activatedAbility = activatedAbilities[abilityIndex] as ActivatedAbility;
+
+
+            // PlayerEffect 처리
+            /*
+             이건 플레이어 대상 효과다.
+
+            예:
+                내 체력 회복, 상대 체력 감소, 마나 증가, 플레이어 버프/디버프
+
+            흐름은:
+                이 effect가 현재 유효한 타겟을 가질 수 있는지 확인, 실제 플레이어 타겟 목록 계산, 각 타겟에 대해 Resolve() 실행
+                즉 수동 능력이라고 해도 타겟 검증을 먼저 한다.
+                 */
             if (activatedAbility.effect is PlayerEffect && AreTargetsAvailable(activatedAbility.effect, card, activatedAbility.target))
             {
                 var targets = GetPlayerTargets(player, activatedAbility.target, targetInfo);
@@ -381,6 +432,17 @@ namespace CCGKit
                     (activatedAbility.effect as PlayerEffect).Resolve(t);
                 }
             }
+
+            // CardEffect 처리
+            /*
+             이건 카드 대상 효과다.
+
+                예:
+                    카드 공격력 증가, 적 카드 체력 감소, 특정 카드 강화, 특정 조건 카드 선택
+                    여기서는 GetCardTargets()를 써서:
+                    어떤 존에서 어떤 타입 카드인지 targetInfo가 뭔지 를 보고 실제 카드 목록을 뽑는다.
+                    즉 이 부분은:  카드 대상 액티브 능력 실행기  다.
+             */
             else if (activatedAbility.effect is CardEffect && AreTargetsAvailable(activatedAbility.effect, card, activatedAbility.target))
             {
                 var cardEffect = activatedAbility.effect as CardEffect;
@@ -390,6 +452,21 @@ namespace CCGKit
                     (activatedAbility.effect as CardEffect).Resolve(t);
                 }
             }
+
+            // MoveCardEffect 처리
+            /*
+             이건 카드 이동 효과다.
+
+            예:
+
+                카드 한 장 손으로 되돌리기
+                묘지로 보내기
+                덱으로 넣기
+                다른 존으로 이동
+
+            여기도 타겟은 카드라 GetCardTargets()를 쓰지만, 실제 실행은 이동 계열 effect다.
+            즉 CardEffect와 타겟 방식은 비슷하지만, 결과가 zone 이동이라는 점이 다르다.
+             */
             else if (activatedAbility.effect is MoveCardEffect && AreTargetsAvailable(activatedAbility.effect, card, activatedAbility.target))
             {
                 var moveCardEffect = activatedAbility.effect as MoveCardEffect;
@@ -400,6 +477,8 @@ namespace CCGKit
                 }
             }
         }
+
+
 
         /// <summary>
         /// Sets the destroy conditions of the specified card.
