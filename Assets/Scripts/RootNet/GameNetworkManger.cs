@@ -55,6 +55,7 @@ public class GameNetworkManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        turnDuration = 60;
 
         //
         config.LoadGameConfigurationAtRuntime();
@@ -312,7 +313,39 @@ public class GameNetworkManager : MonoBehaviour
     void StartGame()
     {
         gameObject.GetComponent<DemoHumanPlayer>().OnStartGame(playerInfo.nickname, opponentInfo.nickname);
+
+        // 임시 테스트
+        StartTurn_LocalPlayerOnly();
     }
 
+    public void StartTurn_LocalPlayerOnly()
+    {
+        currentTurn += 1;
+        currentPlayerIndex = 0;
+        isActivePlayer = true;
+
+        playerInfo.numTurn += 1;
+
+        foreach (var action in config.properties.turnStartActions)
+        {
+            gameObject.GetComponent<DemoHumanPlayer>().ExecuteGameAction(action);
+        }
+
+        PerformTurnStartStateInitialization();
+
+        effectSolver.OnTurnStarted();
+
+        var msg = new StartTurnMessage();
+        msg.isRecipientTheActivePlayer = true;
+        msg.turn = currentTurn;
+
+        gameObject.GetComponent<DemoHumanPlayer>().OnStartTurn(msg);
+    }
+
+
+    void PerformTurnStartStateInitialization()
+    {
+        // GINO TODO
+    }
 
 }

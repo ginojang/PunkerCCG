@@ -2627,9 +2627,9 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 569613683
+  m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 675823474351d4e9db03e4d08ec89421, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -4812,7 +4812,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_TargetDisplay: 0
 --- !u!224 &1421215837
 RectTransform:
@@ -5184,9 +5184,9 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 569613683
+  m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: d7e573df3b70b4a3fb0c3ea896df7a07, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -6209,6 +6209,12 @@ MonoBehaviour:
   isLocalPlayer: 1
   isActivePlayer: 1
   isHuman: 1
+  gameStarted: 0
+  playerIndex: 0
+  turnDuration: 0
+  currentTurn: 0
+  currentPlayerIndex: 0
+  randomSeed: 0
 --- !u!114 &1913803333
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6221,10 +6227,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe898c6cc06f8fd428fc4621c299bf32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CCGKit.DemoHumanPlayer
-  isLocalPlayer: 1
-  isActivePlayer: 1
-  isHuman: 1
-  randomSeed: 0
   creatureCardViewPrefab: {fileID: 1130229958192014, guid: 3e2eb5fbe61ddce49b9e848b89eed4f2, type: 3}
   spellCardViewPrefab: {fileID: 1236948560037684, guid: d74a1cb162a060d459abb43b4cc47cdb, type: 3}
   opponentCardPrefab: {fileID: 1727265671445790, guid: c2e085de934874c5a876cabfe24a44c3, type: 3}

@@ -43,6 +43,8 @@ namespace CCGKit
     
         public void OpenPopup<T>(string name, Action<T> onOpened = null, bool darkenBackground = true) where T : Popup
         {
+            Debug.Log($"OpenPopup<T>  {name}");
+
             var prefab = Resources.Load<GameObject>(name);
             currentPopup = Instantiate(prefab) as GameObject;
             currentPopup.transform.SetParent(canvas.transform, false);

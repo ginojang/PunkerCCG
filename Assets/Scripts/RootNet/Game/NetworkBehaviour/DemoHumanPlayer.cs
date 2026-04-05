@@ -320,7 +320,7 @@ namespace CCGKit
             }
         }
 
-        protected void ExecuteGameAction(GameAction action)
+        public void ExecuteGameAction(GameAction action)
         {
             var targetPlayers = new List<PlayerInfo>();
             switch (action.target)
