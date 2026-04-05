@@ -4,6 +4,8 @@
 
 using System;
 using System.Collections.Generic;
+using UnityEngine;
+
 
 namespace CCGKit
 {
@@ -99,11 +101,29 @@ namespace CCGKit
         /// </summary>
         public CardType cardType
         {
+            /*
             get
             {
                 var gameConfig = GameManager.Instance.config;
                 var libraryCard = gameConfig.GetCard(cardId);
                 return gameConfig.cardTypes.Find(x => x.id == libraryCard.cardTypeId);
+            }*/
+
+            get
+            {
+                var gameConfig = GameNetworkManager.Instance.config;
+                var libraryCard = gameConfig.GetCard(cardId);
+
+                //Debug.Log($"RuntimeCard.cardType >> cardId={cardId}, libraryCard={(libraryCard != null ? libraryCard.name : "NULL")}, cardTypeId={(libraryCard != null ? libraryCard.cardTypeId : -999)}, cardTypesCount={gameConfig.cardTypes.Count}");
+
+                if (libraryCard == null)
+                    return null;
+
+                var foundType = gameConfig.cardTypes.Find(x => x.id == libraryCard.cardTypeId);
+
+                //Debug.Log($"RuntimeCard.cardType >> foundType={(foundType != null ? foundType.name : "NULL")}");
+
+                return foundType;
             }
         }
 
@@ -163,7 +183,7 @@ namespace CCGKit
         /// <returns>True if this card has the specified keyword; false otherwise.</returns>
         public bool HasKeyword(string name)
         {
-            var gameConfig = GameManager.Instance.config;
+            var gameConfig = GameNetworkManager.Instance.config;
             var keywordId = -1;
             var valueId = -1;
             foreach (var keyword in gameConfig.keywords)

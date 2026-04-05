@@ -211,7 +211,7 @@ namespace CCGKit
         protected bool TryToPlayCard(RuntimeCard card)
         {
             var availableMana = playerInfo.namedStats["Mana"].effectiveValue;
-            var libraryCard = GameManager.Instance.config.GetCard(card.cardId);
+            var libraryCard = GameNetworkManager.Instance.config.GetCard(card.cardId);
             var cost = libraryCard.costs.Find(x => x is PayResourceCost);
             if (cost != null)
             {
@@ -244,7 +244,7 @@ namespace CCGKit
 
         protected List<int> GetAbilityTarget(RuntimeCard card)
         {
-            var config = GameManager.Instance.config;
+            var config = GameNetworkManager.Instance.config;
             var boardZoneId = config.gameZones.Find(x => x.name == "Board").id;
             var libraryCard = config.GetCard(card.cardId);
             var triggeredAbilities = libraryCard.abilities.FindAll(x => x is TriggeredAbility);

@@ -42,7 +42,7 @@ namespace CCGKit
         {
             this.card = card;
 
-            var gameConfig = GameManager.Instance.config;
+            var gameConfig = GameNetworkManager.Instance.config;
             /*var cardType = gameConfig.cardTypes.Find(x => x.id == card.cardId);
             Assert.IsNotNull(cardType);
             pictureSprite.sprite = Resources.Load<Sprite>(cardType.GetStringProperty("Picture"));*/

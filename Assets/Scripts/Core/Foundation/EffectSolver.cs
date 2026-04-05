@@ -302,9 +302,7 @@ namespace CCGKit
             }
 
             var cardType = card.cardType;
-
-            Debug.Log($"SetDestroyConditions cardId={card.cardId}, instanceId={card.instanceId}, cardType={(cardType != null ? cardType.name : "NULL")}");
-
+            
             if (cardType == null)
             {
                 Debug.LogError($"SetDestroyConditions: cardType is null. cardId={card.cardId}");
@@ -316,6 +314,9 @@ namespace CCGKit
                 Debug.LogWarning($"SetDestroyConditions: destroyConditions is null. cardType={cardType.name}");
                 return;
             }
+
+
+            Debug.Log($"SetDestroyConditions: cardId={card.cardId}, instanceId={card.instanceId}, cardType={cardType.name}, destroyConditionsCount={(cardType.destroyConditions != null ? cardType.destroyConditions.Count : -1)}");
 
 
             ///

@@ -273,7 +273,7 @@ namespace CCGKit
     
         public void OnStartGame(string playerName, string opponentName)
         {
-            foreach (var action in GameManager.Instance.config.properties.gameStartActions)
+            foreach (var action in GameNetworkManager.Instance.config.properties.gameStartActions)
             {
                 ExecuteGameAction(action);
             }
@@ -717,7 +717,7 @@ namespace CCGKit
         {
             yield return new WaitForSeconds(0.3f);
     
-            var gameConfig = GameManager.Instance.config;
+            var gameConfig = GameNetworkManager.Instance.config;
             var libraryCard = gameConfig.GetCard(card.cardId);
             var cardType = gameConfig.cardTypes.Find(x => x.id == libraryCard.cardTypeId);
             if (cardType.name == "Creature")
@@ -784,7 +784,7 @@ namespace CCGKit
     
         protected virtual void AddCardToHand(RuntimeCard card)
         {
-            var gameConfig = GameManager.Instance.config;
+            var gameConfig = GameNetworkManager.Instance.config;
             var libraryCard = gameConfig.GetCard(card.cardId);
             var cardType = gameConfig.cardTypes.Find(x => x.id == libraryCard.cardTypeId);
             GameObject go = null;
@@ -821,7 +821,7 @@ namespace CCGKit
             {
                 gameUI.endTurnButton.SetEnabled(false);
     
-                var gameConfig = GameManager.Instance.config;
+                var gameConfig = GameNetworkManager.Instance.config;
                 var libraryCard = gameConfig.GetCard(card.card.cardId);
                 var cardType = gameConfig.cardTypes.Find(x => x.id == libraryCard.cardTypeId);
                 if (cardType.name == "Creature")
@@ -957,7 +957,7 @@ namespace CCGKit
     
         private void AddCreatureToPlayerBoard(RuntimeCard creatureCard)
         {
-            var gameConfig = GameManager.Instance.config;
+            var gameConfig = GameNetworkManager.Instance.config;
             var libraryCard = gameConfig.GetCard(creatureCard.cardId);
             var cardType = gameConfig.cardTypes.Find(x => x.id == libraryCard.cardTypeId);
             if (cardType.name == "Creature")
@@ -986,7 +986,7 @@ namespace CCGKit
     
         private void AddCreatureToOpponentBoard(RuntimeCard creatureCard)
         {
-            var gameConfig = GameManager.Instance.config;
+            var gameConfig = GameNetworkManager.Instance.config;
             var libraryCard = gameConfig.GetCard(creatureCard.cardId);
             var cardType = gameConfig.cardTypes.Find(x => x.id == libraryCard.cardTypeId);
             if (cardType.name == "Creature")
@@ -1081,7 +1081,7 @@ namespace CCGKit
                 return;
             }*/
     
-            var gameConfig = GameManager.Instance.config;
+            var gameConfig = GameNetworkManager.Instance.config;
             var libraryCard = gameConfig.GetCard(msg.card.cardId);
             var cardType = gameConfig.cardTypes.Find(x => x.id == libraryCard.cardTypeId);
     

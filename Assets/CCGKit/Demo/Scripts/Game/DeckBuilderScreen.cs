@@ -150,6 +150,13 @@ namespace CCGKit
                 SetActiveDeck(firstDeckButton);
             }
             // 즉 화면 진입 시 현재 선택 덱이 자동 지정된다.
+
+            //
+            for (int i = 0; i < Mathf.Min(8, GameManager.Instance.config.cards.Count); i++)
+            {
+                var c = GameManager.Instance.config.cards[i];
+                Debug.Log($"GM index={i}, id={c.id}, name={c.name}");
+            }
         }
 
         public void OnBackButtonPressed()

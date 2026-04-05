@@ -25,6 +25,8 @@ public class GameNetworkManager : MonoBehaviour
 
     private fsSerializer serializer = new fsSerializer();
 
+
+    //////////////////////////////////////////////////////////////////
     //
     // 기존 GameState 부분 통합
     public List<PlayerInfo> players = new List<PlayerInfo>();  // 링크용

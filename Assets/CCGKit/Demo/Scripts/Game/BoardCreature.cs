@@ -80,7 +80,7 @@ namespace CCGKit
         {
             this.card = card;
 
-            var gameConfig = GameManager.Instance.config;
+            var gameConfig = GameNetworkManager.Instance.config;
             var libraryCard = gameConfig.GetCard(card.cardId);
             Assert.IsNotNull(libraryCard);
             nameText.text = libraryCard.name;
