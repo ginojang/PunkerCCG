@@ -91,13 +91,14 @@ namespace CCGKit
         /// <summary>
         /// The base value of this stat.
         /// </summary>
-        private int _baseValue;
+        //private int _baseValue;
 
         /// <summary>
         /// The base value of this stat.
         /// </summary>
         //[SerializeField]
-        public int baseValue
+        public int baseValue;
+            /*
         {
             get { return _baseValue; }
             set
@@ -109,7 +110,7 @@ namespace CCGKit
                     onValueChanged(oldValue, value);
                 }
             }
-        }
+        }*/
 
         /// <summary>
         /// The original value of this stat.

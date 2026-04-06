@@ -39,6 +39,10 @@ namespace CCGKit
             attackText.text = attackStat.effectiveValue.ToString();
             defenseText.text = defenseStat.effectiveValue.ToString();
 
+            Debug.Log($">> {attackText.text}");
+            Debug.Log($">> {defenseText.text}");
+
+
             attackStat.onValueChanged += (oldValue, newValue) =>
             {
                 attackText.text = attackStat.effectiveValue.ToString();
@@ -57,7 +61,6 @@ namespace CCGKit
         }
 
         // GINO_CHECK
-        /*
         public override bool CanBePlayed(DemoHumanPlayer owner)
         {
             var board = owner.boardZone;
@@ -67,6 +70,6 @@ namespace CCGKit
             }
 
             return base.CanBePlayed(owner);
-        }*/
+        }
     }
 }

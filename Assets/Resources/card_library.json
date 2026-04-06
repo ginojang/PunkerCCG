@@ -92,19 +92,19 @@
                 ],
                 "stats": [
                     {
-                        "baseValue": 2,
+                        "baseValue": 1,
                         "statId": 0,
                         "name": "Attack",
-                        "originalValue": 2,
+                        "originalValue": 1,
                         "minValue": 0,
                         "maxValue": 99,
                         "modifiers": []
                     },
                     {
-                        "baseValue": 3,
+                        "baseValue": 1,
                         "statId": 1,
                         "name": "Life",
-                        "originalValue": 3,
+                        "originalValue": 1,
                         "minValue": 0,
                         "maxValue": 99,
                         "modifiers": []
@@ -148,10 +148,10 @@
                 ],
                 "stats": [
                     {
-                        "baseValue": 2,
+                        "baseValue": 1,
                         "statId": 0,
                         "name": "Attack",
-                        "originalValue": 2,
+                        "originalValue": 1,
                         "minValue": 0,
                         "maxValue": 99,
                         "modifiers": []
@@ -204,19 +204,19 @@
                 ],
                 "stats": [
                     {
-                        "baseValue": 4,
+                        "baseValue": 1,
                         "statId": 0,
                         "name": "Attack",
-                        "originalValue": 4,
+                        "originalValue": 1,
                         "minValue": 0,
                         "maxValue": 99,
                         "modifiers": []
                     },
                     {
-                        "baseValue": 5,
+                        "baseValue": 1,
                         "statId": 1,
                         "name": "Life",
-                        "originalValue": 5,
+                        "originalValue": 1,
                         "minValue": 0,
                         "maxValue": 99,
                         "modifiers": []
@@ -265,19 +265,19 @@
                 ],
                 "stats": [
                     {
-                        "baseValue": 6,
+                        "baseValue": 1,
                         "statId": 0,
                         "name": "Attack",
-                        "originalValue": 6,
+                        "originalValue": 1,
                         "minValue": 0,
                         "maxValue": 99,
                         "modifiers": []
                     },
                     {
-                        "baseValue": 7,
+                        "baseValue": 3,
                         "statId": 1,
                         "name": "Life",
-                        "originalValue": 7,
+                        "originalValue": 3,
                         "minValue": 0,
                         "maxValue": 99,
                         "modifiers": []
@@ -321,10 +321,10 @@
                 ],
                 "stats": [
                     {
-                        "baseValue": 1,
+                        "baseValue": 2,
                         "statId": 0,
                         "name": "Attack",
-                        "originalValue": 1,
+                        "originalValue": 2,
                         "minValue": 0,
                         "maxValue": 99,
                         "modifiers": []
@@ -377,19 +377,19 @@
                 ],
                 "stats": [
                     {
-                        "baseValue": 1,
+                        "baseValue": 4,
                         "statId": 0,
                         "name": "Attack",
-                        "originalValue": 1,
+                        "originalValue": 4,
                         "minValue": 0,
                         "maxValue": 99,
                         "modifiers": []
                     },
                     {
-                        "baseValue": 3,
+                        "baseValue": 4,
                         "statId": 1,
                         "name": "Life",
-                        "originalValue": 3,
+                        "originalValue": 4,
                         "minValue": 0,
                         "maxValue": 99,
                         "modifiers": []
@@ -433,10 +433,10 @@
                 ],
                 "stats": [
                     {
-                        "baseValue": 1,
+                        "baseValue": 3,
                         "statId": 0,
                         "name": "Attack",
-                        "originalValue": 1,
+                        "originalValue": 3,
                         "minValue": 0,
                         "maxValue": 99,
                         "modifiers": []
@@ -550,19 +550,19 @@
                 ],
                 "stats": [
                     {
-                        "baseValue": 1,
+                        "baseValue": 5,
                         "statId": 0,
                         "name": "Attack",
-                        "originalValue": 1,
+                        "originalValue": 5,
                         "minValue": 0,
                         "maxValue": 99,
                         "modifiers": []
                     },
                     {
-                        "baseValue": 3,
+                        "baseValue": 5,
                         "statId": 1,
                         "name": "Life",
-                        "originalValue": 3,
+                        "originalValue": 5,
                         "minValue": 0,
                         "maxValue": 99,
                         "modifiers": []
@@ -606,19 +606,19 @@
                 ],
                 "stats": [
                     {
-                        "baseValue": 1,
+                        "baseValue": 5,
                         "statId": 0,
                         "name": "Attack",
-                        "originalValue": 1,
+                        "originalValue": 5,
                         "minValue": 0,
                         "maxValue": 99,
                         "modifiers": []
                     },
                     {
-                        "baseValue": 3,
+                        "baseValue": 5,
                         "statId": 1,
                         "name": "Life",
-                        "originalValue": 3,
+                        "originalValue": 5,
                         "minValue": 0,
                         "maxValue": 99,
                         "modifiers": []
@@ -662,19 +662,19 @@
                 ],
                 "stats": [
                     {
-                        "baseValue": 1,
+                        "baseValue": 6,
                         "statId": 0,
                         "name": "Attack",
-                        "originalValue": 1,
+                        "originalValue": 6,
                         "minValue": 0,
                         "maxValue": 99,
                         "modifiers": []
                     },
                     {
-                        "baseValue": 3,
+                        "baseValue": 5,
                         "statId": 1,
                         "name": "Life",
-                        "originalValue": 3,
+                        "originalValue": 5,
                         "minValue": 0,
                         "maxValue": 99,
                         "modifiers": []
@@ -718,19 +718,19 @@
                 ],
                 "stats": [
                     {
-                        "baseValue": 1,
+                        "baseValue": 5,
                         "statId": 0,
                         "name": "Attack",
-                        "originalValue": 1,
+                        "originalValue": 5,
                         "minValue": 0,
                         "maxValue": 99,
                         "modifiers": []
                     },
                     {
-                        "baseValue": 3,
+                        "baseValue": 8,
                         "statId": 1,
                         "name": "Life",
-                        "originalValue": 3,
+                        "originalValue": 8,
                         "minValue": 0,
                         "maxValue": 99,
                         "modifiers": []
