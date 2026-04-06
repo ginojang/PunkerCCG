@@ -89,7 +89,6 @@
     <Compile Include="Assets\CCGKit\Demo\Scripts\Game\CreateDeckButton.cs" />
     <Compile Include="Assets\CCGKit\Demo\Scripts\Game\PopupTurnStart.cs" />
     <Compile Include="Assets\Scripts\Core\Utils\StringUtils.cs" />
-    <Compile Include="Assets\Scripts\RootNet\Game\NetworkBehaviour\Player.cs" />
     <Compile Include="Assets\Scripts\FullSerializer\Source\Converters\Unity\UnityEvent_Converter.cs" />
     <Compile Include="Assets\Scripts\FullSerializer\Source\fsContext.cs" />
     <Compile Include="Assets\Scripts\RootNet\Base\Logging\UnityNetLoger.cs" />
@@ -173,7 +172,6 @@
     <Compile Include="Assets\Scripts\FullSerializer\Source\Converters\fsPrimitiveConverter.cs" />
     <Compile Include="Assets\Scripts\Core\Foundation\Attributes\IntFieldAttribute.cs" />
     <Compile Include="Assets\Scripts\Core\Foundation\Ability.cs" />
-    <Compile Include="Assets\Scripts\RootNet\Game\NetworkBehaviour\DemoPlayer.cs" />
     <Compile Include="Assets\Scripts\FullSerializer\Source\Aot\fsAotConfiguration.cs" />
     <Compile Include="Assets\Scripts\FullSerializer\Source\fsJsonPrinter.cs" />
     <Compile Include="Assets\Scripts\Core\Foundation\Attributes\EnumFieldAttribute.cs" />
@@ -252,7 +250,6 @@
     <Compile Include="Assets\Scripts\Core\Foundation\EndGameConditions\PlayerStatEndGameCondition.cs" />
     <Compile Include="Assets\Scripts\RootNet\Base\Core\MessageFormat.cs" />
     <Compile Include="Assets\Scripts\FullSerializer\Source\Internal\fsPortableReflection.cs" />
-    <Compile Include="Assets\Scripts\Core\Foundation\GameState.cs" />
     <Compile Include="Assets\Scripts\RootNet\Game\NetworkBehaviour\BotController.cs" />
     <Compile Include="Assets\CCGKit\Demo\Scripts\Game\BoardSpell.cs" />
     <Compile Include="Assets\Scripts\Core\Foundation\Attributes\CardStatFieldAttribute.cs" />

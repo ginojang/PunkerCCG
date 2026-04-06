@@ -1,4 +1,3 @@
-//
 using System.IO;
 using FullSerializer;
 
@@ -9,6 +8,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 using CCGKit;
+
 
 public class GameNetworkManager : MonoBehaviour
 {

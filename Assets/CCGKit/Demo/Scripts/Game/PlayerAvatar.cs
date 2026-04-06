@@ -21,9 +21,11 @@ namespace CCGKit
             get { return IsBottom ? 0 : 1; }
         }
 
-        private Player GetTargetPlayer()
+        // GINO CHECK
+        /*
+        private DemoHumanPlayer GetTargetPlayer()
         {
-            var players = FindObjectsByType<Player>(FindObjectsSortMode.None);
+            var players = FindObjectsByType<DemoHumanPlayer>(FindObjectsSortMode.None);
             if (IsBottom)
             {
                 foreach (var player in players)
@@ -43,7 +45,7 @@ namespace CCGKit
 
             return null;
         }
-
+        */
         private void OnTriggerEnter2D(Collider2D collider)
         {
             if (collider.transform.parent != null)
