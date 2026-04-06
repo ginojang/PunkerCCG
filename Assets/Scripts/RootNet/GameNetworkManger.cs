@@ -272,6 +272,13 @@ public class GameNetworkManager : MonoBehaviour
 
     private void Start()
     {
+    /*
+   if (GameNetworkManager.Instance.IsSinglePlayer)
+   {
+       bot = gameObject.AddComponent<BotController>();
+       bot.SetPlayer(this);
+   }*/
+
         gameObject.GetComponent<DemoHumanPlayer>().InitializePlayers();
 
         randomSeed = System.Environment.TickCount;

@@ -78,29 +78,26 @@ namespace CCGKit
 
     public class Stat
     {
-        /// <summary>
-        /// The identifier of this stat.
-        /// </summary>
         public int statId;
-
-        /// <summary>
-        /// The name of this stat.
-        /// </summary>
         public string name;
+        public int originalValue;
 
-        /// <summary>
-        /// The base value of this stat.
-        /// </summary>
-        //private int _baseValue;
+        public int minValue;
+        public int maxValue;
 
-        /// <summary>
-        /// The base value of this stat.
-        /// </summary>
-        //[SerializeField]
-        public int baseValue;
-            /*
+        
+        // //////////////////////////////////////////////////////////////////////////
+        //
+        public List<Modifier> modifiers = new List<Modifier>();
+        public Action<int, int> onValueChanged;
+
+
+        // //////////////////////////////////////////////////////////////////////////
+        //
+        private int _baseValue = int.MinValue;
+        public int baseValue
         {
-            get { return _baseValue; }
+            get { return _baseValue == int.MinValue ? originalValue : _baseValue; }
             set
             {
                 var oldValue = _baseValue;
@@ -110,36 +107,9 @@ namespace CCGKit
                     onValueChanged(oldValue, value);
                 }
             }
-        }*/
+        }
 
-        /// <summary>
-        /// The original value of this stat.
-        /// </summary>
-        public int originalValue;
 
-        /// <summary>
-        /// The minimum value of this stat.
-        /// </summary>
-        public int minValue;
-
-        /// <summary>
-        /// The maximum value of this stat.
-        /// </summary>
-        public int maxValue;
-
-        /// <summary>
-        /// The modifiers of this stat.
-        /// </summary>
-        public List<Modifier> modifiers = new List<Modifier>();
-
-        /// <summary>
-        /// The callback that is called when the value of this stat changes.
-        /// </summary>
-        public Action<int, int> onValueChanged;
-
-        /// <summary>
-        /// The effective value of this stat.
-        /// </summary>
         public int effectiveValue
         {
             get
@@ -167,6 +137,8 @@ namespace CCGKit
                 return value;
             }
         }
+
+
 
         /// <summary>
         /// Adds a modifier to this stat.

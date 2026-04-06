@@ -97,15 +97,10 @@ namespace CCGKit
 
         public void InitializePlayers()
         {
-            if (GameNetworkManager.Instance.IsSinglePlayer)
-            {
-                bot = gameObject.AddComponent<BotController>();
-                bot.SetPlayer(this);
-            }
-    
             gameUI = GameObject.Find("GameUI").GetComponent<GameUI>();
             Assert.IsNotNull(gameUI);
-    
+
+
             foreach (var entry in GameNetworkManager.Instance.playerInfo.stats)
             {
                 if (entry.Value.name == "Life")
@@ -356,7 +351,10 @@ namespace CCGKit
                 bot.OnStartTurn(msg);
                 return;
             }*/
-    
+
+            
+
+
             gameUI.SetPlayerActive(msg.isRecipientTheActivePlayer);
             gameUI.SetOpponentActive(!msg.isRecipientTheActivePlayer);
             gameUI.SetEndTurnButtonEnabled(msg.isRecipientTheActivePlayer);
