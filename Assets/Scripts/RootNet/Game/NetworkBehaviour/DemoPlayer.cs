@@ -45,6 +45,7 @@ namespace CCGKit
 
         public void FightPlayer(int cardInstanceId)
         {
+            Debug.Log($"FightPlayer>>   {cardInstanceId}");
         }
 
         public void FightCreature(RuntimeCard attackingCard, RuntimeCard attackedCard)

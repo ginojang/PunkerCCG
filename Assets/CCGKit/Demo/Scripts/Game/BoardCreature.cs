@@ -259,6 +259,8 @@ namespace CCGKit
             }
         }
 
+
+        // GINO CHECK >>  공격시 호출 되는 함수.
         public void ResolveCombat()
         {
             var sortingGroup = GetComponent<SortingGroup>();
@@ -271,7 +273,7 @@ namespace CCGKit
                     isPlayable = false;
                     sortingGroup.sortingOrder = 100;
                     CombatAnimation.PlayFightAnimation(gameObject, targetPlayer.gameObject, 0.1f,
-                        () => { ownerPlayer.FightPlayer(card.instanceId); },
+                        () => { ownerPlayer.FightPlayer(targetPlayer.playerInfo, card.instanceId); },
                         () =>
                         {
                             sortingGroup.sortingOrder = 0;

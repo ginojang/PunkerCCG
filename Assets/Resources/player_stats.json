@@ -1,8 +1,8 @@
 [
     {
         "name": "Life",
-        "baseValue": 20,
-        "originalValue": 20,
+        "baseValue": 10,
+        "originalValue": 10,
         "minValue": 0,
         "maxValue": 99,
         "id": 0,

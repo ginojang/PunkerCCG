@@ -167,7 +167,8 @@ namespace CCGKit
                     if (creature != null && creature.namedStats["Life"].effectiveValue > 0 &&
                         (numTurnsOnBoard[creature.instanceId] >= 1 || creature.HasKeyword("Impetus")))
                     {
-                        player.FightPlayer(creature.instanceId);
+                        // GINO CHECK
+                        //player.FightPlayer(creature.instanceId);
                         yield return new WaitForSeconds(2.0f);
                     }
                 }
@@ -183,7 +184,8 @@ namespace CCGKit
                         var opponentPower = GetOpponentAttackingPower();
                         if (playerPower > opponentPower)
                         {
-                            player.FightPlayer(creature.instanceId);
+                            //// GINO CHECK
+                            //player.FightPlayer(creature.instanceId);
                             yield return new WaitForSeconds(2.0f);
                         }
                         else
@@ -196,7 +198,8 @@ namespace CCGKit
                             }
                             else
                             {
-                                player.FightPlayer(creature.instanceId);
+                                //// GINO CHECK
+                                ///player.FightPlayer(creature.instanceId);
                                 yield return new WaitForSeconds(2.0f);
                             }
                         }

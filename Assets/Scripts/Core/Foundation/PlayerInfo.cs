@@ -26,7 +26,7 @@ namespace CCGKit
         /// <summary>
         /// The unique network instance identifier of this player.
         /// </summary>
-        public RootNetClientBehaviour netId;
+        //public RootNetClientBehaviour netId;
 
         /// <summary>
         /// The nickname of this player.

@@ -19,7 +19,7 @@ namespace CCGKit
     /// functionality. Most of which is straightforward updating of the user interface when receiving
     /// new state from the server.
     /// </summary>
-    public class DemoHumanPlayer : DemoPlayer
+    public class DemoHumanPlayer : MonoBehaviour
     {
     #pragma warning disable 649
         [SerializeField]
@@ -351,9 +351,6 @@ namespace CCGKit
                 bot.OnStartTurn(msg);
                 return;
             }*/
-
-            
-
 
             gameUI.SetPlayerActive(msg.isRecipientTheActivePlayer);
             gameUI.SetOpponentActive(!msg.isRecipientTheActivePlayer);
@@ -1049,6 +1046,8 @@ namespace CCGKit
             var scene = GameObject.FindFirstObjectByType<GameScreen>();
             scene.OpenPopup<PopupOneButton>("PopupOneButton", popup =>
             {
+                // GINO CHECK
+                /*
                 if (msg.winnerPlayerIndex == GameNetworkManager.Instance.playerInfo.netId)
                 {
                     popup.text.text = "You win!";
@@ -1056,7 +1055,7 @@ namespace CCGKit
                 else
                 {
                     popup.text.text = "You lose!";
-                }
+                }*/
                 popup.buttonText.text = "Exit";
                 popup.button.onClickEvent.AddListener(() =>
                 {
@@ -1211,6 +1210,7 @@ namespace CCGKit
               //  return;
             //}
     
+            /*    
             var attackingCard = opponentBoardCards.Find(x => x.card.instanceId == msg.attackingCardInstanceId);
             if (attackingCard != null)
             {
@@ -1218,7 +1218,7 @@ namespace CCGKit
                 {
                     GameNetworkManager.Instance.effectSolver.FightPlayer(msg.attackingPlayerNetId, msg.attackingCardInstanceId);
                 });
-            }
+            }*/
         }
     
         public void OnCreatureAttacked(CreatureAttackedMessage msg)
@@ -1281,5 +1281,58 @@ namespace CCGKit
     
             opponentHandZone.numCards += msg.numCards;
         }
+
+
+
+
+
+        // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // 
+        //
+        public void PlayCard(RuntimeCard card, List<int> targetInfo = null)
+        {
+            var libraryCard = GameNetworkManager.Instance.config.GetCard(card.cardId);
+            PayResourceCosts(libraryCard.costs.ConvertAll(cost => cost as PayResourceCost));
+            SendMoveCardMessage(card, targetInfo);
+        }
+
+
+        public void PayResourceCosts(List<PayResourceCost> costs)
+        {
+            costs.ForEach(cost => {
+                if (cost != null)
+                {
+                    GameNetworkManager.Instance.playerInfo.stats[cost.statId].baseValue -= cost.value;
+                }
+            });
+        }
+
+
+        public void SendMoveCardMessage(RuntimeCard card, List<int> targetInfo = null)
+        {
+            // GINO CHECK
+            /*
+            var msg = new MoveCardMessage();
+            msg.playerNetId = netIdentity;
+            msg.cardInstanceId = card.instanceId;
+            msg.originZoneId = playerInfo.namedZones["Hand"].zoneId;
+            msg.destinationZoneId = playerInfo.namedZones["Board"].zoneId;
+            if (targetInfo != null)
+            {
+                msg.targetInfo = targetInfo.ToArray();
+            }
+            NetworkClient.Send<MoveCardMessage>(msg);*/
+        }
+
+        public void FightPlayer(PlayerInfo targetPlayer, int cardInstanceId)
+        {
+            GameNetworkManager.Instance.effectSolver.FightPlayer(targetPlayer, cardInstanceId);
+
+        }
+
+        public void FightCreature(RuntimeCard attackingCard, RuntimeCard attackedCard)
+        {
+        }
+
     }
 }

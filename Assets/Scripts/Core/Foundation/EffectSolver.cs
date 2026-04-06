@@ -87,42 +87,43 @@ namespace CCGKit
             }
         }
 
-        /// <summary>
-        /// Resolves the combat between the specified card and its opponent player.
-        /// </summary>
-        /// <param name="attackingPlayerNetId">The network identifier of the attacking player.</param>
-        /// <param name="attackingCardInstanceId">The instance identifier of the attacking card.</param>
-        public void FightPlayer(NetworkIdentity attackingPlayerNetId, int attackingCardInstanceId)
+        // ///////////////////////////////////////////////////////////////////////////////
+        // 
+        public void FightPlayer(PlayerInfo attackedPlayer, int attackingCardInstanceId)
         {
-            var attackingPlayer = GameNetworkManager.Instance.players.Find(x => x.netId == attackingPlayerNetId);
-            var attackedPlayer = GameNetworkManager.Instance.players.Find(x => x.netId != attackingPlayerNetId);
-            if (attackingPlayer != null && attackedPlayer != null)
+            var players = GameNetworkManager.Instance.players;
+            if (players == null || attackedPlayer == null)
+                return;
+
+            // 두명이니까 이렇게 해도 됨.
+            PlayerInfo attackingPlayer = GameNetworkManager.Instance.players.Find(x => x.id != attackedPlayer.id);
+            if (attackingPlayer == null)
+                return;
+
+            // 보드에 있는 애만  가능함. 
+            var board = attackingPlayer.namedZones["Board"];
+            var card = board.cards.Find(x => x.instanceId == attackingCardInstanceId);
+            if (card != null)
             {
-                var board = attackingPlayer.namedZones["Board"];
-                var card = board.cards.Find(x => x.instanceId == attackingCardInstanceId);
-                if (card != null)
-                {
-                    attackedPlayer.namedStats["Life"].baseValue -= card.namedStats["Attack"].effectiveValue;
-                }
+                attackedPlayer.namedStats["Life"].baseValue -= card.namedStats["Attack"].effectiveValue;
             }
+  
         }
 
-        /// <summary>
-        /// Resolves the combat between the specified creatures.
-        /// </summary>
-        /// <param name="attackingPlayerNetId">The network identifier of the attacking player.</param>
-        /// <param name="attackingCreature">The attacking creature.</param>
-        /// <param name="attackedCreature">The attacked creature.</param>
+
         public void FightCreature(NetworkIdentity attackingPlayerNetId, RuntimeCard attackingCreature, RuntimeCard attackedCreature)
         {
+            // GINO CHECK
+            /*
             var attackingPlayer = GameNetworkManager.Instance.players.Find(x => x.netId == attackingPlayerNetId);
             var attackedPlayer = GameNetworkManager.Instance.players.Find(x => x.netId != attackingPlayerNetId);
             if (attackingPlayer != null && attackedPlayer != null)
             {
                 attackedCreature.namedStats["Life"].baseValue -= attackingCreature.namedStats["Attack"].effectiveValue;
                 attackingCreature.namedStats["Life"].baseValue -= attackedCreature.namedStats["Attack"].effectiveValue;
-            }
+            }*/
         }
+
 
         /// <summary>
         /// Moves the specified card from the specified origin zone to the specified destination zone.
@@ -134,6 +135,7 @@ namespace CCGKit
         /// <param name="msgTargetInfo">The optional target information.</param>
         public void MoveCard(NetworkIdentity playerNetId, RuntimeCard card, string originZone, string destinationZone, int[] msgTargetInfo = null)
         {
+            /*
             var player = GameNetworkManager.Instance.players.Find(x => x.netId == playerNetId);
             if (player != null)
             {
@@ -158,7 +160,7 @@ namespace CCGKit
                     player.namedZones[destinationZone].RemoveCard(card);
                     player.namedZones[finalDestinationZone.name].AddCard(card);
                 }
-            }
+            }*/
         }
 
         /// <summary>
@@ -169,6 +171,7 @@ namespace CCGKit
         /// <param name="targetInfo">The optional target information.</param>
         public void DrawCards(NetworkIdentity playerNetId, int numCards, List<int> targetInfo = null)
         {
+            /*
             var player = GameNetworkManager.Instance.players.Find(x => x.netId == playerNetId);
             if (player != null)
             {
@@ -183,7 +186,7 @@ namespace CCGKit
                     if (serverGo != null && serverGo.activeSelf)
                     {
                         // GINO CHECK
-                        /*
+                        
                         var server = serverGo.GetComponent<Server>();
                         var msg = new PlayerDrewCardsMessage();
                         msg.playerNetId = player.netId;
@@ -201,10 +204,10 @@ namespace CCGKit
                         oppMsg.playerNetId = opponent.netId;
                         oppMsg.numCards = cards.Count;
                         server.SafeSendToClient(opponent, oppMsg);
-                        */
+                        
                     }
                 }
-            }
+            }*/
         }
 
 
@@ -606,8 +609,8 @@ namespace CCGKit
 
                 case EffectTarget.RandomPlayer:
                     {
-                        playerTargets.AddRange(GameNetworkManager.Instance.players);
-                        playerTargets = playerTargets.OrderBy(x => x.netId).ToList();
+                        playerTargets.AddRange(GameNetworkManager.Instance.players);                        
+                        playerTargets = playerTargets.OrderBy(x => x.id).ToList();
                         var randomPlayer = playerTargets[GetRandomNumber(playerTargets.Count)];
                         playerTargets.RemoveAll(x => x != randomPlayer);
                     }

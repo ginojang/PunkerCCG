@@ -1,9 +1,12 @@
-using System.Collections.Generic;
+//
 using System.IO;
 using FullSerializer;
 
 using UnityEngine;
 using UnityEngine.Assertions;
+
+using System.Collections;
+using System.Collections.Generic;
 
 using CCGKit;
 
@@ -190,6 +193,14 @@ public class GameNetworkManager : MonoBehaviour
         if (!gameStarted)
             return;
 
+        StartCoroutine(OnEndGame(loser, type));
+      
+    }
+
+    private IEnumerator OnEndGame(PlayerInfo loser, EndGameType type)
+    {
+        yield return new WaitForSeconds(1.0f);
+
         gameStarted = false;
 
         var winner = players.Find(x => x != loser);
@@ -200,6 +211,7 @@ public class GameNetworkManager : MonoBehaviour
         // 2. UI 알림
         // 3. DemoHumanPlayer.OnEndGame(...) 연결
     }
+
 
     void BuildDeck(PlayerInfo player, Deck sourceDeck)
     {
