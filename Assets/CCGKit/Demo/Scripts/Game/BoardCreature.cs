@@ -91,7 +91,7 @@ namespace CCGKit
             healthText.text = healthStat.effectiveValue.ToString();
 
             pictureSprite.sprite =
-                Resources.Load<Sprite>(string.Format("Images/{0}", libraryCard.GetStringProperty("Picture")));
+                Resources.Load<Sprite>(string.Format("Card/{0}", libraryCard.GetStringProperty("Picture")));
             var material = libraryCard.GetStringProperty("Material");
             if (!string.IsNullOrEmpty(material))
             {

@@ -172,7 +172,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 061c8c0774bf74f66860f6693d976703, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -192,8 +192,8 @@ SortingGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1727265671445790}
   m_Enabled: 1
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingLayerID: -1140432005
+  m_SortingLayer: 6
+  m_SortingOrder: 0
   m_SortAtRoot: 0
   m_Sort3DAs2D: 0

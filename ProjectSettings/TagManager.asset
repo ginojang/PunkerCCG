@@ -2,8 +2,10 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!78 &1
 TagManager:
-  serializedVersion: 2
-  tags: []
+  serializedVersion: 3
+  tags:
+  - PlayerOwned
+  - OpponentOwned
   layers:
   - Default
   - TransparentFX
@@ -41,3 +43,26 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Board
+    uniqueID: 833559547
+    locked: 0
+  - name: Battlefield
+    uniqueID: 1681661309
+    locked: 0
+  - name: BoardUI
+    uniqueID: 79473807
+    locked: 0
+  - name: BoardCards
+    uniqueID: 2981046425
+    locked: 0
+  - name: HandCards
+    uniqueID: 3388322505
+    locked: 0
+  - name: Foreground
+    uniqueID: 3154535291
+    locked: 0
+  - name: GameUI
+    uniqueID: 3100347703
+    locked: 0
+  m_RenderingLayers:
+  - Default

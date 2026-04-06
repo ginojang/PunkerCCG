@@ -78,8 +78,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -906644791
+  m_SortingLayer: 5
   m_SortingOrder: 1
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 362d9d767515f41458b56dcb08f3f189, type: 3}
@@ -103,6 +103,7 @@ GameObject:
   - component: {fileID: 224821836209733266}
   - component: {fileID: 23677670874923448}
   - component: {fileID: 114121149941045728}
+  - component: {fileID: 2507836223043383786}
   m_Layer: 0
   m_Name: BodyText
   m_TagString: Untagged
@@ -273,6 +274,19 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 23677670874923448}
   m_maskType: 0
+--- !u!210 &2507836223043383786
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1129120343096738}
+  m_Enabled: 1
+  m_SortingLayerID: -906644791
+  m_SortingLayer: 5
+  m_SortingOrder: 2
+  m_SortAtRoot: 0
+  m_Sort3DAs2D: 0
 --- !u!1 &1130229958192014
 GameObject:
   m_ObjectHideFlags: 0
@@ -362,8 +376,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -906644791
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 465beb2700fd647ee960b956fbad19ef, type: 3}
@@ -384,8 +398,8 @@ SortingGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1130229958192014}
   m_Enabled: 1
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1313920871
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_SortAtRoot: 0
   m_Sort3DAs2D: 0
@@ -535,8 +549,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -906644791
+  m_SortingLayer: 5
   m_SortingOrder: 1
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 16628d4bc14664c95bb24db4d00a0c30, type: 3}
@@ -718,8 +732,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -906644791
+  m_SortingLayer: 5
   m_SortingOrder: -1
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 496633a88d557e140af81e1b5c3c6ee8, type: 3}
@@ -810,8 +824,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -906644791
+  m_SortingLayer: 5
   m_SortingOrder: 2
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: cb305c4b544864d6bb82ffc573d6022f, type: 3}
@@ -835,6 +849,7 @@ GameObject:
   - component: {fileID: 224437907527635112}
   - component: {fileID: 23544788315357702}
   - component: {fileID: 114852956735093258}
+  - component: {fileID: 6375833460009892564}
   m_Layer: 0
   m_Name: Text
   m_TagString: Untagged
@@ -1005,6 +1020,19 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 23544788315357702}
   m_maskType: 0
+--- !u!210 &6375833460009892564
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1246064044942104}
+  m_Enabled: 1
+  m_SortingLayerID: -906644791
+  m_SortingLayer: 5
+  m_SortingOrder: 2
+  m_SortAtRoot: 0
+  m_Sort3DAs2D: 0
 --- !u!1 &1329760015491878
 GameObject:
   m_ObjectHideFlags: 0
@@ -1082,8 +1110,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -906644791
+  m_SortingLayer: 5
   m_SortingOrder: -2
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 89facc4d0dcc04594a97ea5788d6d24f, type: 3}
@@ -1173,8 +1201,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -906644791
+  m_SortingLayer: 5
   m_SortingOrder: -2
   m_MaskInteraction: 1
   m_Sprite: {fileID: 0}
@@ -1198,6 +1226,7 @@ GameObject:
   - component: {fileID: 224698402677413080}
   - component: {fileID: 23270595084508038}
   - component: {fileID: 114827711172712536}
+  - component: {fileID: 2180909338225262173}
   m_Layer: 0
   m_Name: Text
   m_TagString: Untagged
@@ -1368,6 +1397,19 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 23270595084508038}
   m_maskType: 0
+--- !u!210 &2180909338225262173
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1385601485789484}
+  m_Enabled: 1
+  m_SortingLayerID: -906644791
+  m_SortingLayer: 5
+  m_SortingOrder: 2
+  m_SortAtRoot: 0
+  m_Sort3DAs2D: 0
 --- !u!1 &1786638816741722
 GameObject:
   m_ObjectHideFlags: 0
@@ -1445,8 +1487,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -906644791
+  m_SortingLayer: 5
   m_SortingOrder: -3
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 53cfa69316153454e9cfca1b42255a37, type: 3}
@@ -1538,8 +1580,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -906644791
+  m_SortingLayer: 5
   m_SortingOrder: 3
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 30a4687c302804bcc8a530c5f7467a3c, type: 3}
@@ -1563,6 +1605,7 @@ GameObject:
   - component: {fileID: 224895646923385174}
   - component: {fileID: 23869341651328300}
   - component: {fileID: 114262444831809498}
+  - component: {fileID: 3841053417162297107}
   m_Layer: 0
   m_Name: Text
   m_TagString: Untagged
@@ -1733,6 +1776,19 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 23869341651328300}
   m_maskType: 0
+--- !u!210 &3841053417162297107
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1957235418648180}
+  m_Enabled: 1
+  m_SortingLayerID: -906644791
+  m_SortingLayer: 5
+  m_SortingOrder: 4
+  m_SortAtRoot: 0
+  m_Sort3DAs2D: 0
 --- !u!1 &1957568115903144
 GameObject:
   m_ObjectHideFlags: 0
@@ -1744,6 +1800,7 @@ GameObject:
   - component: {fileID: 224356376579234744}
   - component: {fileID: 23615414471177312}
   - component: {fileID: 114894120928793496}
+  - component: {fileID: 7855640535808996595}
   m_Layer: 0
   m_Name: Text
   m_TagString: Untagged
@@ -1914,6 +1971,19 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 23615414471177312}
   m_maskType: 0
+--- !u!210 &7855640535808996595
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1957568115903144}
+  m_Enabled: 1
+  m_SortingLayerID: -906644791
+  m_SortingLayer: 5
+  m_SortingOrder: 2
+  m_SortAtRoot: 0
+  m_Sort3DAs2D: 0
 --- !u!1 &1998601698339352
 GameObject:
   m_ObjectHideFlags: 0
@@ -1991,8 +2061,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -906644791
+  m_SortingLayer: 5
   m_SortingOrder: 2
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 0ab6d73dc578e4c1eba995a5f0040c10, type: 3}
