@@ -3,6 +3,7 @@
 // a copy of which is available at http://unity3d.com/company/legal/as_terms.
 
 using UnityEngine;
+using System;
 
 using DG.Tweening;
 
@@ -12,6 +13,8 @@ namespace CCGKit
     {
         [HideInInspector] public BaseScreen parentScene;
 
+        public Action OnClosed;
+
         public void Close()
         {
             OnPopupClosedActions();
@@ -19,6 +22,11 @@ namespace CCGKit
             if (parentScene != null)
             {
                 parentScene.OnPopupClosed(this);
+            }
+
+            if(OnClosed != null)
+            {
+                OnClosed();
             }
 
             Destroy(gameObject);

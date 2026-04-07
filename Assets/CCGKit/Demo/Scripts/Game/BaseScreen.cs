@@ -21,7 +21,8 @@ namespace CCGKit
     
         [SerializeField]
         protected CanvasGroup panelCanvasGroup;
-    
+
+
         protected virtual void Awake()
         {
             SceneManager.sceneLoaded += OnSceneLoaded;
@@ -79,6 +80,8 @@ namespace CCGKit
             panelCanvasGroup.blocksRaycasts = false;
             panelCanvasGroup.GetComponent<Image>().DOKill();
             panelCanvasGroup.GetComponent<Image>().DOFade(0.0f, 0.25f);
+
+           
         }
     }
 }

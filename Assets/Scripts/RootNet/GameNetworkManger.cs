@@ -13,7 +13,6 @@ using CCGKit;
 public class GameNetworkManager : MonoBehaviour
 {
     public static GameNetworkManager Instance;
-
     public bool IsSinglePlayer;
 
     //
@@ -46,12 +45,12 @@ public class GameNetworkManager : MonoBehaviour
     public bool isHuman;
 
     public bool gameStarted;
-    public int playerIndex;
-    public int turnDuration;
+    
     public int currentTurn;
     public int currentPlayerIndex;
 
-    public int randomSeed;
+    private int randomSeed;
+    public int turnDuration;
 
 
 
@@ -74,6 +73,7 @@ public class GameNetworkManager : MonoBehaviour
             file.Close();
 
             playerDecks = deserialized as List<Deck>;
+
 
             // 디폴트 덱은 게임 시작시 로비에서 전달해야 한다.  지금은 임시 0번 인덱스
             if (playerDecks.Count > 0)
@@ -157,59 +157,6 @@ public class GameNetworkManager : MonoBehaviour
         opponentInfo.id = 1;
         opponentInfo.nickname = "Jisu";
         opponentInfo.isHuman = false;
-    }
-
-    void BindEndGameConditions(PlayerInfo player)
-    {
-        foreach (var condition in config.properties.endGameConditions)
-        {
-            if (condition is PlayerStatEndGameCondition playerStatCondition)
-            {
-                var targetStat = player.stats[playerStatCondition.statId];
-                targetStat.onValueChanged += (oldValue, newValue) =>
-                {
-                    if (playerStatCondition.IsTrue(player))
-                    {
-                        EndGame(player, playerStatCondition.type);
-                    }
-                };
-            }
-            else if (condition is CardsInZoneEndGameCondition cardsCondition)
-            {
-                var targetZone = player.zones[cardsCondition.zoneId];
-                targetZone.onZoneChanged += value =>
-                {
-                    if (cardsCondition.IsTrue(player))
-                    {
-                        EndGame(player, cardsCondition.type);
-                    }
-                };
-            }
-        }
-    }
-
-    public void EndGame(PlayerInfo loser, EndGameType type)
-    {
-        if (!gameStarted)
-            return;
-
-        StartCoroutine(OnEndGame(loser, type));
-      
-    }
-
-    private IEnumerator OnEndGame(PlayerInfo loser, EndGameType type)
-    {
-        yield return new WaitForSeconds(1.0f);
-
-        gameStarted = false;
-
-        var winner = players.Find(x => x != loser);
-        Debug.Log($"EndGame - loser: {loser.nickname}, winner: {winner?.nickname}, type: {type}");
-
-        // TODO:
-        // 1. currentTurn 정지
-        // 2. UI 알림
-        // 3. DemoHumanPlayer.OnEndGame(...) 연결
     }
 
 
@@ -433,5 +380,81 @@ public class GameNetworkManager : MonoBehaviour
             StartTurn_LocalPlayerOnly();
         }
     }
+
+
+
+    void BindEndGameConditions(PlayerInfo player)
+    {
+        foreach (var condition in config.properties.endGameConditions)
+        {
+            if (condition is PlayerStatEndGameCondition playerStatCondition)
+            {
+                var targetStat = player.stats[playerStatCondition.statId];
+                targetStat.onValueChanged += (oldValue, newValue) =>
+                {
+                    if (playerStatCondition.IsTrue(player))
+                    {
+                        EndGame(player, playerStatCondition.type);
+                    }
+                };
+            }
+            else if (condition is CardsInZoneEndGameCondition cardsCondition)
+            {
+                var targetZone = player.zones[cardsCondition.zoneId];
+                targetZone.onZoneChanged += value =>
+                {
+                    if (cardsCondition.IsTrue(player))
+                    {
+                        EndGame(player, cardsCondition.type);
+                    }
+                };
+            }
+        }
+    }
+
+    public void EndGame(PlayerInfo loser, EndGameType type)
+    {
+        if (!gameStarted)
+            return;
+
+        StartCoroutine(OnEndGame(loser, type));
+
+    }
+
+    private IEnumerator OnEndGame(PlayerInfo loser, EndGameType type)
+    {
+        yield return new WaitForSeconds(1.0f);
+
+        gameStarted = false;
+
+        var winner = players.Find(x => x != loser);
+        //Debug.Log($"EndGame - loser: {loser.nickname}, winner: {winner?.nickname}, type: {type}");
+
+        var scene = FindFirstObjectByType<GameScreen>();
+        scene.OpenPopup<PopupOneButton>("PopupOneButton", popup =>
+        {
+            if(winner == playerInfo)
+            {
+                popup.text.text = "You win!";
+            }
+            else
+            {
+                popup.text.text = "You lose!";
+            }
+
+            popup.buttonText.text = "Exit";
+            popup.button.onClickEvent.AddListener(() =>
+            {
+                Debug.Log("EXIT >>>>>>>>>>>>>>>>>>>>>  ");
+            });
+
+            popup.OnClosed = () => {
+
+                Debug.Log("EXIT2 >>>>>>>>>>>>>>>>>>>>>  ");
+            };
+
+        });
+
+    } 
 
 }
